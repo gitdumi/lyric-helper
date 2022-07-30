@@ -4,22 +4,17 @@ export default function SectionLyric(props: {
   value: string;
   removeLyric: Function;
   index: number;
+  setInputvalue: Function;
 }) {
-  const { value, removeLyric, index } = props;
-
-  const [inputValue, setInputValue] = useState(value);
-
-  function handleChange(event: any) {
-    setInputValue(event.target.value);
-  }
+  const { value, removeLyric, index, setInputvalue } = props;
 
   return (
     <div className="section-lyric">
       <button>random</button>
       <input
         type="text"
-        value={inputValue}
-        onChange={(e) => handleChange(e)}
+        value={value}
+        onChange={(e) => setInputvalue(index, e.target.value)}
       ></input>
 
       <div className="section-lyric--drag">
@@ -31,7 +26,7 @@ export default function SectionLyric(props: {
       <button
         onClick={(e) => {
           console.log(e.target);
-          removeLyric(index);
+          removeLyric(e, index);
           e.stopPropagation();
         }}
       >

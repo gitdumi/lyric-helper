@@ -13,28 +13,38 @@ function App() {
     count: 0,
   });
 
-  function addLyric() {
-    console.log(sectionData);
+  function setInputValue(index: number, value: string) {
+    const updatedLyrics = [...sectionData.lyrics];
+    updatedLyrics[index] = value;
+
     setSectionData((prev) => ({
       ...prev,
-      lyrics: [...sectionData.lyrics, `New ${sectionData.count}`],
-      count: sectionData.count+1,
+      lyrics: updatedLyrics,
     }));
   }
 
-  function removeLyric(index: number) {
+  function addLyric() {
+    setSectionData((prev) => ({
+      ...prev,
+      lyrics: [...sectionData.lyrics, `New`],
+    }));
+  }
+
+  function removeLyric(event: Event, index: number) {
+    event.preventDefault();
     const updatedLyrics = sectionData.lyrics.filter((lyr, i) => {
       console.log(lyr, i);
-      i != 1;
+      return i != index;
     });
 
     console.log(index + "delete");
 
-    setSectionData((prev: SectionData) => ({
-      ...prev,
-      lyrics: updatedLyrics,
-      count: updatedLyrics.length,
-    }));
+    setSectionData((prev: SectionData) => {
+      return {
+        lyrics: updatedLyrics,
+        count: updatedLyrics.length - 1,
+      };
+    });
   }
 
   // function moveLyric(oldIndex: number, newIndex: number) {
@@ -55,6 +65,7 @@ function App() {
         data={sectionData}
         addLyric={addLyric}
         removeLyric={removeLyric}
+        setInputValue={setInputValue}
       />
     </div>
   );

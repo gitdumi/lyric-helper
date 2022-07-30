@@ -5,9 +5,10 @@ export default function SectionCard(props: {
   data: { lyrics: [] };
   removeLyric: Function;
   addLyric: Function;
+  setInputValue: Function;
 }) {
   const { lyrics } = props.data;
-  const { addLyric, removeLyric } = props;
+  const { addLyric, removeLyric, setInputValue } = props;
   const [position, setPosition] = useState({ oldPosition: 0, newPosition: 0 });
 
   function getChangedPos(oldPosition: number, newPosition: number) {
@@ -22,6 +23,7 @@ export default function SectionCard(props: {
         index={index}
         value={text}
         removeLyric={removeLyric}
+        setInputvalue={setInputValue}
       />
     );
   });
