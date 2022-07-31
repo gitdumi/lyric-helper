@@ -49,21 +49,22 @@ export default function SectionLyric(props: {
         style={lyricStyle}
         // maxlength="10"
       ></input>
-      <div className="section-lyric--actions"></div>
-      <div className="section-lyric--actions__drag svg-button">
-        {moveIconSvg}
+      <div className="section-lyric--actions">
+        <div className="section-lyric--actions__drag svg-button">
+          {moveIconSvg}
+        </div>
+        {/* <button>Duplicate</button> */}
+        <button
+          className="section-lyric--actions__delete svg-button"
+          onClick={(e) => {
+            console.log(e.target);
+            removeLyric(e, index);
+            e.stopPropagation();
+          }}
+        >
+          {deleteIconSvg}
+        </button>
       </div>
-      {/* <button>Duplicate</button> */}
-      <button
-        className="section-lyric--actions__delete svg-button"
-        onClick={(e) => {
-          console.log(e.target);
-          removeLyric(e, index);
-          e.stopPropagation();
-        }}
-      >
-        {deleteIconSvg}
-      </button>
     </div>
   );
 }

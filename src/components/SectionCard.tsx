@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SectionLyric from "./SectionLyric";
+import { addIconSvg } from "../assets/svg/svg";
 
 export default function SectionCard(props: {
   data: { lyrics: []; count: number };
@@ -35,13 +36,13 @@ export default function SectionCard(props: {
         <div className="section-card--content__lyrics">
           <ul>{lyricElements}</ul>
           <button
-            className="section-card--content__add"
+            className="section-card--content__add svg-button"
             onClick={(e) => {
               addLyric();
               e.stopPropagation();
             }}
           >
-            Add
+            {addIconSvg}
           </button>
         </div>
         <div className="section-card--actions">

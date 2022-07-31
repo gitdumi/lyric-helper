@@ -1,9 +1,46 @@
+export const addIconSvg = (
+  <div id="add-icon">
+    <svg
+      width="74"
+      height="74"
+      viewBox="0 0 74 74"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M37 16.2661V57.7338"
+        stroke="black"
+        stroke-width="3"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M57.7337 37H16.2659"
+        stroke="black"
+        stroke-width="3"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M37 72C56.33 72 72 56.33 72 37C72 17.67 56.33 2 37 2C17.67 2 2 17.67 2 37C2 56.33 17.67 72 37 72Z"
+        stroke="black"
+        stroke-width="3"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </div>
+);
+
 export const diceIconSvg = (
   <div id="lyric-dice-icon">
     <svg
-      width="70"
-      height="70"
-      viewBox="0 0 70 70"
+      width="74"
+      height="74"
+      viewBox="0 0 74 74"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
