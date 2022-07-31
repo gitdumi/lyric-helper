@@ -8,6 +8,14 @@ export const addIconSvg = (
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
+        d="M37 72C56.33 72 72 56.33 72 37C72 17.67 56.33 2 37 2C17.67 2 2 17.67 2 37C2 56.33 17.67 72 37 72Z"
+        stroke="black"
+        stroke-width="3"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
         d="M37 16.2661V57.7338"
         stroke="black"
         stroke-width="3"
@@ -17,14 +25,6 @@ export const addIconSvg = (
       />
       <path
         d="M57.7337 37H16.2659"
-        stroke="black"
-        stroke-width="3"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M37 72C56.33 72 72 56.33 72 37C72 17.67 56.33 2 37 2C17.67 2 2 17.67 2 37C2 56.33 17.67 72 37 72Z"
         stroke="black"
         stroke-width="3"
         stroke-miterlimit="10"
@@ -145,12 +145,21 @@ export const deleteIconSvg = (
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M37 37L51 51M51 23L37 37L51 23ZM37 37L23 51L37 37ZM37 37L23 23L37 37Z"
+      <line
+        x1="21.0607"
+        y1="18.9393"
+        x2="52.8805"
+        y2="50.7591"
         stroke="black"
         stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+      />
+      <line
+        x1="52.8805"
+        y1="19.0607"
+        x2="21.0607"
+        y2="50.8805"
+        stroke="black"
+        stroke-width="3"
       />
       <path
         d="M37 72C56.33 72 72 56.33 72 37C72 17.67 56.33 2 37 2C17.67 2 2 17.67 2 37C2 56.33 17.67 72 37 72Z"

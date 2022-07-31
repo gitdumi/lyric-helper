@@ -81,6 +81,17 @@
   padding: 0.2rem;
   cursor: pointer;
 }
+.svg-button svg:hover, .svg-button svg line:hover {
+  fill: var(--light-background);
+  stroke: var(--black)
+}
+#add-icon.svg-button svg path:hover {
+  fill: var(--accent-color);
+}
+#lyric-dice-icon svg path:hover {
+  fill: var(--accent-color);
+  stroke: none;
+}
 .svg-button svg {
   height: 1.5rem;
   width: auto;

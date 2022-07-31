@@ -10,9 +10,13 @@ interface SectionData {
 
 function App() {
   const [sectionData, setSectionData] = useState({
-    lyrics: ['Roll the dice, baby!'],
+    lyrics: [],
     count: 0,
   });
+
+  useEffect(() => {
+    addLyric();
+  }, [])
 
   function setInputValue(index: number, value: string) {
     const updatedLyrics = [...sectionData.lyrics];
@@ -25,10 +29,12 @@ function App() {
   }
 
   function addLyric() {
-    setSectionData((prev) => ({
-      ...prev,
-      lyrics: [...sectionData.lyrics, `New`],
-    }));
+    getLyric(8).then((result) => {
+      setSectionData((prev) => ({
+        ...prev,
+        lyrics: [...sectionData.lyrics, result.lyric],
+      }));
+    });
   }
 
   function removeLyric(event: Event, index: number) {
