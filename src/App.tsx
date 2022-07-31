@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import SectionCard from "./components/SectionCard";
+import { getLyric, getLyricSync } from "./utils/hipster";
 
 interface SectionData {
   lyrics: string[];
@@ -9,7 +10,7 @@ interface SectionData {
 
 function App() {
   const [sectionData, setSectionData] = useState({
-    lyrics: ["Hipster ipsum"],
+    lyrics: ['Roll the dice, baby!'],
     count: 0,
   });
 

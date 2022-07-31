@@ -11,6 +11,14 @@ export async function getLyric(syllableCount: number) {
   });
 }
 
+export function getLyricSync(syllableCount: number) {
+  async function asyncWrapper() {
+    return getLyric(syllableCount)
+  }
+
+  return asyncWrapper()
+}
+
 function fetchLyric() {
   return fetch("https://hipsum.co/api/?type=hipster-centric&sentences=1")
     .then(function (response) {

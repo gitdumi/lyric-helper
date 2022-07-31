@@ -33,17 +33,16 @@ export default function SectionCard(props: {
       <div className="section-card--title">Chorus</div>
       <div className="section-card--content">
         <div className="section-card--content__lyrics">
-          <ul>
-            {lyricElements}
-            <button
-              onClick={(e) => {
-                addLyric();
-                e.stopPropagation();
-              }}
-            >
-              Add
-            </button>
-          </ul>
+          <ul>{lyricElements}</ul>
+          <button
+            className="section-card--content__add"
+            onClick={(e) => {
+              addLyric();
+              e.stopPropagation();
+            }}
+          >
+            Add
+          </button>
         </div>
         <div className="section-card--actions">
           <button>duplicate</button>
