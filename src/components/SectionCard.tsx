@@ -2,7 +2,7 @@ import { useState } from "react";
 import SectionLyric from "./SectionLyric";
 
 export default function SectionCard(props: {
-  data: { lyrics: [] };
+  data: { lyrics: []; count: number };
   removeLyric: Function;
   addLyric: Function;
   setInputValue: Function;

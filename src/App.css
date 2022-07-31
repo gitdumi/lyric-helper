@@ -42,10 +42,16 @@
 
 .section-lyric {
   display:flex;
-  padding-left: 5rem;
+  /* padding-left: 5rem; */
+}
+
+.section-lyric input {
+  display: block;
+  overflow:visible;
+  min-width: 200px;
+  max-width: 100%;
 }
 
 .section-lyric--drag {
   display: inline;
-  /* cursor: grab; */
 }

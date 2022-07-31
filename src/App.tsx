@@ -47,18 +47,6 @@ function App() {
     });
   }
 
-  // function moveLyric(oldIndex: number, newIndex: number) {
-  //   let lyrics = [...sectionData.lyrics];
-  //   const oldLyric = lyrics[oldIndex];
-  //   const newLyric = lyrics[newIndex];
-
-  //   console.log({ lyrics, old: oldLyric });
-  //   lyrics[oldIndex] = newLyric;
-  //   lyrics[newIndex] = oldLyric;
-
-  //   console.log({ lyrics, new: newLyric });
-  // }
-
   return (
     <div className="App">
       <SectionCard
