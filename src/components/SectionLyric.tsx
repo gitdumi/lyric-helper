@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { getLyric } from "../utils/hipster.ts";
+import { getLyric, getSyllableCount } from "../utils/hipster.ts";
 
 export default function SectionLyric(props: {
   value: string;
@@ -9,17 +9,21 @@ export default function SectionLyric(props: {
 }) {
   const { value, removeLyric, index, setInputvalue } = props;
 
-  const randomButton = useRef(null)
+  const randomButton = useRef(null);
 
   async function handleRandom() {
     console.log("random");
     //@ts-ignore
-    randomButton.current.disabled = true
+    randomButton.current.disabled = true;
     const result = await getLyric();
     console.log(result.lyric);
     setInputvalue(index, result.lyric);
     //@ts-ignore
-    randomButton.current.disabled = false
+    randomButton.current.disabled = false;
+  }
+
+  const lyricStyle = {
+    width: `${value.length/2.5}rem`
   }
 
   return (
@@ -37,6 +41,7 @@ export default function SectionLyric(props: {
         type="text"
         value={value}
         onChange={(e) => setInputvalue(index, e.target.value)}
+        style={lyricStyle}
       ></input>
 
       <div className="section-lyric--drag">

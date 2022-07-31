@@ -3,6 +3,7 @@
   flex-direction: column;
   overflow: hidden;
   margin: 0;
+  width: auto;
 }
 
 .section-card--title {

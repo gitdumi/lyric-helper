@@ -43,7 +43,7 @@ function processLyric(raw: string[], result: any) {
   return result;
 }
 
-function getSyllableCount(word: string) {
+export function getSyllableCount(word: string) {
   let numSyllables = 0;
   let newSyllable = true;
   let vowels = "aeiouy";
