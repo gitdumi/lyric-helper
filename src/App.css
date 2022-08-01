@@ -78,18 +78,21 @@
   height: 100%;
   width: 100%;
   width: auto;
-  padding: 0.2rem;
+  padding: 0.5rem;
   cursor: pointer;
 }
 .svg-button svg:hover, .svg-button svg line:hover {
   fill: var(--light-background);
-  stroke: var(--black)
+  stroke: var(--light-background);
+  transition: var(--transition-speed);
 }
-#add-icon.svg-button svg path:hover {
-  fill: var(--accent-color);
+#add-icon svg path:first-child:hover {
+  stroke: var(--accent-color);
+  transition: var(--transition-speed);
 }
 #lyric-dice-icon svg path:hover {
   fill: var(--accent-color);
+  transition: var(--transition-speed);
   stroke: none;
 }
 .svg-button svg {
@@ -99,6 +102,7 @@
 .svg-button svg path,
 .svg-button svg line {
   stroke: var(--black);
+  transition: var(--transition-speed);
 }
 #lyric-dice-icon svg path {
   fill: var(--black);

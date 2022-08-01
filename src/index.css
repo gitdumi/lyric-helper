@@ -18,6 +18,8 @@
   --text-color: white;
   --light-background: rgb(237, 237, 237);
   --black: black;
+
+  --transition-speed: 150ms;
 }
 
 /* a {
