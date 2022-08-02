@@ -1,87 +1,100 @@
-import { useEffect, useState, useRef, useContext, EventHandler } from "react";
-import { getLyric, getSyllableCount } from "../utils/hipster.ts";
-import { moveIconSvg, deleteIconSvg, diceIconSvg } from "../assets/svg/svg";
-import { useInputValue } from "../utils/hooks";
-import { AppData } from "../utils/interfaces";
-import { useAppData } from "../AppContext";
+import {useEffect, useState, useRef, useContext, EventHandler, LegacyRef} from "react";
+// @ts-ignore
+import {getLyric, getSyllableCount} from "../utils/hipster.ts";
+import {moveIconSvg, deleteIconSvg, diceIconSvg} from "../assets/svg/svg";
+import {AppData} from "../utils/interfaces";
+import {useAppData} from "../AppContext";
 
 export default function SectionLyric(props: {
-  // value: string;
-  // removeLyric: Function;
-  index: number;
-  sectionIndex: number;
-  // setInputvalue: Function;
+    index: number;
+    sectionIndex: number;
+    value: string;
 }) {
-  // const { value, removeLyric, index, setInputvalue } = props;
+    const {appData, setAppData} = useAppData();
+    const {index, sectionIndex} = props;
+    const value = appData.sections[sectionIndex].lyrics[index];
 
-  const {appData, setAppData} = useAppData();
-  const { index, sectionIndex } = props;
-  const value = appData.sections[sectionIndex].lyrics[index];
+    const randomButton = useRef() as LegacyRef<HTMLButtonElement>;
+    const inputField = useRef() as LegacyRef<HTMLInputElement>;
 
-  const randomButton = useRef();
-  const inputField = useRef();
+    function handleChange(e: any) {
+        setAppData((prevAppData: AppData) => {
+            prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
+            return {...prevAppData, sections: prevAppData.sections};
+        })
+    }
 
-  function handleChange(e) {
-    console.log('here');
-    //@ts-ignore
-    setAppData((prevAppData: AppData) => {
-      prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
-      console.log(prevAppData);
-      return {...prevAppData, sections: prevAppData.sections};
-    })
-  }
+    async function handleRandom() {
+        console.log("random");
+        // @ts-ignore
+        randomButton.current.disabled = true;
+        // @ts-ignore
+        inputField.current.value = "loading...";
+        const result = await getLyric();
+        setAppData((prevAppData: AppData) => {
+            prevAppData.sections[sectionIndex].lyrics[index] = result.lyric;
+            return {...prevAppData, sections: prevAppData.sections};
+        })
+        console.log(result.lyric);
+        //@ts-ignore
+        randomButton.current.disabled = false;
+    }
 
-  async function handleRandom() {
-    console.log("random");
-    randomButton.current.disabled = true;
-    inputField.current.value = "loading...";
-    const result = await getLyric();
-    console.log(result.lyric);
-    //@ts-ignore
-    randomButton.current.disabled = false;
-  }
+    const handleDelete = (event: any, index: number) => {
+        event.preventDefault();
+        const updatedLyrics = appData.sections[sectionIndex].lyrics.filter((lyr: object, i: number) => {
+            console.log(lyr, i);
+            return i != index;
+        });
+        setAppData((prev: AppData) => {
+            prev.sections[sectionIndex].lyrics = updatedLyrics;
+            return {...prev, sections: prev.sections};
+        })
+    }
 
-  const lyricStyle = {
-    width: `${value.length / 2.5}rem`,
-  };
+    const lyricStyle = {
+        width: `${value.length / 2.5}rem`,
+    };
 
-  return (
-    <div className="section-lyric">
-      <button
-        className="section-lyric--actions__random svg-button"
-        id="random-lyric-button"
-        onClick={async (e) => {
-          await handleRandom();
-          e.stopPropagation();
-        }}
-        ref={randomButton}
-      >
-        {diceIconSvg}
-      </button>
-      <input
-        type="text"
-        value={value}
-        ref={inputField}
-        onChange={(e) => handleChange(e)}
-        style={lyricStyle}
-        // maxlength="10"
-      ></input>
-      <div className="section-lyric--actions">
-        <div className="section-lyric--actions__drag svg-button">
-          {moveIconSvg}
+    return (
+        <div className="section-lyric">
+            <button
+                className="section-lyric--actions__random svg-button"
+                id="random-lyric-button"
+                onClick={async (e) => {
+                    await handleRandom();
+                    e.stopPropagation();
+                }}
+                ref={randomButton}
+                // style={lyricStyle}
+            >
+                {diceIconSvg}
+            </button>
+            <input
+                type="text"
+                value={value}
+                ref={inputField}
+                onChange={(e) => handleChange(e)}
+                // style={lyricStyle}
+                maxLength={30}
+                style={{width: `${value.length / 2.5}rem`}}
+            />
+            <div className="section-lyric--actions">
+                <div className="section-lyric--actions__drag svg-button">
+                    {moveIconSvg}
+                </div>
+                {/* <button>Duplicate</button> */}
+                <button
+                    className="section-lyric--actions__delete svg-button"
+                    onClick={(e) => {
+                        console.log(e.target);
+                        handleDelete(e, index)
+                        e.stopPropagation();
+                    }}
+                >
+                    {deleteIconSvg}
+                </button>
+            </div>
         </div>
-        {/* <button>Duplicate</button> */}
-        <button
-          className="section-lyric--actions__delete svg-button"
-          onClick={(e) => {
-            console.log(e.target);
-            // removeLyric(e, index);
-            e.stopPropagation();
-          }}
-        >
-          {deleteIconSvg}
-        </button>
-      </div>
-    </div>
-  );
+    );
 }

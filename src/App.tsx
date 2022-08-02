@@ -1,33 +1,29 @@
-import { createContext, useContext, useEffect, useState } from "react";
 import "./App.css";
 import SectionCard from "./components/SectionCard";
-import { AppContextProvider, useAppData } from "../src/AppContext";
+import {AppContextProvider, useAppData} from "../src/AppContext";
+import {SectionData} from "./utils/interfaces";
 
-const SectionCards = () => {
-  const { appData } = useAppData();
+function SectionCards() {
+    const {appData} = useAppData();
 
-  console.log(appData);
-
-  return appData.sections.map((section, index) => {
-    return (
-      <SectionCard
-        key={`SC${index}`}
-        sectionIndex={index}
-        // addLyric={addLyric}
-        // removeLyric={removeLyric}
-      />
-    );
-  });
+    return appData.sections.map((section: SectionData, index: number) => {
+        return (
+            <SectionCard
+                key={`SC${index}`}
+                sectionIndex={index}
+            />
+        );
+    });
 };
 
 function App() {
-  return (
-    <div className="App">
-      <AppContextProvider>
-        <SectionCards />
-      </AppContextProvider>
-    </div>
-  );
+    return (
+        <div className="App">
+            <AppContextProvider>
+                <SectionCards/>
+            </AppContextProvider>
+        </div>
+    );
 }
 
 export default App;

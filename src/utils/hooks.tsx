@@ -1,7 +1,6 @@
-import { useEffect, useState, useContext } from "react";
-import { useAppData } from "../AppContext";
-import { AppData } from "./interfaces";
-
+import {useEffect, useState, useContext} from "react";
+import {useAppData} from "../AppContext";
+import {AppData} from "./interfaces";
 
 //////////////-------------------
 

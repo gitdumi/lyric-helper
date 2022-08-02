@@ -1,4 +1,4 @@
-export async function getLyric(syllableCount: number) {
+export function getLyric(syllableCount: number) {
   return fetchLyric().then((all) => {
     const raw = all.replace(new RegExp("^[^A-z]|[^A-z]$|[.,]"), "").split(" ");
 
@@ -7,17 +7,17 @@ export async function getLyric(syllableCount: number) {
       syllableCount: 0,
     };
 
-    return processLyric(raw, result);
+    return processLyric(syllableCount, raw, result);
   });
 }
-
-export function getLyricSync(syllableCount: number) {
-  async function asyncWrapper() {
-    return getLyric(syllableCount);
-  }
-
-  return asyncWrapper();
-}
+//
+// export function getLyricSync(syllableCount: number) {
+//   async function asyncWrapper() {
+//     return getLyric(syllableCount);
+//   }
+//
+//   return asyncWrapper();
+// }
 
 function fetchLyric() {
   return fetch("https://hipsum.co/api/?type=hipster-centric&sentences=1")
@@ -32,7 +32,7 @@ function fetchLyric() {
     });
 }
 
-function processLyric(raw: string[], result: any) {
+function processLyric(syllableCount: number, raw: string[], result: any) {
   for (let index = 0; index < raw.length; index++) {
     if (result.syllableCount < 8) {
       result = {
@@ -41,7 +41,7 @@ function processLyric(raw: string[], result: any) {
           ? result.syllableCount + getSyllableCount(raw[index])
           : getSyllableCount(raw[index]),
       };
-    } else if ((result.syllableCount = 8)) {
+    } else if ((result.syllableCount = syllableCount)) {
       return result;
     }
   }
