@@ -10,26 +10,26 @@ export const addIconSvg = (
       <path
         d="M37 72C56.33 72 72 56.33 72 37C72 17.67 56.33 2 37 2C17.67 2 2 17.67 2 37C2 56.33 17.67 72 37 72Z"
         stroke="black"
-        stroke-width="3"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M37 16.2661V57.7338"
         stroke="black"
-        stroke-width="3"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M57.7337 37H16.2659"
         stroke="black"
-        stroke-width="3"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   </div>
@@ -112,9 +112,9 @@ export const moveIconSvg = (
       <path
         d="M37 72C56.33 72 72 56.33 72 37C72 17.67 56.33 2 37 2C17.67 2 2 17.67 2 37C2 56.33 17.67 72 37 72Z"
         stroke="black"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <line
         x1="14"
@@ -122,7 +122,7 @@ export const moveIconSvg = (
         x2="59"
         y2="30.5"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <line
         x1="14"
@@ -130,7 +130,7 @@ export const moveIconSvg = (
         x2="59"
         y2="43.5"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
     </svg>
   </div>
@@ -151,7 +151,7 @@ export const deleteIconSvg = (
         x2="52.8805"
         y2="50.7591"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <line
         x1="52.8805"
@@ -159,14 +159,14 @@ export const deleteIconSvg = (
         x2="21.0607"
         y2="50.8805"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <path
         d="M37 72C56.33 72 72 56.33 72 37C72 17.67 56.33 2 37 2C17.67 2 2 17.67 2 37C2 56.33 17.67 72 37 72Z"
         stroke="black"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   </div>

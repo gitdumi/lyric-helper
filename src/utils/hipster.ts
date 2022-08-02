@@ -13,10 +13,10 @@ export async function getLyric(syllableCount: number) {
 
 export function getLyricSync(syllableCount: number) {
   async function asyncWrapper() {
-    return getLyric(syllableCount)
+    return getLyric(syllableCount);
   }
 
-  return asyncWrapper()
+  return asyncWrapper();
 }
 
 function fetchLyric() {
@@ -42,10 +42,7 @@ function processLyric(raw: string[], result: any) {
           : getSyllableCount(raw[index]),
       };
     } else if ((result.syllableCount = 8)) {
-      console.log("bines");
       return result;
-    } else {
-      console.log("raues");
     }
   }
   return result;

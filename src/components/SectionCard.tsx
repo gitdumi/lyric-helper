@@ -1,30 +1,47 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SectionLyric from "./SectionLyric";
 import { addIconSvg } from "../assets/svg/svg";
+import { AppData, SectionData } from "../utils/interfaces";
+import { useAppData } from "../AppContext";
+import { getLyric } from "../utils/hipster";
 
-export default function SectionCard(props: {
-  data: { lyrics: []; count: number };
-  removeLyric: Function;
-  addLyric: Function;
-  setInputValue: Function;
-}) {
-  const { lyrics } = props.data;
-  const { addLyric, removeLyric, setInputValue } = props;
-  const [position, setPosition] = useState({ oldPosition: 0, newPosition: 0 });
+export default function SectionCard(props: { sectionIndex: number }) {
+  const { appData, setAppData } = useAppData();
+  const { sectionIndex } = props;
+  const sectionData = appData.sections[sectionIndex];
+  const { lyrics, count } = sectionData;
 
-  function getChangedPos(oldPosition: number, newPosition: number) {
-    console.log("change");
-    setPosition({ oldPosition: oldPosition, newPosition: newPosition });
-  }
+  // const [position, setPosition] = useState({ oldPosition: 0, newPosition: 0 });
+
+  // function getChangedPos(oldPosition: number, newPosition: number) {
+  //   console.log("change");
+  //   setPosition({ oldPosition: oldPosition, newPosition: newPosition });
+  // }
+
+  const addLyric = () => {
+    // getLyric(appData.config.selectedSylCount).then((result) => {
+    //   console.log("here");
+    //   setAppData((prev) => {
+    //     //       prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
+    //     // console.log(prevAppData);
+    //     // return {...prevAppData, sections: prevAppData.sections};
+    //     prev.sections[sectionIndex].lyrics = [
+    //       ...sectionData.lyrics,
+    //       result.lyric,
+    //     ];
+    //     return prev;
+    //   });
+    // });
+  };
 
   const lyricElements = lyrics.map((text: string, index: number) => {
     return (
       <SectionLyric
-        key={index}
+        key={`SL${index}`}
+        sectionIndex={sectionIndex}
         index={index}
         value={text}
-        removeLyric={removeLyric}
-        setInputvalue={setInputValue}
+        // removeLyric={removeLyric}
       />
     );
   });

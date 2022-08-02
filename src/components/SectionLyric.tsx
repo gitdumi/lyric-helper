@@ -1,17 +1,35 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext, EventHandler } from "react";
 import { getLyric, getSyllableCount } from "../utils/hipster.ts";
 import { moveIconSvg, deleteIconSvg, diceIconSvg } from "../assets/svg/svg";
+import { useInputValue } from "../utils/hooks";
+import { AppData } from "../utils/interfaces";
+import { useAppData } from "../AppContext";
 
 export default function SectionLyric(props: {
-  value: string;
-  removeLyric: Function;
+  // value: string;
+  // removeLyric: Function;
   index: number;
-  setInputvalue: Function;
+  sectionIndex: number;
+  // setInputvalue: Function;
 }) {
-  const { value, removeLyric, index, setInputvalue } = props;
+  // const { value, removeLyric, index, setInputvalue } = props;
+
+  const {appData, setAppData} = useAppData();
+  const { index, sectionIndex } = props;
+  const value = appData.sections[sectionIndex].lyrics[index];
 
   const randomButton = useRef();
   const inputField = useRef();
+
+  function handleChange(e) {
+    console.log('here');
+    //@ts-ignore
+    setAppData((prevAppData: AppData) => {
+      prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
+      console.log(prevAppData);
+      return {...prevAppData, sections: prevAppData.sections};
+    })
+  }
 
   async function handleRandom() {
     console.log("random");
@@ -19,7 +37,6 @@ export default function SectionLyric(props: {
     inputField.current.value = "loading...";
     const result = await getLyric();
     console.log(result.lyric);
-    setInputvalue(index, result.lyric);
     //@ts-ignore
     randomButton.current.disabled = false;
   }
@@ -45,7 +62,7 @@ export default function SectionLyric(props: {
         type="text"
         value={value}
         ref={inputField}
-        onChange={(e) => setInputvalue(index, e.target.value)}
+        onChange={(e) => handleChange(e)}
         style={lyricStyle}
         // maxlength="10"
       ></input>
@@ -58,7 +75,7 @@ export default function SectionLyric(props: {
           className="section-lyric--actions__delete svg-button"
           onClick={(e) => {
             console.log(e.target);
-            removeLyric(e, index);
+            // removeLyric(e, index);
             e.stopPropagation();
           }}
         >
