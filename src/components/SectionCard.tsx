@@ -14,16 +14,18 @@ export default function SectionCard(props: { sectionIndex: number }) {
 
     const addButton = useRef(null);
 
-    useEffect(()=> {
-        setAppData((prev: AppData) => {
-            prev.sections[sectionIndex].lyrics = [
-                ...sectionData.lyrics,
-                randomLyric,
-            ];
-            console.log(prev.sections[sectionIndex], 'mama')
-            console.log("append new lyric");
-            return {...prev, sections: prev.sections};
-        });
+    useEffect(() => {
+        if (randomLyric) {
+            setAppData((prev: AppData) => {
+                prev.sections[sectionIndex].lyrics = [
+                    ...sectionData.lyrics,
+                    randomLyric,
+                ];
+                console.log(prev.sections[sectionIndex])
+                console.log("append new lyric");
+                return {...prev, sections: prev.sections};
+            });
+        }
     }, [randomLyric])
 
     function updateRandomLyric() {
