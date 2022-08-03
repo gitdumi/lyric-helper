@@ -5,6 +5,8 @@ import App from "./App";
 const initialData: AppData = {
     sections: [
         {
+            name: 'Verse',
+            color: '#1adebb',
             lyrics: ["Roll the dice!"],
             count: 0,
         },

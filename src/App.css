@@ -14,6 +14,11 @@
   font-weight: 600;
   margin: 0.3rem 1rem;
   color: var(--accent-color);
+  border: none;
+  width: fit-content;
+}
+input.section-card--title:focus {
+  outline: none;
 }
 
 .section-card--content {
@@ -56,7 +61,6 @@
 }
 
 .section-lyric input {
-  overflow: none;
   min-width: 200px;
   max-width: 100%;
   border: none;
@@ -76,25 +80,29 @@
 .svg-button {
   border: none;
   background-color: transparent;
+  fill: transparent;
   height: 100%;
-  width: 100%;
   width: auto;
   padding: 0.5rem;
   cursor: pointer;
 }
-.svg-button svg:hover, .svg-button svg line:hover {
-  fill: var(--light-background);
-  stroke: var(--light-background);
-  transition: var(--transition-speed);
+.svg-button svg:hover{
+  filter: invert(0.9)
 }
-#add-icon svg path:first-child:hover {
-  stroke: var(--accent-color);
-  transition: var(--transition-speed);
-}
-#lyric-dice-icon svg path:hover {
+
+#add-icon svg:hover {
+  /*filter: invert(0.5);*/
   fill: var(--accent-color);
+  filter: none;
+
+  /*stroke: var(--accent-color);*/
   transition: var(--transition-speed);
-  stroke: none;
+}
+#lyric-dice-icon svg:hover {
+  /*fill: var(--accent-color);*/
+  transition: var(--transition-speed);
+  /*filter: none;*/
+  /*stroke: none;*/
 }
 .svg-button svg {
   height: 1.5rem;

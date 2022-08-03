@@ -1,9 +1,9 @@
-import {useCallback, useContext, useEffect, useRef, useState, useMemo} from "react";
+import {useEffect, useRef, useState} from "react";
 import SectionLyric from "./SectionLyric";
-import {addIconSvg} from "../assets/svg/svg";
-import {AppData, SectionData} from "../utils/interfaces";
-import {useAppData} from "../AppContext";
-import {getLyric} from "../utils/hipster";
+import {addIconSvg} from "../../assets/svg/svg";
+import {AppData, SectionData} from "../../utils/interfaces";
+import {useAppData} from "../../AppContext";
+import {getLyric} from "../../utils/hipster";
 
 export default function SectionCard(props: { sectionIndex: number }) {
     const {appData, setAppData} = useAppData();
@@ -44,9 +44,26 @@ export default function SectionCard(props: { sectionIndex: number }) {
         );
     });
 
+    function handleChange(e: any) {
+        setAppData((prevAppData: AppData) => {
+            prevAppData.sections[sectionIndex].name = e.target.value;
+            return {...prevAppData, sections: prevAppData.sections};
+        })
+    }
+
     return (
         <div className="section-card">
-            <div className="section-card--title">Chorus</div>
+            <input
+                className="section-card--title"
+                type="text"
+                value={sectionData.name}
+                // ref={inputField}
+                onChange={(e) => handleChange(e)}
+                // style={lyricStyle}
+                maxLength={100}
+                // style={{width: `${value.length / 2.5}rem`}}
+            />
+            {/*<input type="text" className="section-card--title">{sectionData.name}</input>*/}
             <div className="section-card--content">
                 <div className="section-card--content__lyrics">
                     <ul>{lyricElements}</ul>

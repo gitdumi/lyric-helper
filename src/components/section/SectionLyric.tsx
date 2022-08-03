@@ -1,9 +1,9 @@
 import {useEffect, useState, useRef, useContext, EventHandler, LegacyRef} from "react";
 // @ts-ignore
-import {getLyric, getSyllableCount} from "../utils/hipster.ts";
-import {moveIconSvg, deleteIconSvg, diceIconSvg} from "../assets/svg/svg";
-import {AppData} from "../utils/interfaces";
-import {useAppData} from "../AppContext";
+import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
+import {moveIconSvg, deleteIconSvg, diceIconSvg} from "../../assets/svg/svg";
+import {AppData} from "../../utils/interfaces";
+import {useAppData} from "../../AppContext";
 
 export default function SectionLyric(props: {
     index: number;

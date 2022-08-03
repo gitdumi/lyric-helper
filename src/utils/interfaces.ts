@@ -1,4 +1,6 @@
 export interface SectionData {
+  name: string,
+  color: string,
   lyrics: string[];
   count: number;
 }
