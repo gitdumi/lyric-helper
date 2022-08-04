@@ -1,4 +1,5 @@
 export interface SectionData {
+  id: string,
   name: string,
   color: string,
   lyrics: string[];

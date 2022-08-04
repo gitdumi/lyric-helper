@@ -5,9 +5,9 @@ import {AppData, SectionData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {getLyric} from "../../utils/hipster";
 
-export default function SectionCard(props: { sectionIndex: number, handleDuplicate: Function, handleDelete: Function }) {
+export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function }) {
     const {appData, setAppData} = useAppData();
-    const {sectionIndex, handleDuplicate, handleDelete} = props;
+    const {sectionIndex, sectionId, handleDuplicate, handleDelete} = props;
     const sectionData = appData.sections[sectionIndex];
     const {lyrics, count} = sectionData;
     const [randomLyric, setRandomLyric] = useState('');
@@ -34,10 +34,10 @@ export default function SectionCard(props: { sectionIndex: number, handleDuplica
         return (
             <SectionLyric
                 key={`SL${sectionIndex}${index}`}
+                lyricId={`SL${sectionIndex}${index}${sectionId}`}
                 sectionIndex={sectionIndex}
                 index={index}
                 value={text}
-                // removeLyric={removeLyric}
             />
         );
     });
@@ -85,7 +85,9 @@ export default function SectionCard(props: { sectionIndex: number, handleDuplica
 
                 <div className="section-card--actions">
                     <button className="section-delete svg-button"
-                            onClick={(event => handleDelete(event, sectionIndex))}>{deleteIconSvg}</button>
+                            onClick={(event => {
+                                handleDelete(event, sectionId)
+                            })}>{deleteIconSvg}</button>
                     <button className="section-duplicate svg-button"
                             onClick={(e) => handleDuplicate(e, sectionIndex)}>{copyIconSvg}</button>
                     <button className="section-move svg-button">{moveIconSvg}</button>

@@ -8,26 +8,35 @@ import {useAppData} from "../../AppContext";
 export default function SectionLyric(props: {
     index: number;
     sectionIndex: number;
+    lyricId: string;
     value: string;
 }) {
     const {appData, setAppData} = useAppData();
-    const {index, sectionIndex} = props;
+    const {index, sectionIndex, lyricId} = props;
     const value = appData.sections[sectionIndex].lyrics[index];
 
     const randomButton = useRef() as LegacyRef<HTMLButtonElement>;
     const inputField = useRef() as LegacyRef<HTMLInputElement>;
 
     function handleChange(e: any) {
+        console.log(`change section ${sectionIndex} lyric ${index}`)
         setAppData((prevAppData: AppData) => {
-            console.log(prevAppData.sections[sectionIndex].lyrics[index])
-            console.log(inputField)
-            prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
+            console.log(sectionIndex)
+            console.log(index)
+            console.log(prevAppData.sections[0].lyrics)
+            console.log(prevAppData.sections[1].lyrics)
+                prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
+            // prevAppData.sections[sectionIndex] = {...prevAppData.sections[sectionIndex], lyrics: prevAppData.sections[sectionIndex].lyrics}
+            // console.log(prevAppData.sections)
+            console.log(prevAppData.sections[0].lyrics)
+            console.log(prevAppData.sections[1].lyrics)
+
             return {...prevAppData, sections: prevAppData.sections};
         })
     }
 
-    async function handleRandom() {
-        console.log("random");
+    async function handleRandom(e: any) {
+        e.stopPropagation();
         // @ts-ignore
         randomButton.current.disabled = true;
         // @ts-ignore
@@ -37,7 +46,6 @@ export default function SectionLyric(props: {
             prevAppData.sections[sectionIndex].lyrics[index] = result.lyric;
             return {...prevAppData, sections: prevAppData.sections};
         })
-        console.log(result.lyric);
         //@ts-ignore
         randomButton.current.disabled = false;
     }
@@ -64,8 +72,7 @@ export default function SectionLyric(props: {
                 className="section-lyric--actions__random svg-button"
                 id="random-lyric-button"
                 onClick={async (e) => {
-                    e.stopPropagation();
-                    await handleRandom();
+                    await handleRandom(e);
                 }}
                 ref={randomButton}
                 // style={lyricStyle}

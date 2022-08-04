@@ -3,6 +3,7 @@ import {AppData, SectionData} from "../utils/interfaces";
 import SectionCard from "./section/SectionCard";
 import React, {useEffect, useState} from "react";
 import {useAddSection} from "./sectionHooks";
+import {getNewKey} from "../utils/utils";
 
 export default function LyricHelperMain() {
     const {appData, setAppData} = useAppData();
@@ -13,7 +14,13 @@ export default function LyricHelperMain() {
     function handleAddSection(event: any) {
         event.stopPropagation();
         event.preventDefault();
-        let newData: SectionData = {name: 'Verse', color: '#1adebb', lyrics: ['Roll the dice!'], count: 0}
+        let newData: SectionData = {
+            id: getNewKey(),
+            name: 'Verse',
+            color: '#1adebb',
+            lyrics: ['Roll the dice!'],
+            count: 0
+        }
         setNewSection(newData)
     }
 
@@ -21,15 +28,18 @@ export default function LyricHelperMain() {
         event.stopPropagation();
         event.preventDefault();
         let duplicate: SectionData = {...appData.sections[sectionIndex]};
-        console.log(duplicate)
+        duplicate.id = getNewKey();
+        console.log(duplicate);
         setNewSection(duplicate);
     }
 
-    function handleDeleteSection(event: any, sectionIndex: number) {
+    function handleDeleteSection(event: any, sectionId: string) {
         event.preventDefault();
         event.stopPropagation();
         setAppData((prev: AppData) => {
-            prev.sections = prev.sections.filter((section: SectionData, index: number) => index != sectionIndex)
+            console.log('sections before delete',prev.sections)
+            prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId)
+            console.log('sections after delete',prev.sections)
             return {...prev, sections: prev.sections}
         })
     }
@@ -37,8 +47,9 @@ export default function LyricHelperMain() {
     const sectionComponents = appData.sections.map((section: SectionData, index: number) => {
         return (
             <SectionCard
-                key={`SC${section.name}`}
+                key={`SC-${section.id}`}
                 sectionIndex={index}
+                sectionId={section.id}
                 handleDuplicate={handleDuplicateSection}
                 handleDelete={handleDeleteSection}
             />
@@ -47,7 +58,12 @@ export default function LyricHelperMain() {
 
     return (
         <div className="main">
-            <button onClick={(e) => handleAddSection(e)}>Add Section</button>
+            <button onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleAddSection(e);
+            }}>Add Section
+            </button>
             {sectionComponents}
         </div>
     )

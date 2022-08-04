@@ -2,10 +2,12 @@ import {useContext, createContext, useState} from "react";
 import {AppData} from "./utils/interfaces";
 import App from "./App";
 import app from "./App";
+import {getNewKey} from "./utils/utils";
 
 const initialData: AppData = {
     sections: [
         {
+            id: getNewKey(),
             name: 'Verse',
             color: '#1adebb',
             lyrics: ["Roll the dice!"],
