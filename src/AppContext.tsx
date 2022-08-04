@@ -1,6 +1,7 @@
 import {useContext, createContext, useState} from "react";
 import {AppData} from "./utils/interfaces";
 import App from "./App";
+import app from "./App";
 
 const initialData: AppData = {
     sections: [

@@ -1,13 +1,13 @@
 import {useEffect, useRef, useState} from "react";
 import SectionLyric from "./SectionLyric";
-import {addIconSvg} from "../../assets/svg/svg";
+import {addIconSvg, copyIconSvg, deleteIconSvg, moveIconSvg} from "../../assets/svg/svg";
 import {AppData, SectionData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {getLyric} from "../../utils/hipster";
 
-export default function SectionCard(props: { sectionIndex: number }) {
+export default function SectionCard(props: { sectionIndex: number, handleDuplicate: Function, handleDelete: Function }) {
     const {appData, setAppData} = useAppData();
-    const {sectionIndex} = props;
+    const {sectionIndex, handleDuplicate, handleDelete} = props;
     const sectionData = appData.sections[sectionIndex];
     const {lyrics, count} = sectionData;
     const [randomLyric, setRandomLyric] = useState('');
@@ -21,8 +21,6 @@ export default function SectionCard(props: { sectionIndex: number }) {
                     ...sectionData.lyrics,
                     randomLyric,
                 ];
-                console.log(prev.sections[sectionIndex])
-                console.log("append new lyric");
                 return {...prev, sections: prev.sections};
             });
         }
@@ -35,7 +33,7 @@ export default function SectionCard(props: { sectionIndex: number }) {
     const lyricElements = lyrics.map((text: string, index: number) => {
         return (
             <SectionLyric
-                key={`SL${index}`}
+                key={`SL${sectionIndex}${index}`}
                 sectionIndex={sectionIndex}
                 index={index}
                 value={text}
@@ -45,6 +43,8 @@ export default function SectionCard(props: { sectionIndex: number }) {
     });
 
     function handleChange(e: any) {
+        e.preventDefault();
+        e.stopPropagation();
         setAppData((prevAppData: AppData) => {
             prevAppData.sections[sectionIndex].name = e.target.value;
             return {...prevAppData, sections: prevAppData.sections};
@@ -82,14 +82,14 @@ export default function SectionCard(props: { sectionIndex: number }) {
                         {addIconSvg}
                     </button>
                 </div>
+
                 <div className="section-card--actions">
-                    <button>duplicate</button>
-                    <button>move</button>
-                    <button>delete</button>
+                    <button className="section-delete svg-button"
+                            onClick={(event => handleDelete(event, sectionIndex))}>{deleteIconSvg}</button>
+                    <button className="section-duplicate svg-button"
+                            onClick={(e) => handleDuplicate(e, sectionIndex)}>{copyIconSvg}</button>
+                    <button className="section-move svg-button">{moveIconSvg}</button>
                 </div>
-            </div>
-            <div className="section-duplicate">
-                <button>duplicate section</button>
             </div>
         </div>
     );

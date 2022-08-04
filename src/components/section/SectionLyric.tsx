@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef, useContext, EventHandler, LegacyRef} from "react";
+import {useEffect, useState, useRef, LegacyRef} from "react";
 // @ts-ignore
 import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
 import {moveIconSvg, deleteIconSvg, diceIconSvg} from "../../assets/svg/svg";
@@ -19,6 +19,8 @@ export default function SectionLyric(props: {
 
     function handleChange(e: any) {
         setAppData((prevAppData: AppData) => {
+            console.log(prevAppData.sections[sectionIndex].lyrics[index])
+            console.log(inputField)
             prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
             return {...prevAppData, sections: prevAppData.sections};
         })
@@ -62,8 +64,8 @@ export default function SectionLyric(props: {
                 className="section-lyric--actions__random svg-button"
                 id="random-lyric-button"
                 onClick={async (e) => {
-                    await handleRandom();
                     e.stopPropagation();
+                    await handleRandom();
                 }}
                 ref={randomButton}
                 // style={lyricStyle}
@@ -74,9 +76,11 @@ export default function SectionLyric(props: {
                 type="text"
                 value={value}
                 ref={inputField}
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => {
+                    handleChange(e);
+                }}
                 // style={lyricStyle}
-                maxLength={30}
+                maxLength={70}
                 style={{width: `${value.length / 2.5}rem`}}
             />
             <div className="section-lyric--actions">
@@ -87,7 +91,6 @@ export default function SectionLyric(props: {
                 <button
                     className="section-lyric--actions__delete svg-button"
                     onClick={(e) => {
-                        console.log(e.target);
                         handleDelete(e, index)
                         e.stopPropagation();
                     }}

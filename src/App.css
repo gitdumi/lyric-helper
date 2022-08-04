@@ -7,6 +7,7 @@
   height: 100%;
   border: solid 2px var(--accent-color);
   box-shadow: 5px 5px 0px var(--accent-color);
+  margin-top: 1rem;
 }
 
 .section-card--title {
@@ -23,17 +24,20 @@ input.section-card--title:focus {
 
 .section-card--content {
   display: flex;
+  width: 100%;
+  border: none;
 }
 
 .section-card--content__lyrics {
   min-width: 20rem;
+  width: 100%;
   height: 100%;
-  padding: 1rem;
+  padding: 0;
   background-color: var(--light-background);
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  overflow: scroll;
 }
 .section-card--content__lyrics ul {
   display: flex;
@@ -42,16 +46,21 @@ input.section-card--title:focus {
   justify-content: space-evenly;
   padding: 0;
   margin: 0;
+  width: 100%;
   list-style-type: none;
   background-color: var(--accent-color);
   color: var(--text-color);
 }
-
+.section-card--content__add{
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
 .section-card--actions {
   display: flex;
   flex-direction: column;
-  width: 10%;
-  justify-content: space-between;
+  justify-content:flex-end;
+  padding: 0;
 }
 
 .section-lyric {
@@ -63,26 +72,32 @@ input.section-card--title:focus {
 .section-lyric input {
   min-width: 200px;
   max-width: 100%;
+  width: min-content;
+  justify-self: flex-start;
   border: none;
   background-color: transparent;
+}
+.section-lyric input:focus {
+  outline: none;
 }
 
 .section-lyric--actions {
   margin-left: auto;
   display: flex;
+  align-items: flex-start;
 }
 .section-lyric--actions__random {
   padding: 0;
   margin: 0;
   align-self: center;
 }
+#lyric-dice-icon {
+}
 
 .svg-button {
   border: none;
   background-color: transparent;
   fill: transparent;
-  height: 100%;
-  width: auto;
   padding: 0.5rem;
   cursor: pointer;
 }
@@ -94,10 +109,12 @@ input.section-card--title:focus {
   /*filter: invert(0.5);*/
   fill: var(--accent-color);
   filter: none;
+  /*padding: 0;*/
 
   /*stroke: var(--accent-color);*/
   transition: var(--transition-speed);
 }
+
 #lyric-dice-icon svg:hover {
   /*fill: var(--accent-color);*/
   transition: var(--transition-speed);

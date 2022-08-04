@@ -15,14 +15,3 @@ export function useAddSection(newSection: SectionData) {
         }
     }, [newSection])
 }
-
-// export function useInputUpdate(sectionIndex: number, index: number, event: any) {
-//     const {appData, setAppData} = useAppData();
-//
-//     function handleChange(event: any) {
-//         setAppData((prevAppData: AppData) => {
-//             prevAppData.sections[sectionIndex].lyrics[index] = event.target.value;
-//             return {...prevAppData, sections: prevAppData.sections};
-//         })
-//     }
-// }
