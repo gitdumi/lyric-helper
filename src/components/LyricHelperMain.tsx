@@ -35,7 +35,7 @@ export default function LyricHelperMain() {
     }
 
     function handleDeleteSection(event: any, sectionId: string) {
-        event.preventDefault();
+        // event.preventDefault();
         event.stopPropagation();
         setAppData((prev: AppData) => {
             prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId)
@@ -81,13 +81,14 @@ export default function LyricHelperMain() {
     // });
 
     const sectionComponents = appData.sections.map((section: SectionData, index: number) => (
-        <Draggable key={section.id} draggableId={section.id} index={index}>
+        <Draggable key={section.id} draggableId={`SEC-${section.id}`} index={index}>
             {(provided, snapshot) => {
                 return (
                     <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+                        id="draggable-section"
                         // style={getItemStyle(
                         //     snapshot.isDragging,
                         //     provided.draggableProps.style

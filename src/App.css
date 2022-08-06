@@ -16,15 +16,12 @@
     background-color: var(--white);
 }
 
-.section-card--title {
+.section-card--title input {
     font-size: 20px;
     font-weight: 600;
     margin: 0.3rem 0.5rem;
     color: var(--accent-color);
     border: none;
-}
-
-input.section-card--title:focus {
     outline: none;
 }
 
@@ -45,9 +42,10 @@ input.section-card--title:focus {
     align-items: center;
     /*overflow: scroll;*/
 }
-#droppableLyrics {
-    display: flex;
+
+.draggable-lyric,.droppableLyric  {
     width: 100%;
+    transition: var(--transition-speed)
 }
 
 .section-card--content__lyrics ul {
@@ -84,13 +82,10 @@ input.section-card--title:focus {
 
 .section-lyric input {
     min-width: 200px;
-    width: 100%;
+    /*width: 100%;*/
     justify-self: flex-start;
     border: none;
     background-color: transparent;
-}
-
-.section-lyric input:focus {
     outline: none;
 }
 
@@ -122,20 +117,14 @@ input.section-card--title:focus {
 }
 
 #add-icon svg:hover {
-    /*filter: invert(0.5);*/
     fill: var(--accent-color);
     filter: none;
-    /*padding: 0;*/
 
-    /*stroke: var(--accent-color);*/
     transition: var(--transition-speed);
 }
 
 #lyric-dice-icon svg:hover {
-    /*fill: var(--accent-color);*/
     transition: var(--transition-speed);
-    /*filter: none;*/
-    /*stroke: none;*/
 }
 
 .svg-button svg {
@@ -151,12 +140,12 @@ input.section-card--title:focus {
 .svg-button svg path,
 .svg-button svg line {
     stroke: var(--black);
-    /*stroke: var(--text-color);*/
     transition: var(--transition-speed);
 }
 
 #lyric-dice-icon svg path {
     fill: var(--black);
+    transition: var(--transition-speed)
 }
 
 .section-lyric .svg-button svg path,

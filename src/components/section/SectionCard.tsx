@@ -13,58 +13,9 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     const sectionData = appData.sections[sectionIndex];
     const {lyrics, count} = sectionData;
     // @ts-ignore
-    const [randomLyric, setRandomLyric] = useState<Lyric>(null);
     const [isHover, setIsHover] = useState(false);
 
     const addButton = useRef(null);
-
-    useEffect(() => {
-        if (randomLyric) {
-            setAppData((prev: AppData) => {
-                prev.sections[sectionIndex].lyrics = [
-                    ...sectionData.lyrics,
-                    randomLyric,
-                ];
-                return {...prev, sections: prev.sections};
-            });
-        }
-    }, [randomLyric])
-
-    function updateRandomLyric() {
-        getLyric((appData.config.selectedSylCount)).then(result => {
-            setRandomLyric(result)
-        })
-    }
-
-    const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
-        return (
-            <Draggable key={lyric.id} draggableId={lyric.id} index={index}>
-                {(provided, snapshot) => {
-                    // console.log({index, lyric})
-                    return (
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            // style={getItemStyle(
-                            //     snapshot.isDragging,
-                            //     provided.draggableProps.style
-                            // )}
-                        >
-                            <SectionLyric
-                                key={`SL${sectionIndex}${index}`}
-                                lyricId={`SL${sectionIndex}${index}${sectionId}`}
-                                sectionIndex={sectionIndex}
-                                index={index}
-                                value={lyric.value}
-                            />
-                        </div>
-                    )
-                }}
-            </Draggable>
-
-        );
-    });
 
     function handleChange(e: any) {
         e.preventDefault();
@@ -75,8 +26,19 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         })
     }
 
+    function addRandomLyric() {
+        getLyric((appData.config.selectedSylCount)).then(result => {
+            setAppData((prev: AppData) => {
+                prev.sections[sectionIndex].lyrics = [
+                    ...sectionData.lyrics,
+                    result,
+                ];
+                return {...prev, sections: prev.sections};
+            });
+        })
+    }
+
     function onDragEnd(result: any) {
-        // dropped outside the list
         if (!result.destination) {
             return;
         }
@@ -87,7 +49,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
             result.destination.index
         );
 
-        console.log('lyricDrag',newLyrics)
+        console.log('lyricDrag', newLyrics)
 
         setAppData((prev: AppData) => {
             const sections = [...appData.sections]
@@ -98,31 +60,69 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                 ...prev, sections: sections
             })
             return ({
-            ...prev, sections: sections
-        })});
+                ...prev, sections: sections
+            })
+        });
     }
+
+
+    const DragHandle = (props: any) => {
+        return (<div style={{width: "100%", height: "auto"}}/>)
+    }
+
+    const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
+        return (
+            <Draggable key={lyric.id} draggableId={`SL-${lyric.id}`} index={index}>
+                {(provided, snapshot) => {
+                    // console.log({index, lyric})
+                    return (
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="draggable-lyric"
+                            // style={getItemStyle(
+                            //     snapshot.isDragging,
+                            //     provided.draggableProps.style
+                            // )}
+                        >
+                            <SectionLyric
+                                key={`SL-${lyric.id}`}
+                                lyricId={`SL-${lyric.id}`}
+                                sectionIndex={sectionIndex}
+                                index={index}
+                                value={lyric.value}
+                            />
+                        </div>
+                    )
+                }}
+            </Draggable>
+        );
+    });
 
     return (
         <div className="section-card" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-            <input
-                className="section-card--title"
-                type="text"
-                value={sectionData.name}
-                // ref={inputField}
-                onChange={(e) => handleChange(e)}
-                // style={lyricStyle}
-                maxLength={100}
-                style={{width: `${sectionData.name.length}ch`}}
-            />
+
+            <div className="section-card--title">
+                <input
+                    type="text"
+                    value={sectionData.name}
+                    // ref={inputField}
+                    onChange={handleChange}
+                    // style={lyricStyle}
+                    maxLength={100}
+                    style={{width: `${sectionData.name.length}ch`}}
+                />
+            </div>
             <div className="section-card--content">
                 <div className="section-card--content__lyrics">
                     <DragDropContext onDragEnd={onDragEnd}>
-                        <Droppable droppableId="droppableLyrics">
+                        <Droppable droppableId="droppable">
                             {(provided, snapshot) => {
                                 return (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
+                                    <div className="droppableLyric"
+                                         {...provided.droppableProps}
+                                         ref={provided.innerRef}
                                         // style={getListStyle(snapshot.isDraggingOver)}
                                     >
                                         <ul>{lyricElements}</ul>
@@ -137,8 +137,9 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                             className="section-card--content__add svg-button"
                             onClick={async (e) => {
                                 e.stopPropagation();
+                                e.preventDefault();
                                 e.nativeEvent.stopImmediatePropagation();
-                                updateRandomLyric()
+                                addRandomLyric()
                             }}
                         >
                             {addIconSvg}
@@ -160,10 +161,3 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         </div>
     );
 }
-
-// const [position, setPosition] = useState({ oldPosition: 0, newPosition: 0 });
-
-// function getChangedPos(oldPosition: number, newPosition: number) {
-//   console.log("change");
-//   setPosition({ oldPosition: oldPosition, newPosition: newPosition });
-// }

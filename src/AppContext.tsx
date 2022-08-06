@@ -23,6 +23,7 @@ const AppContext = createContext(initialData);
 export const AppContextProvider = ({children}: any) => {
     const [appData, setAppData] = useState<AppData>(initialData);
 
+    console.log({'mama': 'mama', appData})
     return (
         // @ts-ignore
         <AppContext.Provider value={{appData, setAppData}}>
