@@ -24,7 +24,6 @@ export default function SectionLyric(props: {
         console.log(`change section ${sectionIndex} lyric ${index}`)
         setAppData((prevAppData: AppData) => {
             const newLyrics = [...prevAppData.sections[sectionIndex].lyrics].map(lyr => {
-                console.log(lyr.id)
                 if (lyr.id === lyricId) {
                     return {id: getNewKey(), value: e.target.value}
                 } else {

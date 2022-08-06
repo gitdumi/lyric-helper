@@ -83,7 +83,6 @@ export default function LyricHelperMain() {
     const sectionComponents = appData.sections.map((section: SectionData, index: number) => (
         <Draggable key={section.id} draggableId={section.id} index={index}>
             {(provided, snapshot) => {
-                console.log({index, section})
                 return (
                     <div
                         ref={provided.innerRef}
@@ -118,7 +117,6 @@ export default function LyricHelperMain() {
                 </button>
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => {
-                        console.log({provided})
                         return (
                             <div
                                 {...provided.droppableProps}

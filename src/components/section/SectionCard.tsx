@@ -1,9 +1,11 @@
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import SectionLyric from "./SectionLyric";
 import {addIconSvg, copyIconSvg, deleteIconSvg, moveIconSvg} from "../../assets/svg/svg";
 import {AppData, Lyric, SectionData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {getLyric} from "../../utils/hipster";
+import {reorder} from "../../utils/utils";
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 
 export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function }) {
     const {appData, setAppData} = useAppData();
@@ -34,15 +36,33 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         })
     }
 
-    const lyricElements = lyrics.map((text: string, index: number) => {
+    const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
         return (
-            <SectionLyric
-                key={`SL${sectionIndex}${index}`}
-                lyricId={`SL${sectionIndex}${index}${sectionId}`}
-                sectionIndex={sectionIndex}
-                index={index}
-                value={text}
-            />
+            <Draggable key={lyric.id} draggableId={lyric.id} index={index}>
+                {(provided, snapshot) => {
+                    // console.log({index, lyric})
+                    return (
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            // style={getItemStyle(
+                            //     snapshot.isDragging,
+                            //     provided.draggableProps.style
+                            // )}
+                        >
+                            <SectionLyric
+                                key={`SL${sectionIndex}${index}`}
+                                lyricId={`SL${sectionIndex}${index}${sectionId}`}
+                                sectionIndex={sectionIndex}
+                                index={index}
+                                value={lyric.value}
+                            />
+                        </div>
+                    )
+                }}
+            </Draggable>
+
         );
     });
 
@@ -55,6 +75,33 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         })
     }
 
+    function onDragEnd(result: any) {
+        // dropped outside the list
+        if (!result.destination) {
+            return;
+        }
+
+        const newLyrics = reorder(
+            appData.sections[sectionIndex].lyrics,
+            result.source.index,
+            result.destination.index
+        );
+
+        console.log('lyricDrag',newLyrics)
+
+        setAppData((prev: AppData) => {
+            const sections = [...appData.sections]
+            sections[sectionIndex].lyrics = [...newLyrics]
+
+            console.log({prev, sections})
+            console.log({
+                ...prev, sections: sections
+            })
+            return ({
+            ...prev, sections: sections
+        })});
+    }
+
     return (
         <div className="section-card" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             <input
@@ -65,11 +112,25 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                 onChange={(e) => handleChange(e)}
                 // style={lyricStyle}
                 maxLength={100}
-                // style={{width: `${value.length / 2.5}rem`}}
+                style={{width: `${sectionData.name.length}ch`}}
             />
             <div className="section-card--content">
                 <div className="section-card--content__lyrics">
-                    <ul>{lyricElements}</ul>
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId="droppableLyrics">
+                            {(provided, snapshot) => {
+                                return (
+                                    <div
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}
+                                        // style={getListStyle(snapshot.isDraggingOver)}
+                                    >
+                                        <ul>{lyricElements}</ul>
+                                    </div>
+                                )
+                            }}
+                        </Droppable>
+                    </DragDropContext>
                     {isHover &&
                         <button
                             ref={addButton}
