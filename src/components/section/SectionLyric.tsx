@@ -1,7 +1,7 @@
-import {useEffect, useState, useRef, LegacyRef} from "react";
+import {LegacyRef, useRef} from "react";
 // @ts-ignore
 import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
-import {moveIconSvg, deleteIconSvg, diceIconSvg} from "../../assets/svg/svg";
+import {deleteIconSvg, diceIconSvg, moveIconSvg} from "../../assets/svg/svg";
 import {AppData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {getNewKey} from "../../utils/utils";
@@ -22,14 +22,21 @@ export default function SectionLyric(props: {
     function handleChange(e: any, lyricId: string) {
         console.log(`change section ${sectionIndex} lyric ${index}`)
         setAppData((prevAppData: AppData) => {
-            prevAppData.sections[sectionIndex].lyrics[index] = {
-                ...prevAppData.sections[sectionIndex].lyrics[index],
-                value: e.target.value
-            };
-            prevAppData.sections[sectionIndex] = {...prevAppData.sections[sectionIndex], lyrics: prevAppData.sections[sectionIndex].lyrics}
+            const newLyrics = [...prevAppData.sections[sectionIndex].lyrics].map(lyr => {
+                console.log(lyr.id)
+                if (lyr.id === lyricId) {
+                    return {id: getNewKey(), value: e.target.value}
+                } else {
+                    return lyr
+                }
+            })
 
-            return {...prevAppData, sections: prevAppData.sections};
+            prevAppData.sections[sectionIndex] = {...prevAppData.sections[sectionIndex], lyrics: newLyrics}
+            const newSections = [...prevAppData.sections]
+
+            return {...prevAppData, sections: newSections};
         })
+        console.log(appData)
     }
 
     async function handleRandom(e: any) {
