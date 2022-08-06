@@ -1,23 +1,18 @@
+import {getNewKey} from "./utils";
+
 export function getLyric(syllableCount: number) {
   return fetchLyric().then((all) => {
     const raw = all.replace(new RegExp("^[^A-z]|[^A-z]$|[.,]"), "").split(" ");
 
     let result = {
-      lyric: "",
+      value: "",
       syllableCount: 0,
+      id: ""
     };
 
     return processLyric(syllableCount, raw, result);
   });
 }
-//
-// export function getLyricSync(syllableCount: number) {
-//   async function asyncWrapper() {
-//     return getLyric(syllableCount);
-//   }
-//
-//   return asyncWrapper();
-// }
 
 function fetchLyric() {
   return fetch("https://hipsum.co/api/?type=hipster-centric&sentences=1")
@@ -36,10 +31,11 @@ function processLyric(syllableCount: number, raw: string[], result: any) {
   for (let index = 0; index < raw.length; index++) {
     if (result.syllableCount < 8) {
       result = {
-        lyric: result.lyric ? result.lyric + " " + raw[index] : raw[index],
+        value: result.value ? result.value + " " + raw[index] : raw[index],
         syllableCount: result.syllableCount
           ? result.syllableCount + getSyllableCount(raw[index])
           : getSyllableCount(raw[index]),
+        id: getNewKey()
       };
     } else if ((result.syllableCount = syllableCount)) {
       return result;
@@ -64,7 +60,7 @@ export function getSyllableCount(word: string) {
     ) {
       numSyllables--;
     }
-    // if the syllable's character is a vowel. Then it stops and count as a syllable.
+    // if the syllable's character is a vowel. Then it stops and counts as a syllable.
     if (newSyllable && vowels.indexOf(cArray[i].toLowerCase()) >= 0) {
       newSyllable = false;
       numSyllables++;

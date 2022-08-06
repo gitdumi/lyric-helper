@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import SectionLyric from "./SectionLyric";
 import {addIconSvg, copyIconSvg, deleteIconSvg, moveIconSvg} from "../../assets/svg/svg";
-import {AppData, SectionData} from "../../utils/interfaces";
+import {AppData, Lyric, SectionData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {getLyric} from "../../utils/hipster";
 
@@ -10,7 +10,8 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     const {sectionIndex, sectionId, handleDuplicate, handleDelete} = props;
     const sectionData = appData.sections[sectionIndex];
     const {lyrics, count} = sectionData;
-    const [randomLyric, setRandomLyric] = useState('');
+    // @ts-ignore
+    const [randomLyric, setRandomLyric] = useState<Lyric>(null);
 
     const addButton = useRef(null);
 
@@ -27,7 +28,9 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     }, [randomLyric])
 
     function updateRandomLyric() {
-        getLyric((appData.config.selectedSylCount)).then(result => setRandomLyric(result.lyric))
+        getLyric((appData.config.selectedSylCount)).then(result => {
+            setRandomLyric(result)
+        })
     }
 
     const lyricElements = lyrics.map((text: string, index: number) => {
@@ -73,9 +76,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                         onClick={async (e) => {
                             e.stopPropagation();
                             e.nativeEvent.stopImmediatePropagation();
-                            console.log(e)
-
-                            console.log("parent click");
                             updateRandomLyric()
                         }}
                     >

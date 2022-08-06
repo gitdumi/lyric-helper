@@ -10,7 +10,7 @@ const initialData: AppData = {
             id: getNewKey(),
             name: 'Verse',
             color: '#1adebb',
-            lyrics: ["Roll the dice!"],
+            lyrics: [{id: getNewKey(), value:"Roll the dice!"}],
             count: 0,
         },
     ],
@@ -25,7 +25,6 @@ const AppContext = createContext(initialData);
 export const AppContextProvider = ({children}: any) => {
     const [appData, setAppData] = useState<AppData>(initialData);
 
-    console.log('appcontextprovider was here')
     return (
         // @ts-ignore
         <AppContext.Provider value={{appData, setAppData}}>

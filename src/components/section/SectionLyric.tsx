@@ -4,6 +4,7 @@ import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
 import {moveIconSvg, deleteIconSvg, diceIconSvg} from "../../assets/svg/svg";
 import {AppData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
+import {getNewKey} from "../../utils/utils";
 
 export default function SectionLyric(props: {
     index: number;
@@ -12,24 +13,20 @@ export default function SectionLyric(props: {
     value: string;
 }) {
     const {appData, setAppData} = useAppData();
-    const {index, sectionIndex, lyricId} = props;
-    const value = appData.sections[sectionIndex].lyrics[index];
+    const {index, sectionIndex} = props;
+    const {value, id} = appData.sections[sectionIndex].lyrics[index];
 
     const randomButton = useRef() as LegacyRef<HTMLButtonElement>;
     const inputField = useRef() as LegacyRef<HTMLInputElement>;
 
-    function handleChange(e: any) {
+    function handleChange(e: any, lyricId: string) {
         console.log(`change section ${sectionIndex} lyric ${index}`)
         setAppData((prevAppData: AppData) => {
-            console.log(sectionIndex)
-            console.log(index)
-            console.log(prevAppData.sections[0].lyrics)
-            console.log(prevAppData.sections[1].lyrics)
-                prevAppData.sections[sectionIndex].lyrics[index] = e.target.value;
-            // prevAppData.sections[sectionIndex] = {...prevAppData.sections[sectionIndex], lyrics: prevAppData.sections[sectionIndex].lyrics}
-            // console.log(prevAppData.sections)
-            console.log(prevAppData.sections[0].lyrics)
-            console.log(prevAppData.sections[1].lyrics)
+            prevAppData.sections[sectionIndex].lyrics[index] = {
+                ...prevAppData.sections[sectionIndex].lyrics[index],
+                value: e.target.value
+            };
+            prevAppData.sections[sectionIndex] = {...prevAppData.sections[sectionIndex], lyrics: prevAppData.sections[sectionIndex].lyrics}
 
             return {...prevAppData, sections: prevAppData.sections};
         })
@@ -43,7 +40,7 @@ export default function SectionLyric(props: {
         inputField.current.value = "loading...";
         const result = await getLyric();
         setAppData((prevAppData: AppData) => {
-            prevAppData.sections[sectionIndex].lyrics[index] = result.lyric;
+            prevAppData.sections[sectionIndex].lyrics[index] = result;
             return {...prevAppData, sections: prevAppData.sections};
         })
         //@ts-ignore
@@ -53,7 +50,6 @@ export default function SectionLyric(props: {
     const handleDelete = (event: any, index: number) => {
         event.preventDefault();
         const updatedLyrics = appData.sections[sectionIndex].lyrics.filter((lyr: object, i: number) => {
-            console.log(lyr, i);
             return i != index;
         });
         setAppData((prev: AppData) => {
@@ -75,7 +71,6 @@ export default function SectionLyric(props: {
                     await handleRandom(e);
                 }}
                 ref={randomButton}
-                // style={lyricStyle}
             >
                 {diceIconSvg}
             </button>
@@ -84,11 +79,10 @@ export default function SectionLyric(props: {
                 value={value}
                 ref={inputField}
                 onChange={(e) => {
-                    handleChange(e);
+                    handleChange(e, id);
                 }}
-                // style={lyricStyle}
+                style={lyricStyle}
                 maxLength={70}
-                style={{width: `${value.length / 2.5}rem`}}
             />
             <div className="section-lyric--actions">
                 <div className="section-lyric--actions__drag svg-button">

@@ -18,7 +18,7 @@ export default function LyricHelperMain() {
             id: getNewKey(),
             name: 'Verse',
             color: '#1adebb',
-            lyrics: ['Roll the dice!'],
+            lyrics: [{id: getNewKey(), value: 'Roll the dice!'}],
             count: 0
         }
         setNewSection(newData)
@@ -29,7 +29,6 @@ export default function LyricHelperMain() {
         event.preventDefault();
         let duplicate: SectionData = {...appData.sections[sectionIndex]};
         duplicate.id = getNewKey();
-        console.log(duplicate);
         setNewSection(duplicate);
     }
 
@@ -37,9 +36,7 @@ export default function LyricHelperMain() {
         event.preventDefault();
         event.stopPropagation();
         setAppData((prev: AppData) => {
-            console.log('sections before delete',prev.sections)
             prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId)
-            console.log('sections after delete',prev.sections)
             return {...prev, sections: prev.sections}
         })
     }
