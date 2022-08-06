@@ -1,4 +1,4 @@
-import {LegacyRef, useRef} from "react";
+import {LegacyRef, useRef, useState} from "react";
 // @ts-ignore
 import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
 import {deleteIconSvg, diceIconSvg, moveIconSvg} from "../../assets/svg/svg";
@@ -12,6 +12,7 @@ export default function SectionLyric(props: {
     lyricId: string;
     value: string;
 }) {
+    const [isHover, setIsHover] = useState(false);
     const {appData, setAppData} = useAppData();
     const {index, sectionIndex} = props;
     const {value, id} = appData.sections[sectionIndex].lyrics[index];
@@ -67,20 +68,21 @@ export default function SectionLyric(props: {
 
     const lyricStyle = {
         width: `${value.length / 2.5}rem`,
+        filter: 'invert(0.99)'
     };
 
     return (
-        <div className="section-lyric">
-            <button
+        <div className="section-lyric" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+            {isHover && <button
                 className="section-lyric--actions__random svg-button"
-                id="random-lyric-button"
                 onClick={async (e) => {
                     await handleRandom(e);
                 }}
                 ref={randomButton}
             >
                 {diceIconSvg}
-            </button>
+            </button>}
+
             <input
                 type="text"
                 value={value}
@@ -88,24 +90,25 @@ export default function SectionLyric(props: {
                 onChange={(e) => {
                     handleChange(e, id);
                 }}
-                style={lyricStyle}
+                style={isHover ? lyricStyle : {padding: '0.2rem 1.5rem', width: `${value.length / 2.5}rem + 2px`} }
                 maxLength={70}
             />
-            <div className="section-lyric--actions">
-                <div className="section-lyric--actions__drag svg-button">
-                    {moveIconSvg}
-                </div>
-                {/* <button>Duplicate</button> */}
-                <button
-                    className="section-lyric--actions__delete svg-button"
-                    onClick={(e) => {
-                        handleDelete(e, index)
-                        e.stopPropagation();
-                    }}
-                >
-                    {deleteIconSvg}
-                </button>
-            </div>
+            {isHover &&
+                <div className="section-lyric--actions">
+                    <div className="section-lyric--actions__drag svg-button">
+                        {moveIconSvg}
+                    </div>
+                    {/* <button>Duplicate</button> */}
+                    <button
+                        className="section-lyric--actions__delete svg-button"
+                        onClick={(e) => {
+                            handleDelete(e, index)
+                            e.stopPropagation();
+                        }}
+                    >
+                        {deleteIconSvg}
+                    </button>
+                </div>}
         </div>
     );
 }

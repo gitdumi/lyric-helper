@@ -1,7 +1,5 @@
 import {useContext, createContext, useState} from "react";
 import {AppData} from "./utils/interfaces";
-import App from "./App";
-import app from "./App";
 import {getNewKey} from "./utils/utils";
 
 const initialData: AppData = {
@@ -10,7 +8,7 @@ const initialData: AppData = {
             id: getNewKey(),
             name: 'Verse',
             color: '#1adebb',
-            lyrics: [{id: getNewKey(), value:"Roll the dice!"}],
+            lyrics: [{id: getNewKey(), value:"To be or not to be"}],
             count: 0,
         },
     ],

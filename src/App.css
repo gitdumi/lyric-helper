@@ -1,135 +1,162 @@
 .section-card {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  margin: 0;
-  width: auto;
-  height: 100%;
-  border: solid 2px var(--accent-color);
-  box-shadow: 5px 5px 0px var(--accent-color);
-  margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0;
+    width: auto;
+    height: 100%;
+    border: solid 2px var(--accent-color);
+    box-shadow: 5px 5px 0px var(--accent-color);
+    margin-top: 1rem;
 }
 
 .section-card--title {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0.3rem 1rem;
-  color: var(--accent-color);
-  border: none;
-  width: fit-content;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0.3rem 1rem;
+    color: var(--accent-color);
+    border: none;
+    width: fit-content;
 }
+
 input.section-card--title:focus {
-  outline: none;
+    outline: none;
 }
 
 .section-card--content {
-  display: flex;
-  width: 100%;
-  border: none;
+    display: flex;
+    width: 100%;
+    border: none;
 }
 
 .section-card--content__lyrics {
-  min-width: 20rem;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  background-color: var(--light-background);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: scroll;
+    min-width: 20rem;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: var(--light-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
 }
+
 .section-card--content__lyrics ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  list-style-type: none;
-  background-color: var(--accent-color);
-  color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    list-style-type: none;
+    background-color: var(--accent-color);
+    color: var(--text-color);
 }
-.section-card--content__add{
-  margin: 0;
-  padding: 0;
-  display: flex;
+
+.section-card--content__add {
+    margin: 0;
+    padding: 0;
+    display: flex;
 }
+
 .section-card--actions {
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-end;
-  padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
 }
 
 .section-lyric {
-  display: flex;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .section-lyric input {
-  min-width: 200px;
-  max-width: 100%;
-  width: min-content;
-  justify-self: flex-start;
-  border: none;
-  background-color: transparent;
+    min-width: 200px;
+    max-width: 100%;
+    width: min-content;
+    justify-self: flex-start;
+    border: none;
+    background-color: transparent;
 }
+
 .section-lyric input:focus {
-  outline: none;
+    outline: none;
 }
 
 .section-lyric--actions {
-  margin-left: auto;
-  display: flex;
-  align-items: flex-start;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
 }
-.section-lyric--actions__random {
-  padding: 0;
-  margin: 0;
-  align-self: center;
-}
-#lyric-dice-icon {
+
+.section-lyric--actions #lyric-dice-icon,
+.section-lyric--actions #lyric-move-icon,
+.section-lyric--actions #lyric-delete-icon {
+    padding: 0;
+    display: flex;
+    align-self: center;
 }
 
 .svg-button {
-  border: none;
-  background-color: transparent;
-  fill: transparent;
-  padding: 0.5rem;
-  cursor: pointer;
+    border: none;
+    background-color: transparent;
+    fill: transparent;
+    margin: 0.1rem 0.2rem;
+    padding: 0;
+    cursor: pointer;
 }
-.svg-button svg:hover{
-  filter: invert(0.9)
+
+.svg-button svg:hover {
+    filter: invert(0.9)
 }
 
 #add-icon svg:hover {
-  /*filter: invert(0.5);*/
-  fill: var(--accent-color);
-  filter: none;
-  /*padding: 0;*/
+    /*filter: invert(0.5);*/
+    fill: var(--accent-color);
+    filter: none;
+    /*padding: 0;*/
 
-  /*stroke: var(--accent-color);*/
-  transition: var(--transition-speed);
+    /*stroke: var(--accent-color);*/
+    transition: var(--transition-speed);
 }
 
 #lyric-dice-icon svg:hover {
-  /*fill: var(--accent-color);*/
-  transition: var(--transition-speed);
-  /*filter: none;*/
-  /*stroke: none;*/
+    /*fill: var(--accent-color);*/
+    transition: var(--transition-speed);
+    /*filter: none;*/
+    /*stroke: none;*/
 }
+
 .svg-button svg {
-  height: 1.5rem;
-  width: auto;
+    height: 1rem;
+    width: auto;
 }
+
+.section-card--actions svg, #add-icon svg {
+    height: 1.3rem;
+}
+
+/*SVG color default*/
 .svg-button svg path,
 .svg-button svg line {
-  stroke: var(--black);
-  transition: var(--transition-speed);
+    stroke: var(--black);
+    /*stroke: var(--text-color);*/
+    transition: var(--transition-speed);
 }
+
 #lyric-dice-icon svg path {
-  fill: var(--black);
+    fill: var(--black);
+}
+
+.section-lyric .svg-button svg path,
+.section-lyric .svg-button svg line {
+    stroke: var(--text-color);
+    transition: var(--transition-speed);
+}
+
+.section-lyric #lyric-dice-icon svg path {
+    fill: var(--text-color);
 }
