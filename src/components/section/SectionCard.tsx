@@ -88,7 +88,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                         >
                             <SectionLyric
                                 key={`SL-${lyric.id}`}
-                                lyricId={`SL-${lyric.id}`}
                                 sectionIndex={sectionIndex}
                                 index={index}
                                 value={lyric.value}

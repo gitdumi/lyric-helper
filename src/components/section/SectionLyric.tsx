@@ -9,7 +9,6 @@ import {getNewKey} from "../../utils/utils";
 export default function SectionLyric(props: {
     index: number;
     sectionIndex: number;
-    lyricId: string;
     value: string;
 }) {
     const {appData, setAppData} = useAppData();

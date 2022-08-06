@@ -43,6 +43,7 @@
     /*overflow: scroll;*/
 }
 
+/*For full lyric width*/
 .draggable-lyric,.droppableLyric  {
     width: 100%;
     transition: var(--transition-speed)

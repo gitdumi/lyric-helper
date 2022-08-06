@@ -81,7 +81,7 @@ export default function LyricHelperMain() {
     // });
 
     const sectionComponents = appData.sections.map((section: SectionData, index: number) => (
-        <Draggable key={section.id} draggableId={`SEC-${section.id}`} index={index}>
+        <Draggable key={section.id} draggableId={section.id} index={index}>
             {(provided, snapshot) => {
                 return (
                     <div
