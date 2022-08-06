@@ -4,6 +4,7 @@ import SectionCard from "./section/SectionCard";
 import React, {useEffect, useState} from "react";
 import {useAddSection} from "./sectionHooks";
 import {getNewKey} from "../utils/utils";
+import {addIconSvg} from "../assets/svg/svg";
 
 export default function LyricHelperMain() {
     const {appData, setAppData} = useAppData();
@@ -55,11 +56,11 @@ export default function LyricHelperMain() {
 
     return (
         <div className="main">
-            <button onClick={(e) => {
+            <button id="add-section" onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 handleAddSection(e);
-            }}>Add Section
+            }}>{addIconSvg}section
             </button>
             {sectionComponents}
         </div>

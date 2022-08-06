@@ -12,6 +12,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     const {lyrics, count} = sectionData;
     // @ts-ignore
     const [randomLyric, setRandomLyric] = useState<Lyric>(null);
+    const [isHover, setIsHover] = useState(false);
 
     const addButton = useRef(null);
 
@@ -55,7 +56,8 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     }
 
     return (
-        <div className="section-card">
+        <div className="section-card" onMouseEnter={() => setIsHover(true)}  onMouseLeave={() => setIsHover(false)}>
+
             <input
                 className="section-card--title"
                 type="text"
@@ -82,16 +84,17 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                         {addIconSvg}
                     </button>
                 </div>
-
-                <div className="section-card--actions">
-                    <button className="section-delete svg-button"
-                            onClick={(event => {
-                                handleDelete(event, sectionId)
-                            })}>{deleteIconSvg}</button>
-                    <button className="section-duplicate svg-button"
-                            onClick={(e) => handleDuplicate(e, sectionIndex)}>{copyIconSvg}</button>
-                    <button className="section-move svg-button">{moveIconSvg}</button>
-                </div>
+                {isHover &&
+                    <div className="section-card--actions">
+                        <button className="section-delete svg-button"
+                                onClick={(event => {
+                                    handleDelete(event, sectionId)
+                                })}>{deleteIconSvg}</button>
+                        <button className="section-duplicate svg-button"
+                                onClick={(e) => handleDuplicate(e, sectionIndex)}>{copyIconSvg}</button>
+                        <button className="section-move svg-button">{moveIconSvg}</button>
+                    </div>
+                }
             </div>
         </div>
     );

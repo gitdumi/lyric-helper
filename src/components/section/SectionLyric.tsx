@@ -67,7 +67,6 @@ export default function SectionLyric(props: {
     }
 
     const lyricStyle = {
-        width: `${value.length / 2.5}rem`,
         filter: 'invert(0.99)'
     };
 
@@ -90,7 +89,7 @@ export default function SectionLyric(props: {
                 onChange={(e) => {
                     handleChange(e, id);
                 }}
-                style={isHover ? lyricStyle : {padding: '0.2rem 1.5rem', width: `${value.length / 2.5}rem + 2px`} }
+                style={isHover ? lyricStyle : {padding: '0.2rem 1.5rem'} }
                 maxLength={70}
             />
             {isHover &&
