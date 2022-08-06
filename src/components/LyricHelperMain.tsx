@@ -19,7 +19,7 @@ export default function LyricHelperMain() {
             id: getNewKey(),
             name: 'Verse',
             color: '#1adebb',
-            lyrics: [{id: getNewKey(), value: 'Roll the dice!'}],
+            lyrics: [{id: getNewKey(), value: 'To be or not to be'}],
             count: 0
         }
         setNewSection(newData)

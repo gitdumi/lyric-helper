@@ -56,7 +56,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     }
 
     return (
-        <div className="section-card" onMouseEnter={() => setIsHover(true)}  onMouseLeave={() => setIsHover(false)}>
+        <div className="section-card" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
 
             <input
                 className="section-card--title"
@@ -72,17 +72,19 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
             <div className="section-card--content">
                 <div className="section-card--content__lyrics">
                     <ul>{lyricElements}</ul>
-                    <button
-                        ref={addButton}
-                        className="section-card--content__add svg-button"
-                        onClick={async (e) => {
-                            e.stopPropagation();
-                            e.nativeEvent.stopImmediatePropagation();
-                            updateRandomLyric()
-                        }}
-                    >
-                        {addIconSvg}
-                    </button>
+                    {isHover &&
+                        <button
+                            ref={addButton}
+                            className="section-card--content__add svg-button"
+                            onClick={async (e) => {
+                                e.stopPropagation();
+                                e.nativeEvent.stopImmediatePropagation();
+                                updateRandomLyric()
+                            }}
+                        >
+                            {addIconSvg}
+                        </button>
+                    }
                 </div>
                 {isHover &&
                     <div className="section-card--actions">
