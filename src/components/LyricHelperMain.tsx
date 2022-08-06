@@ -3,8 +3,9 @@ import {AppData, SectionData} from "../utils/interfaces";
 import SectionCard from "./section/SectionCard";
 import React, {useEffect, useState} from "react";
 import {useAddSection} from "./sectionHooks";
-import {getNewKey} from "../utils/utils";
+import {getNewKey, reorder} from "../utils/utils";
 import {addIconSvg} from "../assets/svg/svg";
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 
 export default function LyricHelperMain() {
     const {appData, setAppData} = useAppData();
@@ -42,27 +43,94 @@ export default function LyricHelperMain() {
         })
     }
 
-    const sectionComponents = appData.sections.map((section: SectionData, index: number) => {
-        return (
-            <SectionCard
-                key={`SC-${section.id}`}
-                sectionIndex={index}
-                sectionId={section.id}
-                handleDuplicate={handleDuplicateSection}
-                handleDelete={handleDeleteSection}
-            />
+
+    function onDragEnd(result: any) {
+        // dropped outside the list
+        if (!result.destination) {
+            return;
+        }
+
+        const items = reorder(
+            appData.sections,
+            result.source.index,
+            result.destination.index
         );
-    })
+
+        setAppData((prev: AppData) => ({
+            ...prev, sections: items
+        }));
+    }
+
+    // const getItemStyle = (isDragging, draggableStyle) => ({
+    //     // some basic styles to make the items look a bit nicer
+    //     userSelect: "none",
+    //     padding: grid * 2,
+    //     margin: `0 0 ${grid}px 0`,
+    //
+    //     // change background colour if dragging
+    //     background: isDragging ? "lightgreen" : "grey",
+    //
+    //     // styles we need to apply on draggables
+    //     ...draggableStyle
+    // });
+    //
+    // const getListStyle = isDraggingOver => ({
+    //     background: isDraggingOver ? "lightblue" : "lightgrey",
+    //     padding: grid,
+    //     width: 250
+    // });
+
+    const sectionComponents = appData.sections.map((section: SectionData, index: number) => (
+        <Draggable key={section.id} draggableId={section.id} index={index}>
+            {(provided, snapshot) => {
+                console.log({index, section})
+                return (
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        // style={getItemStyle(
+                        //     snapshot.isDragging,
+                        //     provided.draggableProps.style
+                        // )}
+                    >
+                        <SectionCard
+                            key={`SC-${section.id}`}
+                            sectionIndex={index}
+                            sectionId={section.id}
+                            handleDuplicate={handleDuplicateSection}
+                            handleDelete={handleDeleteSection}
+                        />
+                    </div>
+                )
+            }}
+        </Draggable>))
+
 
     return (
-        <div className="main">
-            <button id="add-section" onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleAddSection(e);
-            }}>{addIconSvg}section
-            </button>
-            {sectionComponents}
-        </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+            <div className="main">
+                <button id="add-section" onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleAddSection(e);
+                }}>{addIconSvg}section
+                </button>
+                <Droppable droppableId="droppable">
+                    {(provided, snapshot) => {
+                        console.log({provided})
+                        return (
+                            <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                // style={getListStyle(snapshot.isDraggingOver)}
+                            >
+                                {sectionComponents}
+                            </div>
+                        )
+                    }}
+                </Droppable>
+            </div>
+        </DragDropContext>
     )
 };

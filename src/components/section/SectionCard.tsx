@@ -57,7 +57,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
 
     return (
         <div className="section-card" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-
             <input
                 className="section-card--title"
                 type="text"
@@ -68,7 +67,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                 maxLength={100}
                 // style={{width: `${value.length / 2.5}rem`}}
             />
-            {/*<input type="text" className="section-card--title">{sectionData.name}</input>*/}
             <div className="section-card--content">
                 <div className="section-card--content__lyrics">
                     <ul>{lyricElements}</ul>

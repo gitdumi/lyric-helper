@@ -40,7 +40,7 @@ export default function SectionLyric(props: {
         console.log(appData)
     }
 
-    async function handleRandom(e: any) {
+    async function handleRandom(e: any, lyricId: string) {
         e.stopPropagation();
         // @ts-ignore
         randomButton.current.disabled = true;
@@ -48,7 +48,14 @@ export default function SectionLyric(props: {
         inputField.current.value = "loading...";
         const result = await getLyric();
         setAppData((prevAppData: AppData) => {
-            prevAppData.sections[sectionIndex].lyrics[index] = result;
+            const lyrics = prevAppData.sections[sectionIndex].lyrics.map(lyr => {
+                if (lyr.id===lyricId) {
+                    return lyr = result;
+                } else {
+                    return lyr
+                }
+            })
+            prevAppData.sections[sectionIndex].lyrics = lyrics;
             return {...prevAppData, sections: prevAppData.sections};
         })
         //@ts-ignore
@@ -75,7 +82,7 @@ export default function SectionLyric(props: {
             {isHover && <button
                 className="section-lyric--actions__random svg-button"
                 onClick={async (e) => {
-                    await handleRandom(e);
+                    await handleRandom(e, id);
                 }}
                 ref={randomButton}
             >
