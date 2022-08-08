@@ -4,8 +4,8 @@ import SectionCard from "./section/SectionCard";
 import React, {useEffect, useState} from "react";
 import {useAddSection} from "./sectionHooks";
 import {getNewKey, reorder} from "../utils/utils";
-import {addIconSvg} from "../assets/svg/svg";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
+import {AiOutlinePlusCircle} from "react-icons/all";
 
 export default function LyricHelperMain() {
     const {appData, setAppData} = useAppData();
@@ -87,7 +87,6 @@ export default function LyricHelperMain() {
                     <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
                         id="draggable-section"
                         // style={getItemStyle(
                         //     snapshot.isDragging,
@@ -95,6 +94,7 @@ export default function LyricHelperMain() {
                         // )}
                     >
                         <SectionCard
+                            provided={{...provided}}
                             key={`SC-${section.id}`}
                             sectionIndex={index}
                             sectionId={section.id}
@@ -114,7 +114,7 @@ export default function LyricHelperMain() {
                     e.preventDefault();
                     e.stopPropagation();
                     handleAddSection(e);
-                }}>{addIconSvg}section
+                }}><AiOutlinePlusCircle className="react-button"/>section
                 </button>
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => {
@@ -125,6 +125,7 @@ export default function LyricHelperMain() {
                                 // style={getListStyle(snapshot.isDraggingOver)}
                             >
                                 {sectionComponents}
+                                {provided.placeholder}
                             </div>
                         )
                     }}

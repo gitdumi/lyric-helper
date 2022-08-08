@@ -3,31 +3,40 @@
     flex-direction: column;
     align-items: center;
 }
+
 .section-card {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin: 0;
     width: auto;
     height: 100%;
     border: solid 2px var(--accent-color);
-    box-shadow: 5px 5px 0px var(--accent-color);
+    box-shadow: 5px 5px 0 var(--accent-color);
     margin-top: 1rem;
     background-color: var(--white);
+}
+
+.section-card--title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0.5rem;
 }
 
 .section-card--title input {
     font-size: 20px;
     font-weight: 600;
-    margin: 0.3rem 0.5rem;
     color: var(--accent-color);
     border: none;
     outline: none;
 }
 
+.section-card--actions {
+    display: flex;
+}
+
 .section-card--content {
     display: flex;
-    width: 100%;
     border: none;
 }
 
@@ -36,17 +45,11 @@
     width: 100%;
     height: 100%;
     padding: 0;
-    background-color: var(--light-background);
+    background-color: var(--accent-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     /*overflow: scroll;*/
-}
-
-/*For full lyric width*/
-.draggable-lyric,.droppableLyric  {
-    width: 100%;
-    transition: var(--transition-speed)
 }
 
 .section-card--content__lyrics ul {
@@ -64,26 +67,24 @@
 
 .section-card--content__add {
     margin: 0;
-    padding: 0;
+    padding: 0.2rem;
     display: flex;
 }
 
-.section-card--actions {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0;
+
+/*For full lyric width*/
+.draggable-lyric, .droppableLyric {
+    width: 100%;
+    transition: var(--transition-speed);
+    /*background-color: var(--accent-color);*/
+
 }
 
 .section-lyric {
     display: flex;
-    align-items: center;
-    width: 100%;
 }
 
 .section-lyric input {
-    min-width: 200px;
-    /*width: 100%;*/
     justify-self: flex-start;
     border: none;
     background-color: transparent;
@@ -96,67 +97,35 @@
     align-items: center;
 }
 
-.section-lyric--actions #lyric-dice-icon,
-.section-lyric--actions #lyric-move-icon,
-.section-lyric--actions #lyric-delete-icon {
-    padding: 0;
-    display: flex;
-    align-self: center;
-}
-
-.svg-button {
+.svg-wrapper {
     border: none;
     background-color: transparent;
-    fill: transparent;
-    margin: 0.1rem 0.2rem;
     padding: 0;
+    margin: 0;
+}
+
+.section-card--actions .react-button {
+    height: 1.5rem;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    align-items: center;
     cursor: pointer;
 }
-
-.svg-button svg:hover {
-    filter: invert(0.9)
+.react-button:hover {
+    filter: invert(1);
+    cursor: pointer;
 }
-
-#add-icon svg:hover {
-    fill: var(--accent-color);
-    filter: none;
-
-    transition: var(--transition-speed);
-}
-
-#lyric-dice-icon svg:hover {
-    transition: var(--transition-speed);
-}
-
-.svg-button svg {
+.section-lyric .react-button {
     height: 1rem;
     width: auto;
+    align-self: center;
+    margin: 0.3rem 0.5rem 0 0;
+    padding: 0;
 }
-
-.section-card--actions svg, #add-icon svg {
-    height: 1.3rem;
-}
-
-/*SVG color default*/
-.svg-button svg path,
-.svg-button svg line {
-    stroke: var(--black);
-    transition: var(--transition-speed);
-}
-
-#lyric-dice-icon svg path {
-    fill: var(--black);
-    transition: var(--transition-speed)
-}
-
-.section-lyric .svg-button svg path,
-.section-lyric .svg-button svg line {
-    stroke: var(--text-color);
-    transition: var(--transition-speed);
-}
-
-.section-lyric #lyric-dice-icon svg path {
-    fill: var(--text-color);
+.section-lyric input:hover {
+    /*transform: scale(1.1);*/
+    /*transition: transform var(--transition-speed) ease-out;*/
 }
 
 #add-section {
@@ -172,22 +141,21 @@
     justify-content: center;
     padding: 1rem 0 0 0;
     margin: 0;
-    /*align-items: center;*/
 }
+
 #add-section #add-icon svg {
     display: flex;
-    /*right: 20px;*/
     height: 1.5rem;
     width: auto;
     padding-right: 0.4rem;
 }
+
 #add-section #add-icon {
     display: flex;
 }
-#add-section #add-icon svg path {
-   stroke: var(--accent-color-contrast);
-}
+
 #add-section:hover {
-    color:var(--accent-color)
+    filter: invert(1);
+    cursor: pointer;
 }
 

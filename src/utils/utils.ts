@@ -13,7 +13,6 @@ export const getNewKey = () => {
     return makeid(8)
 }
 
-
 export function reorder(list: any, startIndex: number, endIndex: number) {
     const result = [...list];
     const [removed] = result.splice(startIndex, 1);

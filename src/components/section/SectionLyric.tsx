@@ -1,19 +1,20 @@
 import React, {LegacyRef, useRef, useState} from "react";
 // @ts-ignore
 import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
-import {deleteIconSvg, diceIconSvg, moveIconSvg} from "../../assets/svg/svg";
+import {deleteIconSvg, wandIconSvg, moveIconSvg} from "../../assets/svg/svg";
 import {AppData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
-import {getNewKey} from "../../utils/utils";
+import {AiOutlineCloseCircle, IoColorWandOutline} from "react-icons/all";
 
 export default function SectionLyric(props: {
     index: number;
     sectionIndex: number;
     value: string;
+    provided: any;
 }) {
     const {appData, setAppData} = useAppData();
     const [isHover, setIsHover] = useState(false);
-    const {index, sectionIndex} = props;
+    const {index, sectionIndex, provided} = props;
     const {value, id} = appData.sections[sectionIndex].lyrics[index];
 
     const randomButton = useRef() as LegacyRef<HTMLButtonElement>;
@@ -70,23 +71,26 @@ export default function SectionLyric(props: {
     }
 
     const hoverLyricStyle = {
-        filter: 'invert(0.99)',
         width: `${value.length}ch`
     };
-    const lyricStyle = {padding: '0.2rem 1.5rem', width: `${value.length}ch`}
+    const lyricStyle = {padding: '0.4rem 1.5rem', width: `${value.length}ch`}
 
     return (
-        <li className="section-lyric" onMouseEnter={() => setIsHover(true)} onMouseOver={() => setIsHover(true)}
+        <li {...provided.dragHandleProps} className="section-lyric" onMouseEnter={() => setIsHover(true)}
+            onMouseOver={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}>
-            {isHover && <button
-                className="section-lyric--actions__random svg-button"
-                onClick={async (e) => {
-                    await handleRandom(e);
-                }}
-                ref={randomButton}
-            >
-                {diceIconSvg}
-            </button>}
+
+            {isHover &&
+                <button
+                    className="section-lyric--actions__random svg-wrapper"
+                    onClick={async (e) => {
+                        await handleRandom(e);
+                    }}
+                    ref={randomButton}
+                >
+                    <IoColorWandOutline className="react-button" color='white'/>
+                </button>
+            }
 
             <input
                 type="text"
@@ -98,20 +102,21 @@ export default function SectionLyric(props: {
             />
             {isHover &&
                 <div className="section-lyric--actions">
-                    <div className="section-lyric--actions__drag svg-button">
-                        {moveIconSvg}
-                    </div>
+                    {/*<div  className="section-lyric--actions__drag svg-button">*/}
+                    {/*    {moveIconSvg}*/}
+                    {/*</div>*/}
                     {/* <button>Duplicate</button> */}
                     <button
-                        className="section-lyric--actions__delete svg-button"
+                        className="section-lyric--actions__delete svg-wrapper"
                         onClick={(e) => {
                             handleDelete(e, index)
                             e.stopPropagation();
                         }}
                     >
-                        {deleteIconSvg}
+                        <AiOutlineCloseCircle className="react-button" color={'white'}/>
                     </button>
-                </div>}
+                </div>
+            }
         </li>
     );
 }
