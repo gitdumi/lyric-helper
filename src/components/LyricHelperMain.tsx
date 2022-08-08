@@ -37,10 +37,15 @@ export default function LyricHelperMain() {
     function handleDeleteSection(event: any, sectionId: string) {
         // event.preventDefault();
         event.stopPropagation();
-        setAppData((prev: AppData) => {
-            prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId)
-            return {...prev, sections: prev.sections}
-        })
+        const container = event.currentTarget.closest(".section-card");
+        container.style.transition = "all 0.5s";
+        container.style.opacity = "0";
+        setTimeout(function() {
+            setAppData((prev: AppData) => {
+                prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId)
+                return {...prev, sections: prev.sections}
+            })
+        }, 500)
     }
 
 

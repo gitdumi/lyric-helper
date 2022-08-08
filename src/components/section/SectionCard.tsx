@@ -95,9 +95,9 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     });
 
     return (
-        <div className="section-card" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        <div className="section-card">
 
-            <div ref={provided.innerRef} {...provided.dragHandleProps} className="section-card--title">
+            <div ref={provided.innerRef} {...provided.dragHandleProps} className="section-card--title" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
                 <input
                     type="text"
                     value={sectionData.name}
@@ -120,17 +120,17 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                             addRandomLyric()
                         }}
                     >
-                        <AiOutlinePlusCircle color={sectionData.color} className="react-button"/>
+                        <AiOutlinePlusCircle color={isHover ? sectionData.color : 'transparent'} className="react-button"/>
                     </button>
                     <button className="section-card--content__delete svg-wrapper"
                             onClick={(event => {
                                 handleDelete(event, sectionId)
                             })}>
-                        <AiOutlineCloseCircle className="react-button" color={appData.sections[sectionIndex].color}/>
+                        <AiOutlineCloseCircle className="react-button" color={isHover ? sectionData.color : 'transparent'}/>
                     </button>
                     <button className="section-duplicate svg-wrapper"
                             onClick={(e) => handleDuplicate(e, sectionIndex)}>
-                        <IoSyncCircleOutline className="react-button" color={sectionData.color}/>
+                        <IoSyncCircleOutline className="react-button" color={isHover ? sectionData.color : 'transparent'}/>
                     </button>
                 </div>
                 {/*}*/}

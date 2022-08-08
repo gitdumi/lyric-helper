@@ -59,10 +59,16 @@ export default function SectionLyric(props: {
         const updatedLyrics = appData.sections[sectionIndex].lyrics.filter((lyr: object, i: number) => {
             return i != index;
         });
-        setAppData((prev: AppData) => {
-            prev.sections[sectionIndex].lyrics = updatedLyrics;
-            return {...prev, sections: prev.sections};
-        })
+        const container = event.currentTarget.closest(".section-lyric");
+        container.style.transition = "all 0.5s";
+        container.style.opacity = "0";
+        setTimeout(function() {
+            setAppData((prev: AppData) => {
+                prev.sections[sectionIndex].lyrics = updatedLyrics;
+                return {...prev, sections: prev.sections};
+            })
+        }, 300)
+
     }
 
     return (
