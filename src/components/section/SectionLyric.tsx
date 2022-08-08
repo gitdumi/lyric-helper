@@ -39,9 +39,7 @@ export default function SectionLyric(props: {
 
     async function handleRandom(e: any) {
         e.stopPropagation();
-        // @ts-ignore
-        randomButton.current.disabled = true;
-        // @ts-ignore
+        //@ts-ignore
         inputField.current.value = "loading...";
         const result = await getLyric();
         setAppData((prevAppData: AppData) => {
@@ -54,8 +52,6 @@ export default function SectionLyric(props: {
             });
             return {...prevAppData, sections: prevAppData.sections};
         })
-        // @ts-ignore
-        randomButton.current.disabled = false;
     }
 
     const handleDelete = (event: any, index: number) => {
@@ -69,53 +65,41 @@ export default function SectionLyric(props: {
         })
     }
 
-    const hoverLyricStyle = {
-        width: `${value.length}ch`
-    };
-    const lyricStyle = {padding: '0.4rem 1.5rem', width: `${value.length}ch`}
-
     return (
         <li {...provided.dragHandleProps} className="section-lyric" onMouseEnter={() => setIsHover(true)}
             onMouseOver={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}>
 
-            {isHover &&
-                <button
-                    className="section-lyric--actions__random svg-wrapper"
-                    onClick={async (e) => {
-                        await handleRandom(e);
-                    }}
-                    ref={randomButton}
-                >
-                    <IoColorWandOutline className="react-button" color='white'/>
-                </button>
-            }
+            <button
+                className="section-lyric--actions__random svg-wrapper"
+                onClick={async (e) => {
+                    await handleRandom(e);
+                }}
+                ref={randomButton}
+            >
+                <IoColorWandOutline className="react-button" color={isHover? 'black':'transparent'}/>
+            </button>
 
             <input
                 type="text"
                 value={value}
                 ref={inputField}
                 onChange={handleChange}
-                style={isHover ? hoverLyricStyle : lyricStyle}
+                style={{width: value.length + 'ch'}}
                 maxLength={70}
+                color={'white'}
             />
-            {isHover &&
-                <div className="section-lyric--actions">
-                    {/*<div  className="section-lyric--actions__drag svg-button">*/}
-                    {/*    {moveIconSvg}*/}
-                    {/*</div>*/}
-                    {/* <button>Duplicate</button> */}
-                    <button
-                        className="section-lyric--actions__delete svg-wrapper"
-                        onClick={(e) => {
-                            handleDelete(e, index)
-                            e.stopPropagation();
-                        }}
-                    >
-                        <AiOutlineCloseCircle className="react-button" color={'white'}/>
-                    </button>
-                </div>
-            }
+            <div className={`section-lyric--actions`} >
+                <button
+                    className="section-lyric--actions__delete svg-wrapper"
+                    onClick={(e) => {
+                        handleDelete(e, index)
+                        e.stopPropagation();
+                    }}
+                >
+                    <AiOutlineCloseCircle className="react-button" color={isHover? 'black':'transparent'}/>
+                </button>
+            </div>
         </li>
     );
 }

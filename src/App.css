@@ -4,6 +4,10 @@
     align-items: center;
 }
 
+.disabled {
+    cursor: default;
+}
+
 .section-card {
     display: flex;
     flex-direction: column;
@@ -49,7 +53,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*overflow: scroll;*/
+    overflow: scroll;
 }
 
 .section-card--content__lyrics ul {
@@ -76,19 +80,22 @@
 .draggable-lyric, .droppableLyric {
     width: 100%;
     transition: var(--transition-speed);
-    /*background-color: var(--accent-color);*/
-
 }
 
 .section-lyric {
     display: flex;
+    background-color: transparent;
 }
 
 .section-lyric input {
     justify-self: flex-start;
-    border: none;
     background-color: transparent;
+    border: none;
     outline: none;
+}
+
+.section-lyric:hover {
+    filter: invert(1)
 }
 
 .section-lyric--actions {
@@ -112,6 +119,7 @@
     align-items: center;
     cursor: pointer;
 }
+
 .react-button:hover {
     filter: invert(1);
     cursor: pointer;
@@ -122,10 +130,6 @@
     align-self: center;
     margin: 0.3rem 0.5rem 0 0;
     padding: 0;
-}
-.section-lyric input:hover {
-    /*transform: scale(1.1);*/
-    /*transition: transform var(--transition-speed) ease-out;*/
 }
 
 #add-section {
