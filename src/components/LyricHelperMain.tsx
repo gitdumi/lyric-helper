@@ -6,6 +6,7 @@ import {useAddSection} from "./sectionHooks";
 import {getNewKey, reorder} from "../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlinePlusCircle} from "react-icons/all";
+import {animationTimeout} from "../utils/constants";
 
 export default function LyricHelperMain() {
     const {appData, setAppData} = useAppData();
@@ -45,7 +46,7 @@ export default function LyricHelperMain() {
                 prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId)
                 return {...prev, sections: prev.sections}
             })
-        }, 500)
+        }, animationTimeout)
     }
 
 

@@ -4,6 +4,7 @@ import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
 import {AppData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {AiOutlineCloseCircle, IoColorWandOutline} from "react-icons/all";
+import {animationTimeout, maxChars} from "../../utils/constants";
 
 export default function SectionLyric(props: {
     index: number;
@@ -67,7 +68,7 @@ export default function SectionLyric(props: {
                 prev.sections[sectionIndex].lyrics = updatedLyrics;
                 return {...prev, sections: prev.sections};
             })
-        }, 300)
+        }, animationTimeout)
 
     }
 
@@ -92,10 +93,10 @@ export default function SectionLyric(props: {
                 ref={inputField}
                 onChange={handleChange}
                 style={{width: value.length + 'ch'}}
-                maxLength={70}
-                color={'white'}
+                maxLength={maxChars}
             />
             <div className={`section-lyric--actions`} >
+                <div style={{width: "2rem"}}/>
                 <button
                     className="section-lyric--actions__delete svg-wrapper"
                     onClick={(e) => {

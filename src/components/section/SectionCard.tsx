@@ -6,6 +6,7 @@ import {getLyric} from "../../utils/hipster";
 import {reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlineCloseCircle, AiOutlinePlusCircle, IoSyncCircleOutline} from "react-icons/all";
+import {maxChars} from "../../utils/constants";
 
 
 export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function, provided: any }) {
@@ -104,12 +105,13 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                     // ref={inputField}
                     onChange={handleChange}
                     // style={lyricStyle}
-                    maxLength={100}
-                    style={{width: `${sectionData.name.length + 1}ch`}}
+                    maxLength={maxChars/2}
+                    style={{width: `${sectionData.name.length}ch`}}
                 />
                 {/*{isHover &&*/}
 
                 <div className="section-card--actions">
+                    <div style={{width: "2rem"}}/>
                     <button
                         ref={addButton}
                         className="section-card--content__add svg-wrapper"
