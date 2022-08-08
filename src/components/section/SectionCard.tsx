@@ -106,7 +106,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                     onChange={handleChange}
                     // style={lyricStyle}
                     maxLength={maxChars/2}
-                    style={{width: `${sectionData.name.length}ch`}}
+                    style={{width: `${sectionData.name.length + 1}ch`}}
                 />
                 {/*{isHover &&*/}
 
