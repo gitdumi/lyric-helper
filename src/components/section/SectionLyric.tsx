@@ -1,7 +1,6 @@
 import React, {LegacyRef, useRef, useState} from "react";
 // @ts-ignore
 import {getLyric, getSyllableCount} from "../../utils/hipster.ts";
-import {deleteIconSvg, wandIconSvg, moveIconSvg} from "../../assets/svg/svg";
 import {AppData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {AiOutlineCloseCircle, IoColorWandOutline} from "react-icons/all";

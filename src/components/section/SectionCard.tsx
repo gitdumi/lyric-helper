@@ -1,13 +1,11 @@
-import React, {ProviderProps, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import SectionLyric from "./SectionLyric";
-import {addIconSvg, copyIconSvg, deleteIconSvg, moveIconSvg} from "../../assets/svg/svg";
 import {AppData, Lyric, SectionData} from "../../utils/interfaces";
 import {useAppData} from "../../AppContext";
 import {getLyric} from "../../utils/hipster";
 import {reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlineCloseCircle, AiOutlinePlusCircle, IoSyncCircleOutline} from "react-icons/all";
-import {IconContext} from "react-icons";
 
 
 export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function, provided: any }) {
