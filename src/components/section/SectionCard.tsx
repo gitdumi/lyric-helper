@@ -6,7 +6,8 @@ import {getLyric} from "../../utils/hipster";
 import {reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlineCloseCircle, AiOutlinePlusCircle, IoSyncCircleOutline} from "react-icons/all";
-import {maxChars} from "../../utils/constants";
+import {MAX_CHARS, SECTION_COLORS} from "../../utils/constants";
+import {GithubPicker} from "react-color";
 
 
 export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function, provided: any }) {
@@ -16,6 +17,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     const {lyrics, count} = sectionData;
     // @ts-ignore
     const [isHover, setIsHover] = useState(false);
+    const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
 
     const addButton = useRef(null);
 
@@ -27,6 +29,20 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
             prevAppData.sections[sectionIndex].name = e.target.value;
             return {...prevAppData, sections: prevAppData.sections};
         })
+    }
+
+    function handleColorChange(color: any, event: any) {
+        setAppData((prev: AppData) => {
+            console.log({color, event})
+            const sections = [...prev.sections];
+            sections[sectionIndex].color = color.hex;
+            return {...prev, sections: sections}
+        })
+        setIsHoverColorPicker(false)
+    }
+
+    function toggleColorPicker() {
+        setIsHoverColorPicker(prev => !prev);
     }
 
     function addRandomLyric() {
@@ -96,22 +112,27 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     });
 
     return (
-        <div className="section-card">
+        <div className="section-card" style={{backgroundColor: sectionData.color, border: 'solid 2px ' + sectionData.color,
+            boxShadow: '5px 5px 0 ' + sectionData.color}}>
 
-            <div ref={provided.innerRef} {...provided.dragHandleProps} className="section-card--title" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+            <div ref={provided.innerRef} {...provided.dragHandleProps} className="section-card--title"
+                 onMouseEnter={() => setIsHover(true)}
+                 onMouseLeave={() => setIsHover(false)}
+            >
+
                 <input
                     type="text"
                     value={sectionData.name}
                     // ref={inputField}
                     onChange={handleChange}
                     // style={lyricStyle}
-                    maxLength={maxChars/2}
-                    style={{width: `${sectionData.name.length + 1}ch`}}
+                    maxLength={MAX_CHARS / 2}
+                    style={{width: `${sectionData.name.length + 1}ch`, color: sectionData.color}}
                 />
-                {/*{isHover &&*/}
 
                 <div className="section-card--actions">
                     <div style={{width: "2rem"}}/>
+
                     <button
                         ref={addButton}
                         className="section-card--content__add svg-wrapper"
@@ -122,24 +143,32 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                             addRandomLyric()
                         }}
                     >
-                        <AiOutlinePlusCircle color={isHover ? sectionData.color : 'transparent'} className="react-button"/>
+                        <AiOutlinePlusCircle color={isHover ? sectionData.color : 'transparent'}
+                                             className="react-button"/>
                     </button>
                     <button className="section-card--content__delete svg-wrapper"
                             onClick={(event => {
                                 handleDelete(event, sectionId)
                             })}>
-                        <AiOutlineCloseCircle className="react-button" color={isHover ? sectionData.color : 'transparent'}/>
+                        <AiOutlineCloseCircle className="react-button"
+                                              color={isHover ? sectionData.color : 'transparent'}/>
                     </button>
                     <button className="section-duplicate svg-wrapper"
                             onClick={(e) => handleDuplicate(e, sectionIndex)}>
-                        <IoSyncCircleOutline className="react-button" color={isHover ? sectionData.color : 'transparent'}/>
+                        <IoSyncCircleOutline className="react-button"
+                                             color={isHover ? sectionData.color : 'transparent'}/>
                     </button>
+
+                    <div className="section-card--actions__color-picker" style={{backgroundColor: sectionData.color}} onClick={toggleColorPicker}>
+                    </div>
                 </div>
-                {/*}*/}
             </div>
+            {isHoverColorPicker &&
+                <GithubPicker className="color-picker" width="50px" triangle={"top-right"} colors={SECTION_COLORS} onChangeComplete={handleColorChange}/>
+            }
 
             <div className="section-card--content">
-                <div className="section-card--content__lyrics">
+                <div className="section-card--content__lyrics" style={{backgroundColor: 'transparent'}}>
 
                     <DragDropContext onDragEnd={onDragEnd}>
                         <Droppable droppableId="droppable">

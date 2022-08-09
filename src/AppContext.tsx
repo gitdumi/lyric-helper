@@ -1,13 +1,14 @@
 import {useContext, createContext, useState} from "react";
 import {AppData} from "./utils/interfaces";
 import {getNewKey} from "./utils/utils";
+import {COLORS} from "./utils/constants";
 
 const initialData: AppData = {
     sections: [
         {
             id: getNewKey(),
             name: 'Verse',
-            color: '#1adebb',
+            color: COLORS.GREEN,
             lyrics: [{id: getNewKey(), value:"To be or not to be"}],
             count: 0,
         },
