@@ -20,6 +20,10 @@ export default function SectionLyric(props: {
     const randomButton = useRef() as LegacyRef<HTMLButtonElement>;
     const inputField = useRef() as LegacyRef<HTMLInputElement>;
 
+    function getVisibility(): any {
+        return {visibility: isHover ? 'visible' : 'hidden'};
+    }
+
     function handleChange(e: any) {
         console.log(`change section ${sectionIndex} lyric ${index}`)
         setAppData((prevAppData: AppData) => {
@@ -84,7 +88,7 @@ export default function SectionLyric(props: {
                 }}
                 ref={randomButton}
             >
-                <IoColorWandOutline className="react-button" color={isHover? 'black':'transparent'}/>
+                <IoColorWandOutline className="react-button" style={getVisibility()}/>
             </button>
 
             <input
@@ -104,7 +108,7 @@ export default function SectionLyric(props: {
                         e.stopPropagation();
                     }}
                 >
-                    <AiOutlineCloseCircle className="react-button" color={isHover? 'black':'transparent'}/>
+                    <AiOutlineCloseCircle className="react-button" style={getVisibility()}/>
                 </button>
             </div>
         </li>
