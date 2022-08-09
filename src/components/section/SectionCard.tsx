@@ -5,7 +5,7 @@ import {useAppData} from "../../AppContext";
 import {getLyric} from "../../utils/hipster";
 import {reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {AiOutlineCloseCircle, AiOutlinePlusCircle, IoSyncCircleOutline} from "react-icons/all";
+import {AiOutlineCloseCircle, AiOutlinePlusCircle, IoSyncCircleOutline, GoPrimitiveDot} from "react-icons/all";
 import {MAX_CHARS, SECTION_COLORS} from "../../utils/constants";
 import {GithubPicker} from "react-color";
 
@@ -39,10 +39,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
             return {...prev, sections: sections}
         })
         setIsHoverColorPicker(false)
-    }
-
-    function toggleColorPicker() {
-        setIsHoverColorPicker(prev => !prev);
     }
 
     function addRandomLyric() {
@@ -82,6 +78,11 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         });
     }
 
+    function getVisibility(): any {
+        return `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`;
+        // return `visible`;
+    }
+
     const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
         return (
             <Draggable key={lyric.id} draggableId={`SL-${lyric.id}`} index={index}>
@@ -112,8 +113,10 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     });
 
     return (
-        <div className="section-card" style={{backgroundColor: sectionData.color, border: 'solid 2px ' + sectionData.color,
-            boxShadow: '5px 5px 0 ' + sectionData.color}}>
+        <div className="section-card" style={{
+            backgroundColor: sectionData.color, border: 'solid 2px ' + sectionData.color,
+            boxShadow: '5px 5px 0 ' + sectionData.color
+        }}>
 
             <div ref={provided.innerRef} {...provided.dragHandleProps} className="section-card--title"
                  onMouseEnter={() => setIsHover(true)}
@@ -131,8 +134,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                 />
 
                 <div className="section-card--actions">
-                    <div style={{width: "2rem"}}/>
-
                     <button
                         ref={addButton}
                         className="section-card--content__add svg-wrapper"
@@ -143,7 +144,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                             addRandomLyric()
                         }}
                     >
-                        <AiOutlinePlusCircle color={isHover ? sectionData.color : 'transparent'}
+                        <AiOutlinePlusCircle color={sectionData.color} style={{visibility: getVisibility()}}
                                              className="react-button"/>
                     </button>
                     <button className="section-card--content__delete svg-wrapper"
@@ -151,21 +152,25 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                                 handleDelete(event, sectionId)
                             })}>
                         <AiOutlineCloseCircle className="react-button"
-                                              color={isHover ? sectionData.color : 'transparent'}/>
+                                              color={sectionData.color} style={{visibility: getVisibility()}}/>
                     </button>
                     <button className="section-duplicate svg-wrapper"
                             onClick={(e) => handleDuplicate(e, sectionIndex)}>
                         <IoSyncCircleOutline className="react-button"
-                                             color={isHover ? sectionData.color : 'transparent'}/>
+                                             color={sectionData.color} style={{visibility: getVisibility()}}/>
                     </button>
 
-                    <div className="section-card--actions__color-picker" style={{backgroundColor: sectionData.color}} onClick={toggleColorPicker}>
+                    <div className="section-card--actions__color-picker"
+                                    color={sectionData.color}
+                                    style={{visibility: getVisibility()}}>
+                        <GoPrimitiveDot color={sectionData.color} style={{visibility: getVisibility()}}/>
+                        <GithubPicker className="color-picker" width="100px" triangle={"top-right"}
+                                      colors={SECTION_COLORS}
+                                      onChangeComplete={handleColorChange}/>
                     </div>
                 </div>
             </div>
-            {isHoverColorPicker &&
-                <GithubPicker className="color-picker" width="50px" triangle={"top-right"} colors={SECTION_COLORS} onChangeComplete={handleColorChange}/>
-            }
+
 
             <div className="section-card--content">
                 <div className="section-card--content__lyrics" style={{backgroundColor: 'transparent'}}>

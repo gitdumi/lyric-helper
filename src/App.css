@@ -11,11 +11,10 @@
 .section-card {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     width: auto;
     height: 100%;
     margin-top: 1rem;
-    position:relative;
+    position: relative;
     z-index: 0;
 }
 
@@ -41,22 +40,39 @@
 }
 
 .section-card--actions__color-picker {
-    margin-left: 0.2rem;
-    display: flex;
-    width: 0.5rem;
-    height: 0.5rem;
+    margin: 0;
+    /*display: flex;*/
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
     border-radius: 50%;
     cursor: pointer;
+
+    display:inline-block;
+    position: relative;
+}
+.section-card--actions__color-picker:hover .color-picker {
+    visibility:visible; opacity:1;
 }
 
 .color-picker {
-    float: right;
-    align-self: flex-end;
-    margin-top: -9px;
-    margin-right: -6px;
-    position: fixed;
     top: 50%;
-    z-index: 10;
+    left: 100%;
+    margin-left: 20px;
+    transform: translate(-109%, -12%);
+    padding: 0;
+
+    position: absolute;
+    z-index: 99999999;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity var(--transition-speed);
+}
+
+.color-picker:hover {
+    visibility: visible;
+    opacity: 1;
 }
 
 .section-card--content {
@@ -130,6 +146,15 @@
     margin: 0;
 }
 
+.section-card--actions {
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+}
+.section-card--actions .svg-wrapper:nth-child(1) {
+    margin-right: auto;
+}
+
 .section-card--actions .react-button {
     display: flex;
     height: 1.5rem;
@@ -150,7 +175,7 @@
 }
 
 
-.react-button:hover {
+.react-button:hover:not(#add-section svg) {
     filter: invert(1);
     cursor: pointer;
 }
@@ -170,19 +195,11 @@
     margin: 0;
 }
 
-#add-section #add-icon svg {
-    display: flex;
-    height: 1.5rem;
-    width: auto;
-    padding-right: 0.4rem;
-}
-
-#add-section #add-icon {
-    display: flex;
-}
-
 #add-section:hover {
     filter: invert(1);
     cursor: pointer;
 }
+
+
+
 
