@@ -21,6 +21,9 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
 
     const addButton = useRef(null);
 
+    function getVisibility(): any {
+        return {visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`};
+    }
 
     function handleChange(e: any) {
         e.preventDefault();
@@ -78,11 +81,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         });
     }
 
-    function getVisibility(): any {
-        return `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`;
-        // return `visible`;
-    }
-
     const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
         return (
             <Draggable key={lyric.id} draggableId={`SL-${lyric.id}`} index={index}>
@@ -123,15 +121,16 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                  onMouseLeave={() => setIsHover(false)}
             >
 
-                <input
-                    type="text"
-                    value={sectionData.name}
-                    // ref={inputField}
-                    onChange={handleChange}
-                    // style={lyricStyle}
-                    maxLength={MAX_CHARS / 2}
-                    style={{width: `${sectionData.name.length + 1}ch`, color: sectionData.color}}
-                />
+                <div className="width-wrapper">
+                    <input
+                        type="text"
+                        value={sectionData.name}
+                        // ref={inputField}
+                        onChange={handleChange}
+                        maxLength={MAX_CHARS / 2}
+                        style={{width: "auto", color: sectionData.color}}
+                    />
+                </div>
 
                 <div className="section-card--actions">
                     <button
@@ -144,7 +143,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                             addRandomLyric()
                         }}
                     >
-                        <AiOutlinePlusCircle color={sectionData.color} style={{visibility: getVisibility()}}
+                        <AiOutlinePlusCircle color={sectionData.color} style={getVisibility()}
                                              className="react-button"/>
                     </button>
                     <button className="section-card--content__delete svg-wrapper"
@@ -152,17 +151,17 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                                 handleDelete(event, sectionId)
                             })}>
                         <AiOutlineCloseCircle className="react-button"
-                                              color={sectionData.color} style={{visibility: getVisibility()}}/>
+                                              color={sectionData.color} style={getVisibility()}/>
                     </button>
                     <button className="section-duplicate svg-wrapper"
                             onClick={(e) => handleDuplicate(e, sectionIndex)}>
                         <IoSyncCircleOutline className="react-button"
-                                             color={sectionData.color} style={{visibility: getVisibility()}}/>
+                                             color={sectionData.color} style={getVisibility()}/>
                     </button>
 
                     <div className="section-card--actions__color-picker"
-                                    color={sectionData.color}
-                                    style={{visibility: getVisibility()}}>
+                         color={sectionData.color}
+                         style={{visibility: getVisibility()}}>
                         <GoPrimitiveDot color={sectionData.color} style={{visibility: getVisibility()}}/>
                         <GithubPicker className="color-picker" width="100px" triangle={"top-right"}
                                       colors={SECTION_COLORS}

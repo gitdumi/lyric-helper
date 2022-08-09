@@ -95,9 +95,9 @@ export default function SectionLyric(props: {
                 type="text"
                 value={value}
                 ref={inputField}
+                maxLength={MAX_CHARS}
                 onChange={handleChange}
                 style={{width: value.length + 1 + 'ch'}}
-                maxLength={MAX_CHARS}
             />
             <div className={`section-lyric--actions`} >
                 <div style={{width: "2rem"}}/>

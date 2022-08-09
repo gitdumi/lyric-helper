@@ -21,13 +21,14 @@
 
 .section-card--title {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
-    padding: 0.3rem 0.5rem;
     background-color: var(--white);
 }
 
 .section-card--title input {
+    padding: 0.5rem;
     font-size: 20px;
     font-weight: 600;
     width: min-content;
@@ -39,6 +40,7 @@
 .section-card--actions {
     display: flex;
     align-items: center;
+    padding: 0.5rem;
 }
 
 .section-card--actions__color-picker {
@@ -56,6 +58,7 @@
 .section-card--actions__color-picker:hover .color-picker {
     visibility:visible; opacity:1;
 }
+
 
 .color-picker {
     top: 50%;
@@ -153,9 +156,9 @@
     align-items: center;
     justify-content: flex-end;
 }
-.section-card--actions .svg-wrapper:nth-child(1) {
-    margin-right: auto;
-}
+/*.section-card--actions .svg-wrapper:nth-child(1) {*/
+/*    margin-right: auto;*/
+/*}*/
 
 .section-card--actions .react-button {
     display: flex;
