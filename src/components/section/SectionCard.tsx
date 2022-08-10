@@ -115,21 +115,22 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
             boxShadow: '5px 5px 0 ' + sectionData.color
         }}>
 
+
             <div ref={provided.innerRef} {...provided.dragHandleProps} className="section-card--title"
                  onMouseEnter={() => setIsHover(true)}
                  onMouseLeave={() => setIsHover(false)}
             >
-
-                <input
-                    type="text"
-                    value={sectionData.name}
-                    // ref={inputField}
-                    onChange={handleChange}
-                    maxLength={MAX_CHARS / 3}
-                    style={{width: `${sectionData.name.length + 3 + 'ch'}`, color: sectionData.color}}
-                />
-
-                <div className="section-card--actions">
+                <div className="section-card--title__left">
+                    <input
+                        type="text"
+                        placeholder="Section"
+                        value={sectionData.name}
+                        // ref={inputField}
+                        onChange={handleChange}
+                        minLength={3}
+                        maxLength={MAX_CHARS / 3}
+                        style={{minWidth: '7ch',width: `${sectionData.name.length *1.1 }ch`,color: sectionData.color}}
+                    />
                     <button
                         ref={addButton}
                         className="section-card--content__add svg-wrapper"
@@ -143,6 +144,9 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                         <AiOutlinePlusCircle color={sectionData.color} style={getVisibility()}
                                              className="react-button"/>
                     </button>
+                </div>
+
+                <div className="section-card--actions">
                     <button className="section-card--content__delete svg-wrapper"
                             onClick={(event => {
                                 handleDelete(event, sectionId)

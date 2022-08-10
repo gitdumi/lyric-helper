@@ -13,9 +13,14 @@
     z-index: 0;
 }
 
+.section-card--title__left {
+    display: flex;
+    width: 100%;
+}
+
 .section-card--title {
     display: flex;
-    flex: 0 1 auto;
+    align-items: center;
     justify-content: space-between;
     background-color: var(--white);
 }
@@ -24,7 +29,8 @@
     padding: 0.5rem;
     font-size: 20px;
     font-weight: 600;
-    min-width: 2rem;
+    /*width: min-content;*/
+    min-width: 1rem;
     color: var(--accent-color);
     border: none;
     outline: none;
@@ -32,12 +38,14 @@
 
 .section-card--actions {
     display: flex;
-    padding: 0.5rem;
-    width: 100%;
+    justify-self: flex-end;
+    padding-right: 0.5rem;
     align-items: center;
 }
-.section-card--actions .svg-wrapper:nth-child(1) {
-    margin-right: auto;
+
+.section-card--content__add {
+    align-self: center;
+    justify-self: flex-start;
 }
 
 .section-card--actions__color-picker {
@@ -123,6 +131,7 @@
 }
 
 .section-lyric input {
+    min-width: 1ch;
     justify-self: flex-start;
     background-color: transparent;
     border: none;
@@ -146,7 +155,7 @@
     margin: 0;
 }
 
-.section-card--actions .react-button {
+.react-button {
     display: flex;
     height: 1.5rem;
     width: auto;
