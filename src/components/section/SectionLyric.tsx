@@ -100,7 +100,6 @@ export default function SectionLyric(props: {
                 style={{width: value.length + 1 + 'ch'}}
             />
             <div className={`section-lyric--actions`} >
-                <div style={{width: "2rem"}}/>
                 <button
                     className="section-lyric--actions__delete svg-wrapper"
                     onClick={(e) => {

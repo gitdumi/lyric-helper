@@ -36,7 +36,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
 
     function handleColorChange(color: any, event: any) {
         setAppData((prev: AppData) => {
-            console.log({color, event})
             const sections = [...prev.sections];
             sections[sectionIndex].color = color.hex;
             return {...prev, sections: sections}
@@ -121,16 +120,14 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                  onMouseLeave={() => setIsHover(false)}
             >
 
-                <div className="width-wrapper">
-                    <input
-                        type="text"
-                        value={sectionData.name}
-                        // ref={inputField}
-                        onChange={handleChange}
-                        maxLength={MAX_CHARS / 2}
-                        style={{width: "auto", color: sectionData.color}}
-                    />
-                </div>
+                <input
+                    type="text"
+                    value={sectionData.name}
+                    // ref={inputField}
+                    onChange={handleChange}
+                    maxLength={MAX_CHARS / 3}
+                    style={{width: `${sectionData.name.length + 3 + 'ch'}`, color: sectionData.color}}
+                />
 
                 <div className="section-card--actions">
                     <button
