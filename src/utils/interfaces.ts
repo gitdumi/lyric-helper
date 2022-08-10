@@ -13,6 +13,7 @@ export interface Lyric {
 }
 
 export interface AppData {
+  title: string,
   sections: SectionData[];
   config: {
     selectedSylCount: number;

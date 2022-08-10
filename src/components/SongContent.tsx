@@ -8,7 +8,7 @@ import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlinePlusCircle} from "react-icons/all";
 import {ANIMATION_TIMEOUT, COLORS} from "../utils/constants";
 
-export default function LyricHelperMain() {
+export default function SongContent() {
     const {appData, setAppData} = useAppData();
     const [newSection, setNewSection]: any = useState('')
 
@@ -67,24 +67,9 @@ export default function LyricHelperMain() {
         }));
     }
 
-    // const getItemStyle = (isDragging, draggableStyle) => ({
-    //     // some basic styles to make the items look a bit nicer
-    //     userSelect: "none",
-    //     padding: grid * 2,
-    //     margin: `0 0 ${grid}px 0`,
-    //
-    //     // change background colour if dragging
-    //     background: isDragging ? "lightgreen" : "grey",
-    //
-    //     // styles we need to apply on draggables
-    //     ...draggableStyle
-    // });
-    //
-    // const getListStyle = isDraggingOver => ({
-    //     background: isDraggingOver ? "lightblue" : "lightgrey",
-    //     padding: grid,
-    //     width: 250
-    // });
+    function handleSaveSong() {
+
+    }
 
     const sectionComponents = appData.sections.map((section: SectionData, index: number) => (
         <Draggable key={section.id} draggableId={section.id} index={index}>
@@ -94,10 +79,6 @@ export default function LyricHelperMain() {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         id="draggable-section"
-                        // style={getItemStyle(
-                        //     snapshot.isDragging,
-                        //     provided.draggableProps.style
-                        // )}
                     >
                         <SectionCard
                             provided={{...provided}}
@@ -128,7 +109,6 @@ export default function LyricHelperMain() {
                             <div
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}
-                                // style={getListStyle(snapshot.isDraggingOver)}
                             >
                                 {sectionComponents}
                                 {provided.placeholder}
@@ -137,6 +117,9 @@ export default function LyricHelperMain() {
                     }}
                 </Droppable>
             </div>
+            <footer className="main-footer">
+                <button onClick={handleSaveSong}>Save</button>
+            </footer>
         </DragDropContext>
     )
 };

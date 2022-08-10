@@ -1,8 +1,23 @@
+
+
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem;
+}
+
+.main-footer {
+    background-color: var(--light-background);
+    width: 100vw;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    bottom: 0;
+    left: 0;
+    box-shadow: inset  0 8px 6px -6px grey;
 }
 
 .section-card {
@@ -56,11 +71,13 @@
     border-radius: 50%;
     cursor: pointer;
 
-    display:inline-block;
+    display: inline-block;
     position: relative;
 }
+
 .section-card--actions__color-picker:hover .color-picker {
-    visibility:visible; opacity:1;
+    visibility: visible;
+    opacity: 1;
 }
 
 .color-picker {
@@ -194,6 +211,7 @@
     padding: 1rem 0 0 0;
     margin: 0;
 }
+
 #add-section svg {
     height: 1.5rem;
     transform: translateY(1px);

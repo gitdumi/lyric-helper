@@ -10,7 +10,7 @@ function makeid(length: number) {
 }
 
 export const getNewKey = () => {
-    return makeid(8)
+    return makeid(20)
 }
 
 export function reorder(list: any, startIndex: number, endIndex: number) {

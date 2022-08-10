@@ -70,10 +70,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
             const sections = [...appData.sections]
             sections[sectionIndex].lyrics = [...newLyrics]
 
-            console.log({prev, sections})
-            console.log({
-                ...prev, sections: sections
-            })
             return ({
                 ...prev, sections: sections
             })
@@ -118,6 +114,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
 
             <div ref={provided.innerRef} {...provided.dragHandleProps} className="section-card--title"
                  onMouseEnter={() => setIsHover(true)}
+                 onMouseOver={() => setIsHover(true)}
                  onMouseLeave={() => setIsHover(false)}
             >
                 <div className="section-card--title__left">

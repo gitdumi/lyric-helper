@@ -1,12 +1,12 @@
 import "./App.css";
-import {AppContextProvider} from "../src/AppContext";
-import LyricHelperMain from "./components/LyricHelperMain";
+import {AppContextProvider, useAppData} from "../src/AppContext";
+import SongContent from "./components/SongContent";
 
 function App() {
     return (
         <div className="App">
             <AppContextProvider>
-                <LyricHelperMain/>
+                <SongContent/>
             </AppContextProvider>
         </div>
     );

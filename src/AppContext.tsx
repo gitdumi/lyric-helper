@@ -4,6 +4,7 @@ import {getNewKey} from "./utils/utils";
 import {COLORS} from "./utils/constants";
 
 const initialData: AppData = {
+    title: 'New song',
     sections: [
         {
             id: getNewKey(),
