@@ -5,6 +5,7 @@ import {useAppData} from "../../AppContext";
 import {AiOutlineCloseCircle, IoColorWandOutline} from "react-icons/all";
 import {ANIMATION_TIMEOUT, MAX_CHARS} from "../../utils/constants";
 import {AppData} from "../../utils/interfaces";
+import "./SectionLyric.css"
 
 export default function SectionLyric(props: {
     index: number;

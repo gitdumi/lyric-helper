@@ -5,9 +5,16 @@ import {useAppData} from "../../AppContext";
 import {getLyric} from "../../utils/hipster";
 import {reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {AiOutlineCloseCircle, AiOutlinePlusCircle, IoSyncCircleOutline, GoPrimitiveDot} from "react-icons/all";
+import {
+    AiOutlineCloseCircle,
+    AiOutlinePlusCircle,
+    IoSyncCircleOutline,
+    GoPrimitiveDot,
+    GiChemicalDrop, FiDivideCircle
+} from "react-icons/all";
 import {MAX_CHARS, SECTION_COLORS} from "../../utils/constants";
 import {GithubPicker} from "react-color";
+import "./SectionCard.css"
 
 
 export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function, provided: any }) {
@@ -22,7 +29,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     const addButton = useRef(null);
 
     function getVisibility(): any {
-        return {visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`};
+        // return {visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`};
     }
 
     function handleChange(e: any) {
@@ -132,8 +139,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                         ref={addButton}
                         className="section-card--content__add svg-wrapper"
                         onClick={async (e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
                             e.nativeEvent.stopImmediatePropagation();
                             addRandomLyric()
                         }}
@@ -153,8 +158,19 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                     </button>
                     <button className="section-duplicate svg-wrapper"
                             onClick={(e) => handleDuplicate(e, sectionIndex)}>
-                        <IoSyncCircleOutline className="react-button"
+                        <IoSyncCircleOutline className="react-button sync"
                                              color={sectionData.color} style={getVisibility()}/>
+                    </button>
+
+                    <button
+                        ref={addButton}
+                        className="section-card--content__add svg-wrapper"
+                        onClick={async (e) => {
+
+                        }}
+                    >
+                        <FiDivideCircle color={sectionData.color} style={getVisibility()}
+                                        className="react-button divide"/>
                     </button>
 
                     <div className="section-card--actions__color-picker"
