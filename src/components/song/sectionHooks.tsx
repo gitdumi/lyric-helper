@@ -1,14 +1,15 @@
-import {AppData, SectionData} from "../utils/interfaces";
-import {useAppData} from "../AppContext";
+import {SongData, SectionData} from "../../utils/interfaces";
+import {useSongData} from "../../context/SongContext";
 import {useEffect} from "react";
+import {getNewKey} from "../../utils/utils";
+import {COLORS} from "../../utils/constants";
 
 export function useAddSection(newSection: SectionData) {
-    const {appData, setAppData} = useAppData();
+    const {songData, setSongData} = useSongData();
 
     useEffect(() => {
         if (newSection) {
-            // useAddSection(newSection)
-            setAppData((prev: AppData) => {
+            setSongData((prev: SongData) => {
                 prev.sections = [...prev.sections, newSection];
                 return {...prev, sections: prev.sections};
             })

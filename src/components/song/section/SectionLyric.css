@@ -17,6 +17,14 @@
     border: none;
     outline: none;
 }
+.section-lyric--actions__random {
+    margin-left: 0.5rem;
+    margin-right: 0;
+    transform: translateY(-2px);
+}
+.section-lyric--actions__delete {
+    transform: translateY(-2px);
+}
 
 .section-lyric:hover {
     filter: invert(1)
@@ -26,4 +34,5 @@
     margin-left: auto;
     display: flex;
     align-items: center;
+    padding: 0;
 }

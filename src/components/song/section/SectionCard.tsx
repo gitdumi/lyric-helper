@@ -1,26 +1,26 @@
 import React, {useEffect, useRef, useState} from "react";
 import SectionLyric from "./SectionLyric";
-import {AppData, Lyric, SectionData} from "../../utils/interfaces";
-import {useAppData} from "../../AppContext";
-import {getLyric} from "../../utils/hipster";
-import {reorder} from "../../utils/utils";
+import {SongData, Lyric, SectionData} from "../../../utils/interfaces";
+import {useSongData} from "../../../context/SongContext";
+import {getLyric} from "../../../utils/hipster";
+import {reorder} from "../../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {
     AiOutlineCloseCircle,
     AiOutlinePlusCircle,
     IoSyncCircleOutline,
     GoPrimitiveDot,
-    GiChemicalDrop, FiDivideCircle
+    FiDivideCircle
 } from "react-icons/all";
-import {MAX_CHARS, SECTION_COLORS} from "../../utils/constants";
+import {MAX_CHARS, SECTION_COLORS} from "../../../utils/constants";
 import {GithubPicker} from "react-color";
 import "./SectionCard.css"
 
 
 export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function, provided: any }) {
-    const {appData, setAppData} = useAppData();
+    const {songData, setSongData} = useSongData();
     const {sectionIndex, sectionId, handleDuplicate, handleDelete, provided} = props;
-    const sectionData = appData.sections[sectionIndex];
+    const sectionData = songData.sections[sectionIndex];
     const {lyrics, count} = sectionData;
     // @ts-ignore
     const [isHover, setIsHover] = useState(false);
@@ -29,20 +29,20 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     const addButton = useRef(null);
 
     function getVisibility(): any {
-        // return {visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`};
+        return {visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`};
     }
 
     function handleChange(e: any) {
         e.preventDefault();
         e.stopPropagation();
-        setAppData((prevAppData: AppData) => {
-            prevAppData.sections[sectionIndex].name = e.target.value;
-            return {...prevAppData, sections: prevAppData.sections};
+        setSongData((prevsongData: SongData) => {
+            prevsongData.sections[sectionIndex].name = e.target.value;
+            return {...prevsongData, sections: prevsongData.sections};
         })
     }
 
     function handleColorChange(color: any, event: any) {
-        setAppData((prev: AppData) => {
+        setSongData((prev: SongData) => {
             const sections = [...prev.sections];
             sections[sectionIndex].color = color.hex;
             return {...prev, sections: sections}
@@ -51,8 +51,8 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     }
 
     function addRandomLyric() {
-        getLyric((appData.config.selectedSylCount)).then(result => {
-            setAppData((prev: AppData) => {
+        getLyric((songData.config.selectedSylCount)).then(result => {
+            setSongData((prev: SongData) => {
                 prev.sections[sectionIndex].lyrics = [
                     ...sectionData.lyrics,
                     result,
@@ -68,13 +68,13 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         }
 
         const newLyrics = reorder(
-            appData.sections[sectionIndex].lyrics,
+            songData.sections[sectionIndex].lyrics,
             result.source.index,
             result.destination.index
         );
 
-        setAppData((prev: AppData) => {
-            const sections = [...appData.sections]
+        setSongData((prev: SongData) => {
+            const sections = [...songData.sections]
             sections[sectionIndex].lyrics = [...newLyrics]
 
             return ({
@@ -87,16 +87,11 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         return (
             <Draggable key={lyric.id} draggableId={`SL-${lyric.id}`} index={index}>
                 {(provided, snapshot) => {
-                    // console.log({index, lyric})
                     return (
                         <div
                             ref={provided.innerRef}
                             className="draggable-lyric"
                             {...provided.draggableProps}
-                            // style={getItemStyle(
-                            //     snapshot.isDragging,
-                            //     provided.draggableProps.style
-                            // )}
                         >
                             <SectionLyric
                                 provided={{...provided}}
@@ -157,7 +152,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                                               color={sectionData.color} style={getVisibility()}/>
                     </button>
                     <button className="section-duplicate svg-wrapper"
-                            onClick={(e) => handleDuplicate(e, sectionIndex)}>
+                            onClick={(e) => handleDuplicate(sectionIndex)}>
                         <IoSyncCircleOutline className="react-button sync"
                                              color={sectionData.color} style={getVisibility()}/>
                     </button>
@@ -195,7 +190,6 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                                     <div className="droppableLyric"
                                          {...provided.droppableProps}
                                          ref={provided.innerRef}
-                                        // style={getListStyle(snapshot.isDraggingOver)}
                                     >
                                         <ul>{lyricElements}</ul>
                                         {provided.placeholder}

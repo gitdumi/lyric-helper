@@ -12,7 +12,8 @@ export interface Lyric {
   syllableCount?: number,
 }
 
-export interface AppData {
+export interface SongData {
+  id: string,
   title: string,
   sections: SectionData[];
   config: {

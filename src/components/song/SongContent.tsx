@@ -1,22 +1,20 @@
-import {useAppData} from "../AppContext";
-import {AppData, SectionData} from "../utils/interfaces";
+import {SongContextProvider, useSongData} from "../../context/SongContext";
+import {SongData, SectionData} from "../../utils/interfaces";
 import SectionCard from "./section/SectionCard";
 import React, {useEffect, useState} from "react";
 import {useAddSection} from "./sectionHooks";
-import {getNewKey, reorder} from "../utils/utils";
+import {getNewKey, reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlinePlusCircle} from "react-icons/all";
-import {ANIMATION_TIMEOUT, COLORS} from "../utils/constants";
+import {ANIMATION_TIMEOUT, COLORS} from "../../utils/constants";
 
 export default function SongContent() {
-    const {appData, setAppData} = useAppData();
+    const {songData, setSongData} = useSongData();
     const [newSection, setNewSection]: any = useState('')
 
     useAddSection(newSection)
 
-    function handleAddSection(event: any) {
-        event.stopPropagation();
-        event.preventDefault();
+    function handleAddSection() {
         let newData: SectionData = {
             id: getNewKey(),
             name: 'Verse',
@@ -27,10 +25,8 @@ export default function SongContent() {
         setNewSection(newData)
     }
 
-    function handleDuplicateSection(event: any, sectionIndex: number) {
-        event.stopPropagation();
-        event.preventDefault();
-        let duplicate: SectionData = {...appData.sections[sectionIndex]};
+    function handleDuplicateSection(sectionIndex: number) {
+        let duplicate: SectionData = {...songData.sections[sectionIndex]};
         duplicate.id = getNewKey();
         setNewSection(duplicate);
     }
@@ -41,8 +37,8 @@ export default function SongContent() {
         const container = event.currentTarget.closest(".section-card");
         container.style.transition = "all 0.5s";
         container.style.opacity = "0";
-        setTimeout(function() {
-            setAppData((prev: AppData) => {
+        setTimeout(function () {
+            setSongData((prev: SongData) => {
                 prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId)
                 return {...prev, sections: prev.sections}
             })
@@ -57,12 +53,12 @@ export default function SongContent() {
         }
 
         const items = reorder(
-            appData.sections,
+            songData.sections,
             result.source.index,
             result.destination.index
         );
 
-        setAppData((prev: AppData) => ({
+        setSongData((prev: SongData) => ({
             ...prev, sections: items
         }));
     }
@@ -71,7 +67,7 @@ export default function SongContent() {
 
     }
 
-    const sectionComponents = appData.sections.map((section: SectionData, index: number) => (
+    const sectionComponents = songData.sections.map((section: SectionData, index: number) => (
         <Draggable key={section.id} draggableId={section.id} index={index}>
             {(provided, snapshot) => {
                 return (
@@ -93,15 +89,11 @@ export default function SongContent() {
             }}
         </Draggable>))
 
-
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className="main">
-                <button id="add-section" onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleAddSection(e);
-                }}><AiOutlinePlusCircle className="react-button"/>section
+                <button id="add-section" onClick={handleAddSection}>
+                    <AiOutlinePlusCircle className="react-button"/>section
                 </button>
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => {
