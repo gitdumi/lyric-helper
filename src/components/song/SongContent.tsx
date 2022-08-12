@@ -7,22 +7,23 @@ import {getNewKey, reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlinePlusCircle} from "react-icons/all";
 import {ANIMATION_TIMEOUT, COLORS} from "../../utils/constants";
+import {NEW_SECTION} from "../../context/InitData";
 
-export default function SongContent() {
+export default function SongContent(props: {songData: SongData}) {
     const {songData, setSongData} = useSongData();
     const [newSection, setNewSection]: any = useState('')
+
+    useEffect(() => {
+        setSongData(props.songData)
+        console.log('effect')
+    }, []);
 
     useAddSection(newSection)
 
     function handleAddSection() {
-        let newData: SectionData = {
-            id: getNewKey(),
-            name: 'Verse',
-            color: COLORS.GREEN,
-            lyrics: [{id: getNewKey(), value: 'To be or not to be'}],
-            count: 0
-        }
-        setNewSection(newData)
+        const section = {...NEW_SECTION};
+        section.id = getNewKey();
+        setNewSection(section)
     }
 
     function handleDuplicateSection(sectionIndex: number) {

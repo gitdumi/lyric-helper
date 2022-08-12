@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import * as React from "react";
+import {getNewKey} from "../utils/utils";
 
 
 function MySongsPage() {
@@ -7,9 +8,8 @@ function MySongsPage() {
     const songs = ['1', '2', '3']
 
     const songLinks = songs.map(id => {
-        return <Link to={`/song/${id}`}>Song {id}<br/></Link>
+        return <Link key={`link-${getNewKey()}`} to={`/song/${id}`}>Song {id}<br/></Link>
     })
-
 
     return (
         <div>
