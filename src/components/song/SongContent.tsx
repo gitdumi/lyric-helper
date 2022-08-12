@@ -22,7 +22,7 @@ export default function SongContent(props: { songData: SongData }) {
 
     function handleTitleChange(e: any) {
         // @ts-ignore
-        setSongData((prev: SongData) => ({...prev, title: e.target.value}))
+        setSongData((prev: SongData) => ({...prev, title: e.target.value || 'Song title'}))
     }
 
     function handleAddSection() {
@@ -110,6 +110,7 @@ export default function SongContent(props: { songData: SongData }) {
                        placeholder="Song Title"
                        value={songData.title}
                        onChange={handleTitleChange}
+                       onFocus={(e) =>  e.target.select()}
                        maxLength={MAX_CHARS/2}
                        style={{minWidth: `${songData.title.length + 1}ch`, color: `${songData.sections[0]?.color || COLORS.GREEN}`}}
                 />
