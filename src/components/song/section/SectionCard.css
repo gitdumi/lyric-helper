@@ -5,6 +5,9 @@
     position: relative;
     z-index: 0;
 }
+.section-card:last-child {
+    margin-bottom: 1rem;
+}
 
 .section-card--title__left {
     display: flex;

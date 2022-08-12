@@ -6,10 +6,10 @@ import {useAddSection} from "./sectionHooks";
 import {getNewKey, reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlinePlusCircle} from "react-icons/all";
-import {ANIMATION_TIMEOUT, COLORS} from "../../utils/constants";
+import {ANIMATION_TIMEOUT, COLORS, LS_KEYS, MAX_CHARS} from "../../utils/constants";
 import {generateNewEntity, NEW_SECTION} from "../../context/InitData";
 
-export default function SongContent(props: {songData: SongData}) {
+export default function SongContent(props: { songData: SongData }) {
     const {songData, setSongData} = useSongData();
     const [newSection, setNewSection]: any = useState('')
 
@@ -19,6 +19,11 @@ export default function SongContent(props: {songData: SongData}) {
     }, []);
 
     useAddSection(newSection)
+
+    function handleTitleChange(e: any) {
+        // @ts-ignore
+        setSongData((prev: SongData) => ({...prev, title: e.target.value}))
+    }
 
     function handleAddSection() {
         setNewSection(generateNewEntity(NEW_SECTION))
@@ -63,7 +68,13 @@ export default function SongContent(props: {songData: SongData}) {
     }
 
     function handleSaveSong() {
-
+        //todo: fix ts
+        // @ts-ignore
+        const songs: SongData[] = JSON.parse(localStorage.getItem('SONGS'))
+        // @ts-ignore
+        const index = songs.findIndex(song => song.id === songData.id)
+        songs[index] = songData
+        localStorage.setItem(LS_KEYS.SONGS, JSON.stringify([...songs]))
     }
 
     const sectionComponents = songData.sections.map((section: SectionData, index: number) => (
@@ -94,6 +105,14 @@ export default function SongContent(props: {songData: SongData}) {
                 <button id="add-section" onClick={handleAddSection}>
                     <AiOutlinePlusCircle className="react-button"/>section
                 </button>
+                <input className="song-title"
+                       type="text"
+                       placeholder="Song Title"
+                       value={songData.title}
+                       onChange={handleTitleChange}
+                       maxLength={MAX_CHARS/2}
+                       style={{minWidth: `${songData.title.length + 1}ch`}}
+                />
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => {
                         return (
@@ -113,4 +132,5 @@ export default function SongContent(props: {songData: SongData}) {
             </footer>
         </DragDropContext>
     )
-};
+}
+;

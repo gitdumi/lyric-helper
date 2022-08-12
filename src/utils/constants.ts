@@ -9,4 +9,8 @@ export const COLORS = {
     BLUE: '#1a9fde',
 }
 
+export const LS_KEYS = {
+    SONGS: 'SONGS'
+}
+
 export const SECTION_COLORS = [COLORS.GREEN, COLORS.BLUE, COLORS.RED, COLORS.PURPLE];
