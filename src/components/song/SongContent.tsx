@@ -111,7 +111,7 @@ export default function SongContent(props: { songData: SongData }) {
                        value={songData.title}
                        onChange={handleTitleChange}
                        maxLength={MAX_CHARS/2}
-                       style={{minWidth: `${songData.title.length + 1}ch`}}
+                       style={{minWidth: `${songData.title.length + 1}ch`, color: `${songData.sections[0]?.color || COLORS.GREEN}`}}
                 />
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => {
