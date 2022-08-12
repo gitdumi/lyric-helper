@@ -6,7 +6,7 @@ import {NEW_SONG} from "./InitData";
 const SongContext = createContext(NEW_SONG);
 
 export const SongContextProvider = ({children}: any) => {
-    const [songData, setSongData] = useState<SongData>(NEW_SONG);
+    const [songData, setSongData] = useState(NEW_SONG);
 
     return (
         // @ts-ignore

@@ -116,3 +116,11 @@ export const SAMPLE_SONGS: SongData[] = [
         },
     }
 ]
+
+export const generateNewEntity = (entity: any): typeof entity => {
+    if (entity.id) {
+        const newEntity = {...entity};
+        newEntity.id = getNewKey();
+        return newEntity;
+    }
+}

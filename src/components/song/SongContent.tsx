@@ -7,7 +7,7 @@ import {getNewKey, reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlinePlusCircle} from "react-icons/all";
 import {ANIMATION_TIMEOUT, COLORS} from "../../utils/constants";
-import {NEW_SECTION} from "../../context/InitData";
+import {generateNewEntity, NEW_SECTION} from "../../context/InitData";
 
 export default function SongContent(props: {songData: SongData}) {
     const {songData, setSongData} = useSongData();
@@ -21,9 +21,7 @@ export default function SongContent(props: {songData: SongData}) {
     useAddSection(newSection)
 
     function handleAddSection() {
-        const section = {...NEW_SECTION};
-        section.id = getNewKey();
-        setNewSection(section)
+        setNewSection(generateNewEntity(NEW_SECTION))
     }
 
     function handleDuplicateSection(sectionIndex: number) {
