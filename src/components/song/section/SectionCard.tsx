@@ -173,7 +173,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                          color={sectionData.color}
                          style={{visibility: getVisibility()}}>
                         <GoPrimitiveDot color={sectionData.color} style={{visibility: getVisibility()}}/>
-                        <GithubPicker className="color-picker" width="100px" triangle={"top-right"}
+                        <GithubPicker className="color-picker" width="112px" triangle={"top-right"}
                                       colors={SECTION_COLORS}
                                       onChangeComplete={handleColorChange}/>
                     </div>
