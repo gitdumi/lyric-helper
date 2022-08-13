@@ -10,9 +10,10 @@ import SectionCard from "../components/song/section/SectionCard";
 import {COLORS, theme} from "../lib/Theme";
 import {useSongData} from "../context/SongContext";
 import "./SongPage.css"
-import {Box, Button} from "@mui/material";
+import {Box, Button, Paper} from "@mui/material";
+import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 
-export default function SongPage() {
+function SongPage() {
     const {songData, setSongData} = useSongData();
     const [newSection, setNewSection]: any = useState('');
     const [currentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT));
@@ -20,7 +21,7 @@ export default function SongPage() {
     useEffect(() => {
         // @ts-ignore
         const songs = JSON.parse(localStorage.getItem(LS_KEYS.SONGS));
-        const index = songs.findIndex((song: SongData)=> song.id === currentSongId);
+        const index = songs.findIndex((song: SongData) => song.id === currentSongId);
         setSongData(songs[index])
     }, [currentSongId]);
 
@@ -113,7 +114,11 @@ export default function SongPage() {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <div className="main">
+            <Box display="flex" sx={{
+                flexDirection: "column",
+                alignItems: "center",
+                height: "100vh"
+            }}>
                 <button id="add-section" onClick={handleAddSection}>
                     <AiOutlinePlusCircle className="react-button"/>section
                 </button>
@@ -142,11 +147,36 @@ export default function SongPage() {
                         )
                     }}
                 </Droppable>
-            </div>
-            <Box display="flex" sx={{justifyContent: 'center'}}>
-                <Button variant="contained" sx={{justifySelf: 'center', m: '1rem'}} onClick={handleSaveSong}>Save</Button>
-                <Button variant="contained" sx={{backgroundColor: theme.palette.error.main, justifySelf: 'center', m: '1rem'}} onClick={handleDeleteSong} href={"/"}>Delete</Button>
             </Box>
+
+            <Paper elevation={3} sx={{
+                bgcolor: 'background.paper',
+                textAlign: 'center',
+                width: "100%",
+                position: "fixed",
+                bottom: 0,
+                left: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Button variant="contained"
+                        sx={{justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(40px)'}}
+                        onClick={handleSaveSong}>Save</Button>
+                {/*<Button >*/}
+                <HighlightOffSharpIcon sx={{
+                    color: theme.palette.error.main,
+                    justifySelf: 'center',
+                    mr: '2rem',
+                    fontSize: 30,
+                    ml: 'auto',
+                    cursor: 'pointer'
+                }}
+                                       onClick={handleDeleteSong} href={"/"}/>
+                {/*</Button>*/}
+            </Paper>
         </DragDropContext>
     )
 }
+
+export default SongPage;

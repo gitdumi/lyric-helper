@@ -11,7 +11,7 @@ function App() {
 
     return (
         <Box display='flex' className="App">
-            <Container fixed sx={{p: 2}}>
+            <Container fixed sx={{mt: '2rem'}}>
                 <SongsModal/>
                 <Routes>
                     <Route path="/song/:songId" element={<SongContextProvider><SongPage/></SongContextProvider>}/>

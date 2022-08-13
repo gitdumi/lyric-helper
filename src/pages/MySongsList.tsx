@@ -37,33 +37,31 @@ function MySongsList() {
     }
 
     const songLinks = songs.map(song => {
-        return <ListItemButton selected={song.id === currentSongId} key={`link-${getNewKey()}`}
+        return <ListItemButton selected={song.id === currentSongId}
+                               key={`link-${getNewKey()}`}
                                href={`/song/${song.id}`}
                                onClick={() => setCurrentSongId(song.id)}>{song.title}</ListItemButton>
     })
 
     return (
         <Box sx={{
-            bgcolor: 'background.paper', display: 'flex',
+            display: 'flex',
             overflow: 'scroll',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
+            flexDirection: 'column'
         }}>
 
             <Button variant="contained"
                     onClick={handleAddSong}
-                    sx={{mt: '1rem', mb: '1rem'}}
             >Add song</Button>
             <Box
                 sx={{
                     display: 'flex',
                     '& > *': {
-                        w: '100%',
+                        width: '100%'
                     },
                 }}
             >
-                <List component="nav" aria-label="main mailbox folders">
+                <List disablePadding disableMargin component="nav" aria-label="main mailbox folders">
                     {songLinks}
                 </List>
             </Box>

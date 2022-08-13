@@ -70,15 +70,14 @@ export default function SongsModal() {
     };
 
     return (
-        <Box sx={{display: 'flex'}}>
-            <CssBaseline/>
+        <Box sx={{display: 'flex', m: 0, p: 0}}>
             <CustomDrawer variant="permanent" open={open}
                           onMouseEnter={handleDrawerOpen}
                           onMouseOver={handleDrawerOpen}
                           onMouseLeave={handleDrawerClose}
             >
-                <List>
-                    <ListItem key={'title'} disablePadding sx={{display: 'flex', pl: '0.1rem', pt: '0.6rem', pb: '0.6rem'}}>
+                <List disablePadding>
+                    <ListItem key={'modal-title'} disablePadding sx={{display: 'flex', width: 'fit-content', padding: '0.6rem 0'}}>
                             <ListItemIcon
                                 sx={{
                                     minWidth: 0,
@@ -88,7 +87,7 @@ export default function SongsModal() {
                                 }}
                             ><LyricsSharpIcon/>
                             </ListItemIcon>
-                        <Typography variant="h6" sx={{opacity: open ? 1 : 0, pl: 2, color: theme.palette.primary.main}}> Lyric Helper</Typography>
+                        <Typography variant="h6" sx={{opacity: open ? 1 : 0, pl: 2, pr: 2, color: theme.palette.primary.main}}> Lyric Helper</Typography>
                     </ListItem>
                     <Divider sx={{borderColor: `${open ? theme.palette.primary.main: 'transparent'}`}}/>
                     {open && <MySongsList/>}

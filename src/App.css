@@ -1,4 +1,6 @@
 body {
+    overflow: auto;
+    height: 100%;
 }
 
 .App {
@@ -7,6 +9,11 @@ body {
     justify-content: space-between;
     height: 100vh;
     width: 100vw;
+}
+
+html {
+    overflow: hidden;
+    height: 100%;
 }
 
 .main {
