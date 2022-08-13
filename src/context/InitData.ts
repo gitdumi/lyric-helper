@@ -3,37 +3,9 @@ import {getNewKey} from "../utils/utils";
 import {COLORS} from "../lib/Theme";
 
 export const NEW_SONG: SongData = {
-    id: 'new',
+    id: getNewKey(),
     title: 'New song',
-    sections: [
-        {
-            id: getNewKey(),
-            name: 'Verse',
-            color: COLORS.GREEN,
-            lyrics: [{id: getNewKey(), value: "To be or not to be"}, {id: getNewKey(), value: "That is the question"}],
-            count: 0,
-        },
-        {
-            id: getNewKey(),
-            name: 'Chorus',
-            color: COLORS.BLUE,
-            lyrics: [{id: getNewKey(), value: "Oppa Gangnam Style"}, {
-                id: getNewKey(),
-                value: "Oppa Gangnam Style"
-            }, {id: getNewKey(), value: "Oppa Gangnam Style"}],
-            count: 0,
-        },
-        {
-            id: getNewKey(),
-            name: 'Verse 2',
-            color: COLORS.GREEN,
-            lyrics: [{id: getNewKey(), value: "To be or not to be, again"}, {
-                id: getNewKey(),
-                value: "That is the question, again"
-            }],
-            count: 0,
-        }
-    ],
+    sections: [],
     config: {
         selectedSylCount: 8,
         longestSylCount: 0,

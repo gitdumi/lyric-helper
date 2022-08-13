@@ -10,6 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 import Divider from '@mui/material/Divider';
+import MySongsList from "../pages/MySongsList";
 
 const drawerWidth = 240;
 
@@ -91,11 +92,11 @@ export default function SongsModal() {
                             <ListItemText primary={'Songs'} sx={{opacity: open ? 1 : 0}}/>
                         </ListItemButton>
                     </ListItem>
-                    {open && <Divider/>}
+                    <Divider sx={{borderColor: `${open ? '': 'transparent'}`}}/>
+                    {open && <MySongsList/>}
+
                 </List>
             </CustomDrawer>
-            <Box component="main" sx={{flexGrow: 1, p: 3}}>
-            </Box>
         </Box>
     );
 }

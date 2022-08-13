@@ -1,20 +1,24 @@
 import "./App.css";
 import * as React from "react";
 import {Routes, Route} from "react-router-dom";
-import MySongsPage from "./pages/MySongsPage";
 import SongPage from "./pages/SongPage";
 import SongsModal from "./components/SongsModal"
+import {Box, Container} from "@mui/material";
+import {SongContextProvider} from "./context/SongContext";
 
 
 function App() {
+
     return (
-        <div className="App">
-            <Routes>
-                <Route path="/song/:songId" element={<SongPage/>}/>
-                <Route path="/" element={<MySongsPage/>}/>
-                <Route path="/draw" element={<SongsModal/>}/>
-            </Routes>
-        </div>
+        <Box display='flex' className="App">
+            <Container fixed sx={{p: 2}}>
+                <SongsModal/>
+                <Routes>
+                    <Route path="/song/:songId" element={<SongContextProvider><SongPage/></SongContextProvider>}/>
+                    <Route path="/"/>
+                </Routes>
+            </Container>
+        </Box>
     );
 }
 

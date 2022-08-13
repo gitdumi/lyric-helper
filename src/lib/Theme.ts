@@ -44,6 +44,12 @@ export let theme = createTheme({
             main: COLORS.BLUE,
             dark: '',
             contrastText: '',
-        }
+        },
+        error: {
+            light: '',
+            main: COLORS.RED,
+            dark: '',
+            contrastText: '',
+        },
     },
 });

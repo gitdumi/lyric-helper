@@ -1,35 +1,35 @@
 import * as React from "react";
 import {getNewKey} from "../utils/utils";
 import {generateNewEntity, NEW_SONG, SAMPLE_SONGS} from "../context/InitData";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {SongData} from "../utils/interfaces";
 import {Box, Button, ButtonGroup, Container, Paper, Typography} from "@mui/material";
+import {LS_KEYS} from "../utils/constants";
+import {useNavigate} from "react-router-dom";
 
 
-function MySongsPage() {
+function MySongsList() {
     //@ts-ignore
-    const [songs, setSongs] = useState<SongData[]>(() => JSON.parse(localStorage.getItem('SONGS')) || SAMPLE_SONGS)
+    const [songs, setSongs] = useState<SongData[]>(JSON.parse(localStorage.getItem(LS_KEYS.SONGS)) || SAMPLE_SONGS)
+    const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT) || '0')
+
+    useEffect(() => {
+       localStorage.setItem(LS_KEYS.CURRENT, currentSongId)
+    }, [currentSongId]);
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         localStorage.setItem("SONGS", JSON.stringify(songs));
     }, [songs]);
+
 
     function handleAddSong() {
         setSongs(prev => [...prev, generateNewEntity(NEW_SONG)]);
     }
 
-    function handleRenameSong(event: any, songId: string) {
-        setSongs((prev: SongData[]) => {
-            const index = prev.findIndex(song => song.id === songId);
-            prev[index].title = event.target.value
-            return [...prev]
-        })
-    }
-
     const songLinks = songs.map(song => {
-        return <Button variant="outlined" key={`link-${getNewKey()}`}
-                       href={`/song/${song.id}`}>{song.title}</Button>
+        return <Button variant={ song.id === currentSongId ? "contained" : "outlined"} key={`link-${getNewKey()}`}
+                       href={`/song/${song.id}`} onClick={() => setCurrentSongId(song.id)}>{song.title}</Button>
     })
 
     return (
@@ -38,11 +38,10 @@ function MySongsPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                pt: '1rem'
             }}>
-                <Typography sx={{mt: 4, mb: 2}} variant="h4" component="div">
-                    My Songs
-                </Typography>
+
                 <Button variant="contained" onClick={handleAddSong}>Add song</Button>
                 <Box
                     sx={{
@@ -63,4 +62,4 @@ function MySongsPage() {
     )
 }
 
-export default MySongsPage;
+export default MySongsList;
