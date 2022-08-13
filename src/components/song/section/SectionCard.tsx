@@ -12,9 +12,10 @@ import {
     GoPrimitiveDot,
     FiDivideCircle
 } from "react-icons/all";
-import {MAX_CHARS, SECTION_COLORS} from "../../../utils/constants";
+import {MAX_CHARS} from "../../../utils/constants";
 import {GithubPicker} from "react-color";
 import "./SectionCard.css"
+import {SECTION_COLORS} from "../../../lib/Theme";
 
 
 export default function SectionCard(props: { sectionId: string, sectionIndex: number, handleDuplicate: Function, handleDelete: Function, provided: any }) {

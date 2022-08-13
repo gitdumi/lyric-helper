@@ -6,8 +6,9 @@ import {useAddSection} from "./sectionHooks";
 import {getNewKey, reorder} from "../../utils/utils";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {AiOutlinePlusCircle} from "react-icons/all";
-import {ANIMATION_TIMEOUT, COLORS, LS_KEYS, MAX_CHARS} from "../../utils/constants";
+import {ANIMATION_TIMEOUT, LS_KEYS, MAX_CHARS} from "../../utils/constants";
 import {generateNewEntity, NEW_SECTION} from "../../context/InitData";
+import {COLORS} from "../../lib/Theme";
 
 export default function SongContent(props: { songData: SongData }) {
     const {songData, setSongData} = useSongData();
@@ -15,7 +16,6 @@ export default function SongContent(props: { songData: SongData }) {
 
     useEffect(() => {
         setSongData(props.songData)
-        console.log('effect')
     }, []);
 
     useAddSection(newSection)

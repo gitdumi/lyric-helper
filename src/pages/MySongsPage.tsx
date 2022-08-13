@@ -1,9 +1,9 @@
-import {Link} from "react-router-dom";
 import * as React from "react";
 import {getNewKey} from "../utils/utils";
 import {generateNewEntity, NEW_SONG, SAMPLE_SONGS} from "../context/InitData";
 import {useState} from "react";
 import {SongData} from "../utils/interfaces";
+import {Box, Button, ButtonGroup, Container, Paper, Typography} from "@mui/material";
 
 
 function MySongsPage() {
@@ -19,18 +19,47 @@ function MySongsPage() {
         setSongs(prev => [...prev, generateNewEntity(NEW_SONG)]);
     }
 
+    function handleRenameSong(event: any, songId: string) {
+        setSongs((prev: SongData[]) => {
+            const index = prev.findIndex(song => song.id === songId);
+            prev[index].title = event.target.value
+            return [...prev]
+        })
+    }
+
     const songLinks = songs.map(song => {
-        return <Link key={`link-${getNewKey()}`} to={`/song/${song.id}`}>Song {song.id}<br/></Link>
+        return <Button variant="outlined" key={`link-${getNewKey()}`}
+                       href={`/song/${song.id}`}>{song.title}</Button>
     })
 
     return (
-        <div>
-            <h1>My Songs</h1>
-            <button onClick={handleAddSong}>Add song</button>
-            <ul>
-                {songLinks}
-            </ul>
-        </div>
+        <Container fixed>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Typography sx={{mt: 4, mb: 2}} variant="h4" component="div">
+                    My Songs
+                </Typography>
+                <Button variant="contained" onClick={handleAddSong}>Add song</Button>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        '& > *': {
+                            m: 1,
+                        },
+                    }}
+                >
+                    <ButtonGroup
+                        orientation="vertical"
+                        aria-label="vertical contained button group"
+                        variant="contained"
+                    >{songLinks}</ButtonGroup>
+                </Box>
+            </Box>
+        </Container>
     )
 }
 
