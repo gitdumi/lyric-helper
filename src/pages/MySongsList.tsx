@@ -3,10 +3,19 @@ import {getNewKey} from "../utils/utils";
 import {generateNewEntity, NEW_SONG, SAMPLE_SONGS} from "../context/InitData";
 import {useEffect, useState} from "react";
 import {SongData} from "../utils/interfaces";
-import {Box, Button, ButtonGroup, Container, Paper, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    ButtonGroup,
+    Container,
+    List,
+    ListItemButton,
+    ListItemIcon, ListItemText,
+    Paper,
+    Typography
+} from "@mui/material";
 import {LS_KEYS} from "../utils/constants";
 import {useNavigate} from "react-router-dom";
-
 
 function MySongsList() {
     //@ts-ignore
@@ -14,7 +23,7 @@ function MySongsList() {
     const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT) || '0')
 
     useEffect(() => {
-       localStorage.setItem(LS_KEYS.CURRENT, currentSongId)
+        localStorage.setItem(LS_KEYS.CURRENT, currentSongId)
     }, [currentSongId]);
 
 
@@ -28,37 +37,37 @@ function MySongsList() {
     }
 
     const songLinks = songs.map(song => {
-        return <Button variant={ song.id === currentSongId ? "contained" : "outlined"} key={`link-${getNewKey()}`}
-                       href={`/song/${song.id}`} onClick={() => setCurrentSongId(song.id)}>{song.title}</Button>
+        return <ListItemButton selected={song.id === currentSongId} key={`link-${getNewKey()}`}
+                               href={`/song/${song.id}`}
+                               onClick={() => setCurrentSongId(song.id)}>{song.title}</ListItemButton>
     })
 
     return (
-        <Container fixed>
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                pt: '1rem'
-            }}>
+        <Box sx={{
+            bgcolor: 'background.paper', display: 'flex',
+            overflow: 'scroll',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}>
 
-                <Button variant="contained" onClick={handleAddSong}>Add song</Button>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        '& > *': {
-                            m: 1,
-                        },
-                    }}
-                >
-                    <ButtonGroup
-                        orientation="vertical"
-                        aria-label="vertical contained button group"
-                        variant="contained"
-                    >{songLinks}</ButtonGroup>
-                </Box>
+            <Button variant="contained"
+                    onClick={handleAddSong}
+                    sx={{mt: '1rem', mb: '1rem'}}
+            >Add song</Button>
+            <Box
+                sx={{
+                    display: 'flex',
+                    '& > *': {
+                        w: '100%',
+                    },
+                }}
+            >
+                <List component="nav" aria-label="main mailbox folders">
+                    {songLinks}
+                </List>
             </Box>
-        </Container>
+        </Box>
     )
 }
 

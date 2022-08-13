@@ -12,7 +12,8 @@ import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 import Divider from '@mui/material/Divider';
 import MySongsList from "../pages/MySongsList";
 
-const drawerWidth = 240;
+const drawerWidth = 'fit-content';
+const maxWidth = '500px';
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -38,6 +39,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 const CustomDrawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
     ({theme: drawerTheme, open}) => ({
         width: drawerWidth,
+        maxWidth: maxWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
@@ -60,7 +62,7 @@ export default function SongsModal() {
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        // setOpen(false);
     };
 
     return (
@@ -94,7 +96,6 @@ export default function SongsModal() {
                     </ListItem>
                     <Divider sx={{borderColor: `${open ? '': 'transparent'}`}}/>
                     {open && <MySongsList/>}
-
                 </List>
             </CustomDrawer>
         </Box>
