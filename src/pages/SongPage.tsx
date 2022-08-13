@@ -161,7 +161,7 @@ function SongPage() {
                 justifyContent: 'center'
             }}>
                 <Button variant="contained"
-                        sx={{justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(40px)'}}
+                        sx={{justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(48px)'}}
                         onClick={handleSaveSong}>Save</Button>
                 {/*<Button >*/}
                 <HighlightOffSharpIcon sx={{
