@@ -119,9 +119,6 @@ function SongPage() {
                 alignItems: "center",
                 height: "100vh"
             }}>
-                <button id="add-section" onClick={handleAddSection}>
-                    <AiOutlinePlusCircle className="react-button"/>section
-                </button>
                 <input className="song-title"
                        type="text"
                        placeholder="Song Title"
@@ -147,6 +144,9 @@ function SongPage() {
                         )
                     }}
                 </Droppable>
+                <button id="add-section" onClick={handleAddSection}>
+                    <AiOutlinePlusCircle className="react-button"/>section
+                </button>
             </Box>
 
             <Paper elevation={3} sx={{
