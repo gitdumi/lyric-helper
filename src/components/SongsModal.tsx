@@ -11,6 +11,8 @@ import ListItemText from '@mui/material/ListItemText';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 import Divider from '@mui/material/Divider';
 import MySongsList from "../pages/MySongsList";
+import {Typography} from "@mui/material";
+import {theme} from "../lib/Theme";
 
 const drawerWidth = 'fit-content';
 const maxWidth = '500px';
@@ -22,6 +24,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
         duration: theme.transitions.duration.enteringScreen,
     }),
     overflowX: 'hidden',
+    borderColor: theme.palette.primary.main,
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
@@ -34,6 +37,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     [theme.breakpoints.up('sm')]: {
         width: `calc(${theme.spacing(8)} + 1px)`,
     },
+    borderColor: theme.palette.primary.main,
 });
 
 const CustomDrawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
@@ -62,7 +66,7 @@ export default function SongsModal() {
     };
 
     const handleDrawerClose = () => {
-        // setOpen(false);
+        setOpen(false);
     };
 
     return (
@@ -72,29 +76,21 @@ export default function SongsModal() {
                           onMouseEnter={handleDrawerOpen}
                           onMouseOver={handleDrawerOpen}
                           onMouseLeave={handleDrawerClose}
-                          sx={{border: 'none'}}
             >
                 <List>
-                    <ListItem key={'Songs'} disablePadding sx={{display: 'block'}}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'left',
-                                px: 2.5,
-                            }}
-                        >
+                    <ListItem key={'title'} disablePadding sx={{display: 'flex', pl: '0.1rem', pt: '0.6rem', pb: '0.6rem'}}>
                             <ListItemIcon
                                 sx={{
                                     minWidth: 0,
-                                    mr: open ? 3 : 'auto',
+                                    ml: 2.5,
                                     justifyContent: 'left',
+                                    color: theme.palette.primary.main
                                 }}
                             ><LyricsSharpIcon/>
                             </ListItemIcon>
-                            <ListItemText primary={'Songs'} sx={{opacity: open ? 1 : 0}}/>
-                        </ListItemButton>
+                        <Typography variant="h6" sx={{opacity: open ? 1 : 0, pl: 2, color: theme.palette.primary.main}}> Lyric Helper</Typography>
                     </ListItem>
-                    <Divider sx={{borderColor: `${open ? '': 'transparent'}`}}/>
+                    <Divider sx={{borderColor: `${open ? theme.palette.primary.main: 'transparent'}`}}/>
                     {open && <MySongsList/>}
                 </List>
             </CustomDrawer>
