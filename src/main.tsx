@@ -8,12 +8,12 @@ import {ThemeProvider} from "@emotion/react";
 import {theme} from "./lib/Theme";
 
 ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <App/>
             </ThemeProvider>
         </BrowserRouter>,
-    </React.StrictMode>,
+    // </React.StrictMode>,
     document.getElementById('root')
 );

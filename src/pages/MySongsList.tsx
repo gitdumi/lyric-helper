@@ -61,7 +61,7 @@ function MySongsList() {
                     },
                 }}
             >
-                <List disablePadding disableMargin component="nav" aria-label="main mailbox folders">
+                <List disablePadding component="nav" aria-label="main mailbox folders">
                     {songLinks}
                 </List>
             </Box>

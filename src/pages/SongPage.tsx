@@ -173,7 +173,6 @@ function SongPage() {
                     cursor: 'pointer'
                 }}
                                        onClick={handleDeleteSong} href={"/"}/>
-                {/*</Button>*/}
             </Paper>
         </DragDropContext>
     )

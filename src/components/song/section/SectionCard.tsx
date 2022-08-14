@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {LegacyRef, useEffect, useRef, useState} from "react";
 import SectionLyric from "./SectionLyric";
 import {SongData, Lyric, SectionData} from "../../../utils/interfaces";
 import {useSongData} from "../../../context/SongContext";
@@ -27,7 +27,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
     const [isHover, setIsHover] = useState(false);
     const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
 
-    const addButton = useRef(null);
+    const addButton = useRef() as LegacyRef<HTMLButtonElement>;
 
     function getVisibility(): any {
         return {visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}`};
@@ -51,7 +51,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
         setIsHoverColorPicker(false)
     }
 
-    function addRandomLyric() {
+    async function addRandomLyric() {
         getLyric((songData.config.selectedSylCount)).then(result => {
             setSongData((prev: SongData) => {
                 prev.sections[sectionIndex].lyrics = [
@@ -86,7 +86,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
 
     const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
         return (
-            <Draggable key={lyric.id} draggableId={`SL-${lyric.id}`} index={index}>
+            <Draggable key={`draggable-${lyric.id}`} draggableId={`SL-DRAG-${lyric.id}`} index={index}>
                 {(provided, snapshot) => {
                     return (
                         <div
@@ -135,8 +135,10 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                         ref={addButton}
                         className="section-card--content__add svg-wrapper"
                         onClick={async (e) => {
-                            e.nativeEvent.stopImmediatePropagation();
-                            addRandomLyric()
+                            // e.nativeEvent.stopImmediatePropagation();
+                            // addButton.current.style = 'hidden'
+                            await addRandomLyric()
+                            // addButton.current.style = 'visible'
                         }}
                     >
                         <AiOutlinePlusCircle color={sectionData.color} style={getVisibility()}
@@ -158,16 +160,15 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                                              color={sectionData.color} style={getVisibility()}/>
                     </button>
 
-                    <button
-                        ref={addButton}
-                        className="section-card--content__add svg-wrapper"
-                        onClick={async (e) => {
+                    {/*<button*/}
+                    {/*    className="section-card--content__add svg-wrapper"*/}
+                    {/*    onClick={async (e) => {*/}
 
-                        }}
-                    >
-                        <FiDivideCircle color={sectionData.color} style={getVisibility()}
-                                        className="react-button divide"/>
-                    </button>
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <FiDivideCircle color={sectionData.color} style={getVisibility()}*/}
+                    {/*                    className="react-button divide"/>*/}
+                    {/*</button>*/}
 
                     <div className="section-card--actions__color-picker"
                          color={sectionData.color}
