@@ -3,9 +3,7 @@
 #   publish = "/dist"
 #   base ="/"
 #
-# [[redirects]]
-#   from = "/*"
-#   to = "/"
-#   status = 200
-
-[[redirects]] from = "/*" to = "/" status = 200
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
