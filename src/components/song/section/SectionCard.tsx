@@ -161,7 +161,7 @@ export default function SectionCard(props: { sectionId: string, sectionIndex: nu
                     </button>
 
                     {/*<button*/}
-                    {/*    className="section-card--content__add svg-wrapper"*/}
+                    {/*    className="section-card--content__config svg-wrapper"*/}
                     {/*    onClick={async (e) => {*/}
 
                     {/*    }}*/}

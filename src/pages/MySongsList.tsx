@@ -1,26 +1,23 @@
 import * as React from "react";
 import {getNewKey} from "../utils/utils";
 import {generateNewEntity, NEW_SONG, SAMPLE_SONGS} from "../context/InitData";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {SongData} from "../utils/interfaces";
 import {
-    Box,
     Button,
-    ButtonGroup,
-    Container,
     List,
     ListItemButton,
-    ListItemIcon, ListItemText,
-    Paper,
+    Tooltip,
     Typography
 } from "@mui/material";
 import {LS_KEYS} from "../utils/constants";
-import {useNavigate} from "react-router-dom";
 
 function MySongsList() {
     //@ts-ignore
     const [songs, setSongs] = useState<SongData[]>(JSON.parse(localStorage.getItem(LS_KEYS.SONGS)) || SAMPLE_SONGS)
     const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT) || '0')
+
+    const titleElement = useRef();
 
     useEffect(() => {
         localStorage.setItem(LS_KEYS.CURRENT, currentSongId)
@@ -32,40 +29,36 @@ function MySongsList() {
     }, [songs]);
 
 
-    function handleAddSong() {
+    function handleAddSong(e: any) {
+        e.stopPropagation();
         setSongs(prev => [...prev, generateNewEntity(NEW_SONG)]);
     }
 
     const songLinks = songs.map(song => {
-        return <ListItemButton selected={song.id === currentSongId}
-                               key={`link-${getNewKey()}`}
-                               href={`/song/${song.id}`}
-                               onClick={() => setCurrentSongId(song.id)}>{song.title}</ListItemButton>
+        return <Tooltip ref={titleElement} title={song.title} disableHoverListener={song.title.length < 20}>
+            <ListItemButton selected={song.id === currentSongId}
+                            key={`link-${getNewKey()}`}
+                            href={`/song/${song.id}`}
+                            onClick={() => setCurrentSongId(song.id)}>
+                <Typography noWrap>
+                    {song.title}
+                </Typography>
+            </ListItemButton>
+        </Tooltip>
     })
 
     return (
-        <Box sx={{
+        <List sx={{
             display: 'flex',
-            overflow: 'scroll',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            p: 0,
         }}>
-
             <Button variant="contained"
                     onClick={handleAddSong}
+                // sx={{position: 'sticky',  zIndex: 1}}
             >Add song</Button>
-            <Box
-                sx={{
-                    display: 'flex',
-                    '& > *': {
-                        width: '100%'
-                    },
-                }}
-            >
-                <List disablePadding component="nav" aria-label="main mailbox folders">
-                    {songLinks}
-                </List>
-            </Box>
-        </Box>
+            {songLinks}
+        </List>
     )
 }
 

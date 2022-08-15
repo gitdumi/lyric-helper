@@ -12,11 +12,13 @@ import {useSongData} from "../context/SongContext";
 import "./SongPage.css"
 import {Box, Button, Paper} from "@mui/material";
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
+import {Link, useNavigate} from "react-router-dom";
 
 function SongPage() {
     const {songData, setSongData} = useSongData();
     const [newSection, setNewSection]: any = useState('');
     const [currentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT));
+    const navigate = useNavigate();
 
     useEffect(() => {
         // @ts-ignore
@@ -113,24 +115,26 @@ function SongPage() {
         </Draggable>))
 
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <Box display="flex" sx={{
-                flexDirection: "column",
-                alignItems: "center",
-                height: "100vh"
-            }}>
-                <input className="song-title"
-                       type="text"
-                       placeholder="Song Title"
-                       value={songData.title}
-                       onChange={handleTitleChange}
-                       onFocus={(e) => e.target.select()}
-                       maxLength={MAX_CHARS / 2}
-                       style={{
-                           minWidth: `${songData.title.length + 1}ch`,
-                           color: `${songData.sections[0]?.color || COLORS.GREEN}`
-                       }}
-                />
+        <Box display="flex" sx={{
+            flexDirection: "column",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+            overflow: "scroll"
+        }}>
+            <input className="song-title"
+                   type="text"
+                   placeholder="Song Title"
+                   value={songData.title}
+                   onChange={handleTitleChange}
+                   onFocus={(e) => e.target.select()}
+                   maxLength={MAX_CHARS / 2}
+                   style={{
+                       minWidth: `${songData.title.length + 1}ch`,
+                       color: `${songData.sections[0]?.color || COLORS.GREEN}`
+                   }}
+            />
+            <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => {
                         return (
@@ -144,11 +148,11 @@ function SongPage() {
                         )
                     }}
                 </Droppable>
-                <button id="add-section" onClick={handleAddSection}>
+                <button style={{paddingBottom: '100px', marginTop: `${songData.sections.length > 0 ? '0' : '1rem'}`}}
+                        id="add-section" onClick={handleAddSection}>
                     <AiOutlinePlusCircle className="react-button"/>section
                 </button>
-            </Box>
-
+            </DragDropContext>
             <Paper elevation={3} sx={{
                 bgcolor: 'background.paper',
                 textAlign: 'center',
@@ -162,19 +166,22 @@ function SongPage() {
             }}>
                 <Button variant="contained"
                         sx={{justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(48px)'}}
-                        onClick={handleSaveSong}>Save</Button>
-                {/*<Button >*/}
-                <HighlightOffSharpIcon sx={{
+                        onClick={handleSaveSong}
+                >Save</Button>
+                <HighlightOffSharpIcon
+                    onClick={() => {
+                        handleDeleteSong();
+                        navigate("/");
+                    }} sx={{
                     color: theme.palette.error.main,
                     justifySelf: 'center',
                     mr: '2rem',
                     fontSize: 30,
                     ml: 'auto',
                     cursor: 'pointer'
-                }}
-                                       onClick={handleDeleteSong} href={"/"}/>
+                }}/>
             </Paper>
-        </DragDropContext>
+        </Box>
     )
 }
 
