@@ -9,7 +9,7 @@ import {theme} from "./lib/Theme";
 
 ReactDOM.render(
     // <React.StrictMode>
-        <HashRouter basename = {process.env.PUBLIC_URL}>
+        <HashRouter>
             <ThemeProvider theme={theme}>
                 <App/>
             </ThemeProvider>
