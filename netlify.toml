@@ -1,8 +1,7 @@
-# [build]
-#   command = "yarn run build"
-#   publish = "/dist"
-#   base ="/"
-#
+[build]
+  command = "CI= yarn run build"
+  publish = "dist"
+
 [[redirects]]
   from = "/*"
   to = "/"
