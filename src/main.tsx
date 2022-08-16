@@ -9,11 +9,11 @@ import {theme} from "./lib/Theme";
 
 ReactDOM.render(
     // <React.StrictMode>
-        <HashRouter>
+        <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <App/>
             </ThemeProvider>
-        </HashRouter>,
+        </BrowserRouter>,
     // </React.StrictMode>,
     document.getElementById('root')
 );
