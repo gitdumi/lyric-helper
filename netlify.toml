@@ -1,5 +1,5 @@
 [build]
-  command = "CI=y arn run build"
+  command = "CI= yarn run build"
   publish = "dist"
 
 [[redirects]]
