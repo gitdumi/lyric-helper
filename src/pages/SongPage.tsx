@@ -41,7 +41,7 @@ function SongPage() {
   }
 
   function handleAddSection() {
-    setNewSection(generateNewEntity(NEW_SECTION));
+    setNewSection(generateNewEntity(NEW_SECTION()));
   }
 
   function handleDuplicateSection(sectionIndex: number) {
@@ -59,7 +59,7 @@ function SongPage() {
     const container = event.currentTarget.closest('.section-card');
     container.style.transition = 'all 0.5s';
     container.style.opacity = '0';
-    setTimeout(function() {
+    setTimeout(function () {
       setSongData((prev: SongData) => {
         prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId);
         return { ...prev, sections: prev.sections };
@@ -107,7 +107,7 @@ function SongPage() {
     <Draggable key={section.id} draggableId={section.id} index={index}>
       {(provided) => {
         return (
-          <div ref={provided.innerRef} {...provided.draggableProps} id='draggable-section'>
+          <div ref={provided.innerRef} {...provided.draggableProps} id="draggable-section">
             <SectionCard
               provided={{ ...provided }}
               key={`SC-${section.id}`}
@@ -124,19 +124,18 @@ function SongPage() {
 
   return (
     <Box
-      display='flex'
+      display="flex"
       sx={{
         flexDirection: 'column',
         alignItems: 'center',
         height: '100%',
         width: '100%',
         overflow: 'scroll'
-      }}
-    >
+      }}>
       <input
-        className='song-title'
-        type='text'
-        placeholder='Song Title'
+        className="song-title"
+        type="text"
+        placeholder="Song Title"
         value={songData.title}
         onChange={handleTitleChange}
         onFocus={(e) => e.target.select()}
@@ -147,7 +146,7 @@ function SongPage() {
         }}
       />
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable'>
+        <Droppable droppableId="droppable">
           {(provided) => {
             return (
               <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -162,10 +161,9 @@ function SongPage() {
             paddingBottom: '100px',
             marginTop: `${songData.sections.length > 0 ? '0' : '1rem'}`
           }}
-          id='add-section'
-          onClick={handleAddSection}
-        >
-          <AiOutlinePlusCircle className='react-button' />
+          id="add-section"
+          onClick={handleAddSection}>
+          <AiOutlinePlusCircle className="react-button" />
           section
         </button>
       </DragDropContext>
@@ -181,13 +179,11 @@ function SongPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
-        }}
-      >
+        }}>
         <Button
-          variant='contained'
+          variant="contained"
           sx={{ justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(48px)' }}
-          onClick={handleSaveSong}
-        >
+          onClick={handleSaveSong}>
           Save
         </Button>
         <HighlightOffSharpIcon

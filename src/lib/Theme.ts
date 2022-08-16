@@ -10,6 +10,10 @@ export const COLORS = {
 
 export const SECTION_COLORS = [COLORS.GREEN, COLORS.BLUE, COLORS.RED, COLORS.PURPLE];
 
+export function RANDOM_COLOR() {
+  return SECTION_COLORS[Math.floor(Math.random() * SECTION_COLORS.length)];
+}
+
 interface PaletteColor {
   light?: string;
   main: string;
