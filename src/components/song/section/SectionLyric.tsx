@@ -49,7 +49,7 @@ export default function SectionLyric(props: {
   async function handleRandom() {
     //@ts-ignore
     inputField.current.value = 'loading...';
-    const result = await getLyric();
+    const result = await getLyric(songData.config.selectedSylCount);
     setSongData((prev: SongData) => {
       prev.sections[sectionIndex].lyrics = prev.sections[sectionIndex].lyrics.map((lyr) => {
         if (lyr.id === id) {

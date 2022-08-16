@@ -4,8 +4,7 @@ import {Lyric} from "./interfaces";
 export function getLyric(syllableCount: number) {
   return fetchLyric().then((all) => {
     const raw = all.replace(new RegExp('^[^A-z]|[^A-z]$|[.,]'), '').split(' ');
-
-    const result = {
+    const result: Lyric = {
       value: '',
       syllableCount: 0,
       id: ''
@@ -30,7 +29,8 @@ function fetchLyric() {
 
 function processLyric(syllableCount: number, raw: string[], result: Lyric) {
   for (let index = 0; index < raw.length; index++) {
-    if (result.syllableCount && result.syllableCount < 8) {
+    // @ts-ignore
+    if (result.syllableCount < 8) {
       result = {
         value: result.value ? result.value + ' ' + raw[index] : raw[index],
         syllableCount: result.syllableCount
