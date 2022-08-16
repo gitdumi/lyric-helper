@@ -1,38 +1,39 @@
 /*For full lyric width*/
-.draggable-lyric, .droppableLyric {
-    width: 100%;
-    transition: var(--transition-speed);
+.draggable-lyric,
+.droppableLyric {
+  width: 100%;
+  transition: var(--transition-speed);
 }
 
 .section-lyric {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
 }
 
 .section-lyric input {
-    min-width: 1ch;
-    justify-self: flex-start;
-    background-color: transparent;
-    border: none;
-    outline: none;
+  min-width: 1ch;
+  justify-self: flex-start;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 .section-lyric--actions__random {
-    margin-left: 0.5rem;
-    margin-right: 0;
-    transform: translateY(-2px);
+  margin-left: 0.5rem;
+  margin-right: 0;
+  transform: translateY(-2px);
 }
 .section-lyric--actions__delete {
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .section-lyric:hover {
-    filter: invert(1)
+  filter: invert(1);
 }
 
 .section-lyric--actions {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    padding: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding: 0;
 }

@@ -1,13 +1,14 @@
-import {getNewKey} from "./utils";
+import { getNewKey } from './utils';
+import {Lyric} from "./interfaces";
 
 export function getLyric(syllableCount: number) {
   return fetchLyric().then((all) => {
-    const raw = all.replace(new RegExp("^[^A-z]|[^A-z]$|[.,]"), "").split(" ");
+    const raw = all.replace(new RegExp('^[^A-z]|[^A-z]$|[.,]'), '').split(' ');
 
-    let result = {
-      value: "",
+    const result = {
+      value: '',
       syllableCount: 0,
-      id: ""
+      id: ''
     };
 
     return processLyric(syllableCount, raw, result);
@@ -15,7 +16,7 @@ export function getLyric(syllableCount: number) {
 }
 
 function fetchLyric() {
-  return fetch("https://hipsum.co/api/?type=hipster-centric&sentences=1")
+  return fetch('https://hipsum.co/api/?type=hipster-centric&sentences=1')
     .then(function (response) {
       return response.json();
     })
@@ -27,11 +28,11 @@ function fetchLyric() {
     });
 }
 
-function processLyric(syllableCount: number, raw: string[], result: any) {
+function processLyric(syllableCount: number, raw: string[], result: Lyric) {
   for (let index = 0; index < raw.length; index++) {
-    if (result.syllableCount < 8) {
+    if (result.syllableCount && result.syllableCount < 8) {
       result = {
-        value: result.value ? result.value + " " + raw[index] : raw[index],
+        value: result.value ? result.value + ' ' + raw[index] : raw[index],
         syllableCount: result.syllableCount
           ? result.syllableCount + getSyllableCount(raw[index])
           : getSyllableCount(raw[index]),
@@ -47,14 +48,14 @@ function processLyric(syllableCount: number, raw: string[], result: any) {
 export function getSyllableCount(word: string) {
   let numSyllables = 0;
   let newSyllable = true;
-  let vowels = "aeiouy";
-  let cArray = [...word];
+  const vowels = 'aeiouy';
+  const cArray = [...word];
 
   for (let i = 0; i < cArray.length; i++) {
     // dealing with lone 'e's and 'e's in the end of the word.
     if (
       i == cArray.length - 1 &&
-      cArray[i].toLowerCase() == "e" &&
+      cArray[i].toLowerCase() == 'e' &&
       newSyllable &&
       numSyllables > 0
     ) {

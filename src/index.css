@@ -1,5 +1,5 @@
 :root {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -15,7 +15,7 @@
   -webkit-text-size-adjust: 100%;
 
   --accent-color: #1adebb;
-  --accent-color-contrast: #F83F07;
+  --accent-color-contrast: #f83f07;
   --text-color: white;
   --light-background: rgb(237, 237, 237);
   --black: black;

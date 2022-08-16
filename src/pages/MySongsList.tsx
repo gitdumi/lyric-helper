@@ -1,65 +1,98 @@
-import * as React from "react";
-import {getNewKey} from "../utils/utils";
-import {generateNewEntity, NEW_SONG, SAMPLE_SONGS} from "../context/InitData";
-import {useEffect, useRef, useState} from "react";
-import {SongData} from "../utils/interfaces";
-import {
-    Button,
-    List,
-    ListItemButton,
-    Tooltip,
-    Typography
-} from "@mui/material";
-import {LS_KEYS} from "../utils/constants";
+import * as React from 'react';
+import {getNewKey} from '../utils/utils';
+import {generateNewEntity, NEW_SONG, SAMPLE_SONGS} from '../context/InitData';
+import {useEffect, useState} from 'react';
+import {SongData} from '../utils/interfaces';
+import {Button, List, ListItemButton, Tooltip, Typography} from '@mui/material';
+import {LS_KEYS} from '../utils/constants';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 function MySongsList() {
-    //@ts-ignore
-    const [songs, setSongs] = useState<SongData[]>(JSON.parse(localStorage.getItem(LS_KEYS.SONGS)) || SAMPLE_SONGS)
-    const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT) || '0')
-
-    const titleElement = useRef();
+    const [songs, setSongs] = useState<SongData[]>(
+        //@ts-ignore
+        JSON.parse(localStorage.getItem(LS_KEYS.SONGS)) || SAMPLE_SONGS
+    );
+    const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT) || '0');
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        localStorage.setItem(LS_KEYS.CURRENT, currentSongId)
+        // @ts-ignore
+        setSongs(JSON.parse(localStorage.getItem(LS_KEYS.SONGS)))
+    }, [location]);
+
+
+    useEffect(() => {
+        localStorage.setItem(LS_KEYS.CURRENT, currentSongId);
+        if (currentSongId != '0') {
+            navigate(`song/${currentSongId}`, {replace: false});
+        }
     }, [currentSongId]);
 
-
     useEffect(() => {
-        localStorage.setItem("SONGS", JSON.stringify(songs));
+        localStorage.setItem('SONGS', JSON.stringify(songs));
     }, [songs]);
 
-
-    function handleAddSong(e: any) {
+    function handleAddSong(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.stopPropagation();
-        setSongs(prev => [...prev, generateNewEntity(NEW_SONG)]);
+        const newSong = generateNewEntity(NEW_SONG);
+        setSongs((prev) => [...prev, newSong]);
+        setCurrentSongId(newSong.id);
+        console.log({songs});
+        return newSong;
     }
 
-    const songLinks = songs.map(song => {
-        return <Tooltip ref={titleElement} title={song.title} disableHoverListener={song.title.length < 20}>
-            <ListItemButton selected={song.id === currentSongId}
-                            key={`link-${getNewKey()}`}
-                            href={`/song/${song.id}`}
-                            onClick={() => setCurrentSongId(song.id)}>
-                <Typography noWrap>
-                    {song.title}
-                </Typography>
-            </ListItemButton>
-        </Tooltip>
-    })
+    const songLinks = songs.map((song) => {
+        return (
+            <Tooltip
+                key={`tooltip-${getNewKey()}`}
+                title={song.title}
+                disableHoverListener={song.title.length < 20}
+            >
+                <ListItemButton
+                    selected={song.id === currentSongId}
+                    key={`link-${song.id}`}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('clicky');
+                        setCurrentSongId(song.id);
+                    }}
+                >
+                    <Typography noWrap>{song.title}</Typography>
+                </ListItemButton>
+            </Tooltip>
+        );
+    });
 
     return (
-        <List sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            p: 0,
-        }}>
-            <Button variant="contained"
-                    onClick={handleAddSong}
+        <List
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                p: 0
+            }}
+        >
+            <Button
+                variant="contained"
+                onClick={(e) => {
+                    handleAddSong(e);
+                    // console.log(songs)
+                    // console.log(songs.length)
+                    // console.log(songs[songs.length - 1].id)
+
+                    // navigate(`song/${songs[songs.length - 1].id}`)
+                    // setTimeout(() => {
+                    //     console.log('after',songs)
+                    //     navigate(`song/${songs[songs.length - 1].id}`)
+                    // }, 6000)
+                }}
                 // sx={{position: 'sticky',  zIndex: 1}}
-            >Add song</Button>
+            >
+                Add song
+            </Button>
             {songLinks}
         </List>
-    )
+    );
 }
 
 export default MySongsList;

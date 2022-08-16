@@ -1,47 +1,47 @@
 .song-title {
-    border: none;
-    outline: none;
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-    color: var(--accent-color-contrast);
-    margin-top: 1rem;
+  border: none;
+  outline: none;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--accent-color-contrast);
+  margin-top: 1rem;
 }
 
 .section-lyric .react-button {
-    display: flex;
-    height: 1rem;
-    width: auto;
-    align-self: center;
-    margin: 0.3rem 0.5rem 0 0;
-    padding: 0;
+  display: flex;
+  height: 1rem;
+  width: auto;
+  align-self: center;
+  margin: 0.3rem 0.5rem 0 0;
+  padding: 0;
 }
 
 .react-button:hover:not(#add-section svg) {
-    filter: invert(1);
-    cursor: pointer;
+  filter: invert(1);
+  cursor: pointer;
 }
 
 #add-section {
-    border: none;
-    font-weight: bold;
-    font-size: 25px;
-    background-color: transparent;
-    color: var(--accent-color-contrast);
-    position: relative;
+  border: none;
+  font-weight: bold;
+  font-size: 25px;
+  background-color: transparent;
+  color: var(--accent-color-contrast);
+  position: relative;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
 }
 
 #add-section svg {
-    height: 1.5rem;
-    transform: translateY(1px);
+  height: 1.5rem;
+  transform: translateY(1px);
 }
 
 #add-section:hover {
-    filter: invert(1);
-    cursor: pointer;
+  filter: invert(1);
+  cursor: pointer;
 }

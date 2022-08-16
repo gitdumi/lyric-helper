@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from "./App";
-import "./index.css";
-import {BrowserRouter, HashRouter} from "react-router-dom";
+import App from './App';
+import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 
-import {ThemeProvider} from "@emotion/react";
-import {theme} from "./lib/Theme";
+import { ThemeProvider } from '@emotion/react';
+import { theme } from './lib/Theme';
 
 ReactDOM.render(
-    // <React.StrictMode>
-        <BrowserRouter>
-            <ThemeProvider theme={theme}>
-                <App/>
-            </ThemeProvider>
-        </BrowserRouter>,
-    // </React.StrictMode>,
-    document.getElementById('root')
+  // <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ThemeProvider>,
+  // </React.StrictMode>,
+  document.getElementById('root')
 );
