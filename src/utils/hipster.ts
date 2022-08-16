@@ -1,5 +1,5 @@
 import { getNewKey } from './utils';
-import {Lyric} from "./interfaces";
+import { Lyric } from './interfaces';
 
 export function getLyric(syllableCount: number) {
   return fetchLyric().then((all) => {
@@ -16,13 +16,13 @@ export function getLyric(syllableCount: number) {
 
 function fetchLyric() {
   return fetch('https://hipsum.co/api/?type=hipster-centric&sentences=1')
-    .then(function (response) {
+    .then(function(response) {
       return response.json();
     })
-    .then(function (data) {
+    .then(function(data) {
       return data[0];
     })
-    .catch(function (err) {
+    .catch(function(err) {
       console.log(err);
     });
 }

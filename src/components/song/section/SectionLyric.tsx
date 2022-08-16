@@ -25,7 +25,7 @@ export default function SectionLyric(props: {
     return { visibility: isHover ? 'visible' : 'hidden' };
   }
 
-  function handleChange(e: { target: { value: any; }; }) {
+  function handleChange(e: { target: { value: any } }) {
     console.log(`change section ${sectionIndex} lyric ${index}`);
     setSongData((prevsongData: SongData) => {
       const newLyrics = [...prevsongData.sections[sectionIndex].lyrics].map((lyr) => {
@@ -74,7 +74,7 @@ export default function SectionLyric(props: {
     container.style.transition = 'all 0.5s';
     // @ts-ignore
     container.style.opacity = '0';
-    setTimeout(function () {
+    setTimeout(function() {
       setSongData((prev: SongData) => {
         prev.sections[sectionIndex].lyrics = updatedLyrics;
         return { ...prev, sections: prev.sections };
@@ -85,23 +85,23 @@ export default function SectionLyric(props: {
   return (
     <li
       {...provided.dragHandleProps}
-      className="section-lyric"
+      className='section-lyric'
       onMouseEnter={() => setIsHover(true)}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       <button
-        className="section-lyric--actions__random svg-wrapper"
+        className='section-lyric--actions__random svg-wrapper'
         onClick={async () => {
           await handleRandom();
         }}
         ref={randomButton}
       >
-        <IoColorWandOutline className="react-button" style={getVisibility()} />
+        <IoColorWandOutline className='react-button' style={getVisibility()} />
       </button>
 
       <input
-        type="text"
+        type='text'
         value={value}
         ref={inputField}
         maxLength={MAX_CHARS}
@@ -110,13 +110,13 @@ export default function SectionLyric(props: {
       />
       <div className={`section-lyric--actions`}>
         <button
-          className="section-lyric--actions__delete svg-wrapper"
+          className='section-lyric--actions__delete svg-wrapper'
           onClick={(e) => {
             handleDelete(e, index);
             e.stopPropagation();
           }}
         >
-          <AiOutlineCloseCircle className="react-button" style={getVisibility()} />
+          <AiOutlineCloseCircle className='react-button' style={getVisibility()} />
         </button>
       </div>
     </li>
