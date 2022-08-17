@@ -1,16 +1,15 @@
 import { useContext, createContext, useState } from 'react';
 import { SongData } from '../utils/interfaces';
 import { NEW_SONG } from './InitData';
+import React from 'react';
 
 const SongContext = createContext(NEW_SONG);
 
 export const SongContextProvider = ({ children }: any) => {
   const [songData, setSongData] = useState(NEW_SONG);
 
-  return (
-    // @ts-ignore
-    <SongContext.Provider value={{ songData, setSongData }}>{children}</SongContext.Provider>
-  );
+  // @ts-ignore
+  return <SongContext.Provider value={{ songData, setSongData }}>{children}</SongContext.Provider>;
 };
 
 export const useSongData = () => {

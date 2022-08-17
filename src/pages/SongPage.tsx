@@ -34,7 +34,7 @@ function SongPage() {
 
   useAddSection(newSection);
 
-  function handleTitleChange(e: { target: { value: any } }) {
+  function handleTitleChange(e: { target: { value: string } }) {
     setSongData((prev: SongData) => ({ ...prev, title: e.target.value || 'Song title' }));
   }
 

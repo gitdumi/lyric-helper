@@ -19,15 +19,14 @@ import { SECTION_COLORS } from '../../../lib/Theme';
 export default function SectionCard(props: {
   sectionId: string;
   sectionIndex: number;
-  handleDuplicate: Function;
-  handleDelete: Function;
+  handleDuplicate: (sectionIndex: number) => void;
+  handleDelete: (event: any, sectionId: string) => void;
   provided: any;
 }) {
   const { songData, setSongData } = useSongData();
   const { sectionIndex, sectionId, handleDuplicate, handleDelete, provided } = props;
   const sectionData = songData.sections[sectionIndex];
-  const { lyrics, count } = sectionData;
-  // @ts-ignore
+  const { lyrics } = sectionData;
   const [isHover, setIsHover] = useState(false);
   const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
 
@@ -37,7 +36,11 @@ export default function SectionCard(props: {
     return { visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}` };
   }
 
-  function handleChange(e: any) {
+  function handleChange(e: {
+    preventDefault: () => void;
+    stopPropagation: () => void;
+    target: { value: string };
+  }) {
     e.preventDefault();
     e.stopPropagation();
     setSongData((prevsongData: SongData) => {
@@ -46,7 +49,7 @@ export default function SectionCard(props: {
     });
   }
 
-  function handleColorChange(color: any, event: any) {
+  function handleColorChange(color: { hex: string }) {
     setSongData((prev: SongData) => {
       const sections = [...prev.sections];
       sections[sectionIndex].color = color.hex;
@@ -141,11 +144,8 @@ export default function SectionCard(props: {
           <button
             ref={addButton}
             className="section-card--content__add svg-wrapper"
-            onClick={async (e) => {
-              // e.nativeEvent.stopImmediatePropagation();
-              // addButton.current.style = 'hidden'
+            onClick={async () => {
               await addRandomLyric();
-              // addButton.current.style = 'visible'
             }}
           >
             <AiOutlinePlusCircle

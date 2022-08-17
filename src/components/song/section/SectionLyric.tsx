@@ -17,8 +17,8 @@ export default function SectionLyric(props: {
   const { index, sectionIndex, provided } = props;
   const { value, id } = songData.sections[sectionIndex].lyrics[index];
 
-  const randomButton = useRef() as LegacyRef<HTMLButtonElement>;
-  const inputField = useRef() as LegacyRef<HTMLInputElement>;
+  const randomButton = useRef() as any;
+  const inputField = useRef() as any;
 
   function getVisibility(): any {
     return { visibility: isHover ? 'visible' : 'hidden' };
@@ -46,8 +46,7 @@ export default function SectionLyric(props: {
   }
 
   async function handleRandom() {
-    //@ts-ignore
-    inputField.current.value = 'loading...';
+    inputField.current!.value = 'loading...';
     const result = await getLyric(songData.config.selectedSylCount);
     setSongData((prev: SongData) => {
       prev.sections[sectionIndex].lyrics = prev.sections[sectionIndex].lyrics.map((lyr) => {
@@ -69,9 +68,9 @@ export default function SectionLyric(props: {
       }
     );
     const container = event.currentTarget.closest('.section-lyric');
-    // @ts-ignore
+    //@ts-ignore
     container.style.transition = 'all 0.5s';
-    // @ts-ignore
+    //@ts-ignore
     container.style.opacity = '0';
     setTimeout(function () {
       setSongData((prev: SongData) => {
