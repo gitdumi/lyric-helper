@@ -9,16 +9,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function MySongsList() {
   const [songs, setSongs] = useState<SongData[]>(
-    //@ts-ignore
-    JSON.parse(localStorage.getItem(LS_KEYS.SONGS)) || SAMPLE_SONGS
+    JSON.parse(localStorage.getItem(LS_KEYS.SONGS) || '[]') || SAMPLE_SONGS
   );
+
   const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT) || '0');
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // @ts-ignore
-    setSongs(JSON.parse(localStorage.getItem(LS_KEYS.SONGS)));
+    setSongs(JSON.parse(localStorage.getItem(LS_KEYS.SONGS) || '[]'));
   }, [location]);
 
   useEffect(() => {
@@ -37,7 +36,6 @@ function MySongsList() {
     const newSong = generateNewEntity(NEW_SONG);
     setSongs((prev) => [...prev, newSong]);
     setCurrentSongId(newSong.id);
-    console.log({ songs });
     return newSong;
   }
 
@@ -51,9 +49,7 @@ function MySongsList() {
         <ListItemButton
           selected={song.id === currentSongId}
           key={`link-${song.id}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log('clicky');
+          onClick={() => {
             setCurrentSongId(song.id);
           }}
         >

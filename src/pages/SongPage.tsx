@@ -16,20 +16,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function SongPage() {
   const { songData, setSongData } = useSongData();
-  const [newSection, setNewSection]: any = useState('');
+  const [newSection, setNewSection] = useState<SectionData>();
   const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT));
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // @ts-ignore
-    setCurrentSongId(location.pathname.match(new RegExp('[A-z0-9]{20}$'))[0]);
+    const currentSongId = location.pathname.match(new RegExp('[A-z0-9]{20}$'))![0];
+    setCurrentSongId(currentSongId);
   }, [location]);
 
   useEffect(() => {
-    console.log(currentSongId);
-    // @ts-ignore
-    const songs = JSON.parse(localStorage.getItem(LS_KEYS.SONGS));
+    const songs = JSON.parse(localStorage.getItem(LS_KEYS.SONGS) || '[]');
     const index = songs.findIndex((song: SongData) => song.id === currentSongId);
     setSongData(songs[index]);
   }, [currentSongId]);
@@ -54,7 +52,6 @@ function SongPage() {
     event: { stopPropagation: () => void; currentTarget: { closest: (arg0: string) => any } },
     sectionId: string
   ) {
-    // event.preventDefault();
     event.stopPropagation();
     const container = event.currentTarget.closest('.section-card');
     container.style.transition = 'all 0.5s';
@@ -68,10 +65,7 @@ function SongPage() {
   }
 
   function handleSaveSong() {
-    //todo: fix ts
-    // @ts-ignore
-    const songs: SongData[] = JSON.parse(localStorage.getItem('SONGS'));
-    // @ts-ignore
+    const songs: SongData[] = JSON.parse(localStorage.getItem('SONGS') || '[]');
     const index = songs.findIndex((song) => song.id === songData.id);
     songs[index] = songData;
     localStorage.setItem(LS_KEYS.SONGS, JSON.stringify([...songs]));
@@ -79,8 +73,7 @@ function SongPage() {
   }
 
   function handleDeleteSong() {
-    // @ts-ignore
-    const songs: SongData[] = JSON.parse(localStorage.getItem('SONGS'));
+    const songs: SongData[] = JSON.parse(localStorage.getItem('SONGS') || '[]');
     localStorage.setItem(
       LS_KEYS.SONGS,
       JSON.stringify(songs.filter((song: SongData) => song.id != currentSongId))
@@ -89,7 +82,7 @@ function SongPage() {
     console.log('deleted song');
   }
 
-  function onDragEnd(result: any) {
+  function onDragEnd(result: { destination: { index: number }; source: { index: number } }) {
     // dropped outside the list
     if (!result.destination) {
       return;
@@ -131,7 +124,8 @@ function SongPage() {
         height: '100%',
         width: '100%',
         overflow: 'scroll'
-      }}>
+      }}
+    >
       <input
         className="song-title"
         type="text"
@@ -145,6 +139,7 @@ function SongPage() {
           color: `${songData.sections[0]?.color || COLORS.GREEN}`
         }}
       />
+      {/*@ts-ignore*/}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided) => {
@@ -158,12 +153,13 @@ function SongPage() {
         </Droppable>
         <button
           style={{
-            paddingBottom: '100px',
+            marginBottom: '100px',
             marginTop: `${songData.sections.length > 0 ? '0' : '1rem'}`
           }}
           id="add-section"
-          onClick={handleAddSection}>
-          <AiOutlinePlusCircle className="react-button" />
+          onClick={handleAddSection}
+        >
+          <AiOutlinePlusCircle className="react-button" id="addSectionButtonIcon" />
           section
         </button>
       </DragDropContext>
@@ -179,14 +175,19 @@ function SongPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
-        }}>
+        }}
+      >
         <Button
           variant="contained"
           sx={{ justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(48px)' }}
-          onClick={handleSaveSong}>
+          onClick={handleSaveSong}
+        >
           Save
         </Button>
+
         <HighlightOffSharpIcon
+          className="svg-wrapper react-button"
+          id="deleteSongButtonIcon"
           onClick={() => {
             handleDeleteSong();
             navigate('/');

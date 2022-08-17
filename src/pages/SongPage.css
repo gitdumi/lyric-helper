@@ -18,7 +18,6 @@
 }
 
 .react-button:hover:not(#add-section svg) {
-  filter: invert(1);
   cursor: pointer;
 }
 
@@ -41,7 +40,25 @@
   transform: translateY(1px);
 }
 
+#deleteSongButtonIcon {
+  transition: 300ms linear all;
+}
+#add-section svg:hover, #deleteSongButtonIcon svg:hover {
+  height: 1.5rem;
+  transform: rotate(180deg);
+  filter: grayscale(100);
+}
+
+#add-section:hover svg{
+  transform: rotate(180deg);
+  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+}
+
 #add-section:hover {
-  filter: invert(1);
+  filter: grayscale(100);
   cursor: pointer;
 }

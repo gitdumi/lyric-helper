@@ -1,6 +1,6 @@
-import React, { LegacyRef, useEffect, useRef, useState } from 'react';
+import React, { LegacyRef, useRef, useState } from 'react';
 import SectionLyric from './SectionLyric';
-import { SongData, Lyric, SectionData } from '../../../utils/interfaces';
+import { SongData, Lyric } from '../../../utils/interfaces';
 import { useSongData } from '../../../context/SongContext';
 import { getLyric } from '../../../utils/hipster';
 import { reorder } from '../../../utils/utils';
@@ -9,8 +9,7 @@ import {
   AiOutlineCloseCircle,
   AiOutlinePlusCircle,
   IoSyncCircleOutline,
-  GoPrimitiveDot,
-  FiDivideCircle
+  GoPrimitiveDot
 } from 'react-icons/all';
 import { MAX_CHARS } from '../../../utils/constants';
 import { GithubPicker } from 'react-color';

@@ -2,7 +2,7 @@ import { SongData, SectionData } from '../../utils/interfaces';
 import { useSongData } from '../../context/SongContext';
 import { useEffect } from 'react';
 
-export function useAddSection(newSection: SectionData) {
+export const useAddSection = (newSection: SectionData | undefined): void => {
   const { setSongData } = useSongData();
 
   useEffect(() => {
@@ -13,4 +13,4 @@ export function useAddSection(newSection: SectionData) {
       });
     }
   }, [newSection]);
-}
+};

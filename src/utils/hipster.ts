@@ -29,8 +29,7 @@ function fetchLyric() {
 
 function processLyric(syllableCount: number, raw: string[], result: Lyric) {
   for (let index = 0; index < raw.length; index++) {
-    // @ts-ignore
-    if (result.syllableCount < 8) {
+    if (result.syllableCount! < 8) {
       result = {
         value: result.value ? result.value + ' ' + raw[index] : raw[index],
         syllableCount: result.syllableCount

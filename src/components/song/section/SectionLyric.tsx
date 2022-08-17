@@ -1,6 +1,5 @@
 import React, { LegacyRef, useRef, useState } from 'react';
-// @ts-ignore
-import { getLyric, getSyllableCount } from '../../../utils/hipster.ts';
+import { getLyric } from '../../../utils/hipster';
 import { useSongData } from '../../../context/SongContext';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
 import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../utils/constants';
@@ -88,13 +87,15 @@ export default function SectionLyric(props: {
       className="section-lyric"
       onMouseEnter={() => setIsHover(true)}
       onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}>
+      onMouseLeave={() => setIsHover(false)}
+    >
       <button
         className="section-lyric--actions__random svg-wrapper"
         onClick={async () => {
           await handleRandom();
         }}
-        ref={randomButton}>
+        ref={randomButton}
+      >
         <IoColorWandOutline className="react-button" style={getVisibility()} />
       </button>
 
@@ -112,7 +113,8 @@ export default function SectionLyric(props: {
           onClick={(e) => {
             handleDelete(e, index);
             e.stopPropagation();
-          }}>
+          }}
+        >
           <AiOutlineCloseCircle className="react-button" style={getVisibility()} />
         </button>
       </div>
