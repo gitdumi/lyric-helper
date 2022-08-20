@@ -30,22 +30,13 @@ export const theme = createTheme({
       contrastText: COLORS.WHITE
     },
     secondary: {
-      light: '',
-      main: COLORS.BLUE,
-      dark: '',
-      contrastText: ''
+      main: COLORS.BLUE
     },
     success: {
-      light: '',
-      main: COLORS.BLUE,
-      dark: '',
-      contrastText: ''
+      main: COLORS.BLUE
     },
     error: {
-      light: '',
-      main: COLORS.RED,
-      dark: '',
-      contrastText: ''
+      main: COLORS.RED
     }
   }
 });
