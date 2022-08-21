@@ -1,7 +1,6 @@
 import { getNewKey } from '../utils/utils';
 import { getRandomSection } from '../utils/constants';
-import { SongState } from '../store/slices/songSlice';
-import { SectionState } from '../store/slices/sectionSlice';
+import { SectionState, SongState } from '../store/interfaces';
 
 export function getNewSong(): SongState {
   return {

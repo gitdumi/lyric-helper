@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
-import { getNewKey, reorder } from '../utils/utils';
+import { reorder } from '../utils/utils';
 import { ANIMATION_TIMEOUT, LS_KEYS, MAX_CHARS } from '../utils/constants';
 import SectionCard from '../components/song/section/SectionCard';
 import { COLORS, theme } from '../lib/Theme';

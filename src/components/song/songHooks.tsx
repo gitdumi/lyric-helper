@@ -1,7 +1,6 @@
-import { SectionState } from '../../store/interfaces';
+import { SectionState, SongState } from '../../store/interfaces';
 import { useSongData } from '../../context/SongContext';
 import { useEffect } from 'react';
-import { SongState } from '../../store/slices/songSlice';
 
 export const useAddSection = (newSection: SectionState | undefined): void => {
   const { setSongData } = useSongData();

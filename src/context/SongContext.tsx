@@ -1,5 +1,4 @@
 import { useContext, createContext, useState } from 'react';
-import { SongData } from '../store/interfaces';
 import { getNewSong } from './InitData';
 import React from 'react';
 
