@@ -1,10 +1,15 @@
 import React, { LegacyRef, useRef, useState } from 'react';
 import { getLyric } from '../../../utils/hipster';
-import { useSongData } from '../../../context/SongContext';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
 import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../utils/constants';
-import { SongData } from '../../../utils/interfaces';
 import './SectionLyric.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  deleteSection,
+  deleteSectionLyric,
+  selectSong,
+  updateSectionLyric
+} from '../../../store/slices/songSlice';
 
 export default function SectionLyric(props: {
   index: number;
@@ -12,7 +17,8 @@ export default function SectionLyric(props: {
   value: string;
   provided: any;
 }) {
-  const { songData, setSongData } = useSongData();
+  const songData = useSelector(selectSong);
+  const dispatch = useDispatch();
   const [isHover, setIsHover] = useState(false);
   const { index, sectionIndex, provided } = props;
   const { value, id } = songData.sections[sectionIndex].lyrics[index];
@@ -26,38 +32,17 @@ export default function SectionLyric(props: {
 
   function handleChange(e: { target: { value: any } }) {
     console.log(`change section ${sectionIndex} lyric ${index}`);
-    setSongData((prevsongData: SongData) => {
-      const newLyrics = [...prevsongData.sections[sectionIndex].lyrics].map((lyr) => {
-        if (lyr.id === id) {
-          return { id: id, value: e.target.value };
-        } else {
-          return lyr;
-        }
-      });
-
-      prevsongData.sections[sectionIndex] = {
-        ...prevsongData.sections[sectionIndex],
-        lyrics: newLyrics
-      };
-      const newSections = [...prevsongData.sections];
-
-      return { ...prevsongData, sections: newSections };
-    });
+    dispatch(
+      updateSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index, value: e.target.value })
+    );
   }
 
   async function handleRandom() {
     inputField.current!.value = 'loading...';
     const result = await getLyric(songData.config.selectedSylCount);
-    setSongData((prev: SongData) => {
-      prev.sections[sectionIndex].lyrics = prev.sections[sectionIndex].lyrics.map((lyr) => {
-        if (lyr.id === id) {
-          return result;
-        } else {
-          return lyr;
-        }
-      });
-      return { ...prev, sections: prev.sections };
-    });
+    dispatch(
+      updateSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index, value: result.value })
+    );
   }
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
@@ -72,12 +57,8 @@ export default function SectionLyric(props: {
     container.style.transition = 'all 0.5s';
     //@ts-ignore
     container.style.opacity = '0';
-    setTimeout(function () {
-      setSongData((prev: SongData) => {
-        prev.sections[sectionIndex].lyrics = updatedLyrics;
-        return { ...prev, sections: prev.sections };
-      });
-    }, ANIMATION_TIMEOUT);
+    dispatch(deleteSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index }));
+    // setTimeout(function () {}, ANIMATION_TIMEOUT);
   };
 
   return (

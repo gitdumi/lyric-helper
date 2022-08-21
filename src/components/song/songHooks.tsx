@@ -1,13 +1,14 @@
-import { SongData, SectionData } from '../../utils/interfaces';
+import { SectionState } from '../../store/interfaces';
 import { useSongData } from '../../context/SongContext';
 import { useEffect } from 'react';
+import { SongState } from '../../store/slices/songSlice';
 
-export const useAddSection = (newSection: SectionData | undefined): void => {
+export const useAddSection = (newSection: SectionState | undefined): void => {
   const { setSongData } = useSongData();
 
   useEffect(() => {
     if (newSection) {
-      setSongData((prev: SongData) => {
+      setSongData((prev: SongState) => {
         prev.sections = [...prev.sections, newSection];
         return { ...prev, sections: prev.sections };
       });

@@ -1,18 +1,21 @@
-import { SectionData, SongData } from '../utils/interfaces';
 import { getNewKey } from '../utils/utils';
 import { getRandomSection } from '../utils/constants';
+import { SongState } from '../store/slices/songSlice';
+import { SectionState } from '../store/slices/sectionSlice';
 
-export const NEW_SONG: SongData = {
-  id: getNewKey(),
-  title: 'New song',
-  sections: [],
-  config: {
-    selectedSylCount: 8,
-    longestSylCount: 0
-  }
-};
+export function getNewSong(): SongState {
+  return {
+    id: getNewKey(),
+    title: 'New song',
+    sections: [],
+    config: {
+      selectedSylCount: 8,
+      longestSylCount: 0
+    }
+  };
+}
 
-export function NEW_SECTION(): SectionData {
+export function getNewSection(): SectionState {
   const randomSection = getRandomSection();
 
   return {
@@ -41,4 +44,4 @@ export const generateNewEntity = (entity: any): typeof entity => {
   }
 };
 
-export const SAMPLE_SONGS: SongData[] = [];
+export const SAMPLE_SONGS: SongState[] = [];

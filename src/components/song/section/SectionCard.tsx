@@ -1,7 +1,6 @@
 import React, { LegacyRef, useRef, useState } from 'react';
 import SectionLyric from './SectionLyric';
-import { SongData, Lyric } from '../../../utils/interfaces';
-import { useSongData } from '../../../context/SongContext';
+import { Lyric } from '../../../store/interfaces';
 import { getLyric } from '../../../utils/hipster';
 import { reorder } from '../../../utils/utils';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -15,6 +14,14 @@ import { MAX_CHARS } from '../../../utils/constants';
 import { GithubPicker } from 'react-color';
 import './SectionCard.css';
 import { SECTION_COLORS } from '../../../lib/Theme';
+import {
+  addSectionLyric,
+  reorderSectionLyrics,
+  selectSong,
+  updateSectionColor,
+  updateSectionTitle
+} from '../../../store/slices/songSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -23,8 +30,9 @@ export default function SectionCard(props: {
   handleDelete: (event: any, sectionId: string) => void;
   provided: any;
 }) {
-  const { songData, setSongData } = useSongData();
-  const { sectionIndex, sectionId, handleDuplicate, handleDelete, provided } = props;
+  const dispatch = useDispatch();
+  const songData = useSelector(selectSong);
+  const { sectionIndex, handleDuplicate, handleDelete, sectionId, provided } = props;
   const sectionData = songData.sections[sectionIndex];
   const { lyrics } = sectionData;
   const [isHover, setIsHover] = useState(false);
@@ -41,30 +49,19 @@ export default function SectionCard(props: {
     stopPropagation: () => void;
     target: { value: string };
   }) {
-    e.preventDefault();
-    e.stopPropagation();
-    setSongData((prevsongData: SongData) => {
-      prevsongData.sections[sectionIndex].name = e.target.value;
-      return { ...prevsongData, sections: prevsongData.sections };
-    });
+    // e.preventDefault();
+    // e.stopPropagation();
+    dispatch(updateSectionTitle({ index: sectionIndex, value: e.target.value }));
   }
 
   function handleColorChange(color: { hex: string }) {
-    setSongData((prev: SongData) => {
-      const sections = [...prev.sections];
-      sections[sectionIndex].color = color.hex;
-      return { ...prev, sections: sections };
-    });
+    dispatch(updateSectionColor({ index: sectionIndex, color: color.hex }));
     setIsHoverColorPicker(false);
   }
 
   async function addRandomLyric() {
-    getLyric(songData.config.selectedSylCount).then((result) => {
-      setSongData((prev: SongData) => {
-        prev.sections[sectionIndex].lyrics = [...sectionData.lyrics, result];
-        return { ...prev, sections: prev.sections };
-      });
-    });
+    const result = await getLyric(songData.config.selectedSylCount);
+    dispatch(addSectionLyric({ sectionIndex: sectionIndex, value: result }));
   }
 
   function onDragEnd(result: any) {
@@ -78,15 +75,7 @@ export default function SectionCard(props: {
       result.destination.index
     );
 
-    setSongData((prev: SongData) => {
-      const sections = [...songData.sections];
-      sections[sectionIndex].lyrics = [...newLyrics];
-
-      return {
-        ...prev,
-        sections: sections
-      };
-    });
+    dispatch(reorderSectionLyrics({ sectionIndex: sectionIndex, lyrics: newLyrics }));
   }
 
   const lyricElements = lyrics.map((lyric: Lyric, index: number) => {

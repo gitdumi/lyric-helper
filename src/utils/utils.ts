@@ -1,4 +1,4 @@
-import { Lyric, SectionData, SongData } from './interfaces';
+import { Lyric, SectionState, SongData } from '../store/interfaces';
 
 function makeid(length: number) {
   let result = '';
@@ -15,7 +15,7 @@ export const getNewKey = () => {
 };
 
 export function reorder(
-  list: SongData[] | SectionData[] | Lyric[],
+  list: SongData[] | SectionState[] | Lyric[],
   startIndex: number,
   endIndex: number
 ) {

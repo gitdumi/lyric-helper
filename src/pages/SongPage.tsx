@@ -1,52 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
-import { useAddSection } from '../components/song/songHooks';
-import { SectionData, SongData } from '../utils/interfaces';
-import { generateNewEntity, NEW_SECTION } from '../context/InitData';
 import { getNewKey, reorder } from '../utils/utils';
 import { ANIMATION_TIMEOUT, LS_KEYS, MAX_CHARS } from '../utils/constants';
 import SectionCard from '../components/song/section/SectionCard';
 import { COLORS, theme } from '../lib/Theme';
-import { useSongData } from '../context/SongContext';
 import './SongPage.css';
 import { Box, Button, Paper } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { deleteSong, saveSong, selectSongById, selectSongs } from '../store/slices/mainSlice';
+import {
+  addSection,
+  updateSongTitle,
+  setSong,
+  selectSong,
+  deleteSection,
+  duplicateSection,
+  reorderSections
+} from '../store/slices/songSlice';
+import { SectionState } from '../store/slices/sectionSlice';
 
 function SongPage() {
-  const { songData, setSongData } = useSongData();
-  const [newSection, setNewSection] = useState<SectionData>();
-  const [currentSongId, setCurrentSongId] = useState(localStorage.getItem(LS_KEYS.CURRENT));
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const songs = useSelector(selectSongs);
+  const songStateCopy = {
+    ...useSelector((state: RootState) => selectSongById(state.main, state.main.selected))
+  };
+  const songData = useSelector(selectSong);
+  const { songId } = useParams();
   const location = useLocation();
 
-  useEffect(() => {
-    const currentSongId = location.pathname.match(new RegExp('[A-z0-9]{20}$'))![0];
-    setCurrentSongId(currentSongId);
-  }, [location]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const songs = JSON.parse(localStorage.getItem(LS_KEYS.SONGS) || '[]');
-    const index = songs.findIndex((song: SongData) => song.id === currentSongId);
-    setSongData(songs[index]);
-  }, [currentSongId]);
+    // setting the copy of the selected song from main state to the song slice,
+    // which will be used to save the local state of the song
+    dispatch(setSong(songStateCopy));
+  }, [location.pathname]);
 
-  useAddSection(newSection);
-
-  function handleTitleChange(e: { target: { value: string } }) {
-    setSongData((prev: SongData) => ({ ...prev, title: e.target.value || 'Song title' }));
-  }
-
-  function handleAddSection() {
-    setNewSection(generateNewEntity(NEW_SECTION()));
-  }
-
-  function handleDuplicateSection(sectionIndex: number) {
-    const duplicate: SectionData = { ...songData.sections[sectionIndex] };
-    duplicate.id = getNewKey();
-    setNewSection(duplicate);
-  }
+  useEffect(() => {
+    //return to homepage after delete song
+    if (!songs.find((song) => song.id === songId)) {
+      navigate('/');
+    }
+  }, [songs]);
 
   function handleDeleteSection(
     event: { stopPropagation: () => void; currentTarget: { closest: (arg0: string) => any } },
@@ -57,29 +57,8 @@ function SongPage() {
     container.style.transition = 'all 0.5s';
     container.style.opacity = '0';
     setTimeout(function () {
-      setSongData((prev: SongData) => {
-        prev.sections = prev.sections.filter((section: SectionData) => section.id != sectionId);
-        return { ...prev, sections: prev.sections };
-      });
+      dispatch(deleteSection(sectionId));
     }, ANIMATION_TIMEOUT);
-  }
-
-  function handleSaveSong() {
-    const songs: SongData[] = JSON.parse(localStorage.getItem('SONGS') || '[]');
-    const index = songs.findIndex((song) => song.id === songData.id);
-    songs[index] = songData;
-    localStorage.setItem(LS_KEYS.SONGS, JSON.stringify([...songs]));
-    console.log('saved song');
-  }
-
-  function handleDeleteSong() {
-    const songs: SongData[] = JSON.parse(localStorage.getItem('SONGS') || '[]');
-    localStorage.setItem(
-      LS_KEYS.SONGS,
-      JSON.stringify(songs.filter((song: SongData) => song.id != currentSongId))
-    );
-    localStorage.setItem(LS_KEYS.CURRENT, '0');
-    console.log('deleted song');
   }
 
   function onDragEnd(result: { destination: { index: number }; source: { index: number } }) {
@@ -87,16 +66,11 @@ function SongPage() {
     if (!result.destination) {
       return;
     }
-
     const items = reorder(songData.sections, result.source.index, result.destination.index);
-
-    setSongData((prev: SongData) => ({
-      ...prev,
-      sections: items
-    }));
+    dispatch(reorderSections(items));
   }
 
-  const sectionComponents = songData.sections.map((section: SectionData, index: number) => (
+  const sectionComponents = songData.sections.map((section: SectionState, index: number) => (
     <Draggable key={section.id} draggableId={section.id} index={index}>
       {(provided) => {
         return (
@@ -106,8 +80,8 @@ function SongPage() {
               key={`SC-${section.id}`}
               sectionIndex={index}
               sectionId={section.id}
-              handleDuplicate={handleDuplicateSection}
-              handleDelete={handleDeleteSection}
+              handleDuplicate={() => dispatch(duplicateSection(index))}
+              handleDelete={(e) => handleDeleteSection(e, section.id)}
             />
           </div>
         );
@@ -131,7 +105,7 @@ function SongPage() {
         type="text"
         placeholder="Song Title"
         value={songData.title}
-        onChange={handleTitleChange}
+        onChange={(e) => dispatch(updateSongTitle(e.target.value))}
         onFocus={(e) => e.target.select()}
         maxLength={MAX_CHARS / 2}
         style={{
@@ -157,7 +131,9 @@ function SongPage() {
             marginTop: `${songData.sections.length > 0 ? '0' : '1rem'}`
           }}
           id="add-section"
-          onClick={handleAddSection}
+          onClick={() => {
+            dispatch(addSection());
+          }}
         >
           <AiOutlinePlusCircle className="react-button" id="addSectionButtonIcon" />
           section
@@ -180,7 +156,7 @@ function SongPage() {
         <Button
           variant="contained"
           sx={{ justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(48px)' }}
-          onClick={handleSaveSong}
+          onClick={() => dispatch(saveSong(songData))}
         >
           Save
         </Button>
@@ -189,8 +165,7 @@ function SongPage() {
           className="svg-wrapper react-button"
           id="deleteSongButtonIcon"
           onClick={() => {
-            handleDeleteSong();
-            navigate('/');
+            dispatch(deleteSong(songData));
           }}
           sx={{
             color: theme.palette.error.main,
