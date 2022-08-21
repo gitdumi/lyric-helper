@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getNewKey } from '../utils/utils';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button, List, ListItemButton, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -10,11 +10,10 @@ import {
   selectCurrentSongId,
   setCurrentSongId
 } from '../store/slices/mainSlice';
-import { SongState } from '../store/slices/songSlice';
 
 function MySongsList() {
   const dispatch = useDispatch();
-  const songs: SongState[] = useSelector(selectSongs);
+  const songs = useSelector(selectSongs);
   const songId: string = useSelector(selectCurrentSongId);
   const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ function MySongsList() {
     }
   }, [songId]);
 
-  const songLinks = songs.map((song: SongState) => {
+  const songLinks = songs.map((song) => {
     return (
       <Tooltip
         key={`tooltip-${getNewKey()}`}

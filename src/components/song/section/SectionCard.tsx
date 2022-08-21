@@ -49,8 +49,6 @@ export default function SectionCard(props: {
     stopPropagation: () => void;
     target: { value: string };
   }) {
-    // e.preventDefault();
-    // e.stopPropagation();
     dispatch(updateSectionTitle({ index: sectionIndex, value: e.target.value }));
   }
 

@@ -21,7 +21,7 @@ import {
   duplicateSection,
   reorderSections
 } from '../store/slices/songSlice';
-import { SectionState } from '../store/slices/sectionSlice';
+import { SectionState } from '../store/interfaces';
 
 function SongPage() {
   const dispatch = useDispatch();

@@ -1,11 +1,10 @@
-import React, { LegacyRef, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { getLyric } from '../../../utils/hipster';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
 import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../utils/constants';
 import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  deleteSection,
   deleteSectionLyric,
   selectSong,
   updateSectionLyric
@@ -47,18 +46,15 @@ export default function SectionLyric(props: {
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
     event.preventDefault();
-    const updatedLyrics = songData.sections[sectionIndex].lyrics.filter(
-      (lyr: object, i: number) => {
-        return i != index;
-      }
-    );
     const container = event.currentTarget.closest('.section-lyric');
     //@ts-ignore
     container.style.transition = 'all 0.5s';
     //@ts-ignore
     container.style.opacity = '0';
-    dispatch(deleteSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index }));
-    // setTimeout(function () {}, ANIMATION_TIMEOUT);
+
+    setTimeout(function () {
+      dispatch(deleteSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index }));
+    }, ANIMATION_TIMEOUT);
   };
 
   return (
