@@ -10,7 +10,7 @@ export const songSlice = createSlice({
   name: 'section',
   initialState,
   reducers: {
-    setSong: (state, action: PayloadAction<SongState>) => {
+    setSong: (state, action) => {
       return { ...action.payload };
     },
     updateSongTitle: (state, action) => {
@@ -100,6 +100,10 @@ export const songSlice = createSlice({
 });
 
 export const selectSong = (state: RootState) => state.song;
+
+export const selectCurrentSong = (state: RootState) => {
+  return { ...state.main.songs.find((song) => song.id === state.main.selected) };
+};
 
 export const selectSections = (state: RootState) => state.song.sections;
 

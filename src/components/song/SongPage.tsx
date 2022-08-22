@@ -10,50 +10,36 @@ import { Box, Button, Paper } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
-import { deleteSong, saveSong, selectSongById, selectSongs } from '../../app/mainSlice';
+import { deleteSong, saveSong, selectSongs } from '../../app/mainSlice';
 import {
   addSection,
   updateSongTitle,
-  setSong,
   selectSong,
   deleteSection,
   duplicateSection,
-  reorderSections
+  reorderSections,
+  setSong,
+  selectCurrentSong
 } from './songSlice';
 import { SectionState } from '../../app/interfaces';
 
 function SongPage() {
   const dispatch = useDispatch();
-  const songs = useSelector(selectSongs);
-  const songStateCopy = {
-    ...useSelector((state: RootState) => selectSongById(state.main, state.main.selected))
-  };
-  const songData = useSelector(selectSong);
-  const { songId } = useParams();
   const location = useLocation();
-
   const navigate = useNavigate();
-
-  console.log(songData);
-  console.log(songStateCopy);
-
-  useEffect(() => {
-    dispatch(setSong(songStateCopy));
-  }, []);
+  const songs = useSelector(selectSongs);
+  const currentSong = useSelector(selectCurrentSong);
+  const songData = useSelector(selectSong);
 
   useEffect(() => {
-    // setting the copy of the selected song from main state to the song slice,
-    // which will be used to save the local state of the song
-    dispatch(setSong(songStateCopy));
-  }, [location.pathname]);
-
-  useEffect(() => {
-    //return to homepage after delete song
-    if (!songs.find((song) => song.id === songId)) {
+    //Setting the song in store to the selected one
+    //Also, once the song list gets modified, updating the song slice with the newly selected song (fixes navigation after delete)
+    if (songs.length > 0) {
+      dispatch(setSong(currentSong));
+    } else {
       navigate('/');
     }
-  }, [songs]);
+  }, [songs, location.pathname]);
 
   function handleDeleteSection(
     event: { stopPropagation: () => void; currentTarget: { closest: (arg0: string) => any } },
@@ -117,7 +103,6 @@ function SongPage() {
         placeholder="Song Title"
         value={songData.title}
         onChange={(e) => dispatch(updateSongTitle(e.target.value))}
-        onFocus={(e) => e.target.select()}
         maxLength={MAX_CHARS / 2}
         style={{
           minWidth: `${songData.title.length + 1}ch`,

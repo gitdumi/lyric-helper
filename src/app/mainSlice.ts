@@ -44,7 +44,7 @@ export const mainSlice = createSlice({
       return {
         ...state,
         songs: songs,
-        selected: songs.length > 0 ? songs[0].id : '0'
+        selected: songs.length > 0 ? songs[songs.length - 1].id : '0'
       };
     }
   }
