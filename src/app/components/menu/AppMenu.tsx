@@ -28,6 +28,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`
   },
+  height: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
   borderColor: theme.palette.primary.main
 });
 

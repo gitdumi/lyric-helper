@@ -185,7 +185,7 @@ export default function SectionCard(props: {
             <GoPrimitiveDot color={sectionData.color} style={{ visibility: getVisibility() }} />
             <GithubPicker
               className="color-picker"
-              width="100px"
+              width="125px"
               triangle={'top-right'}
               colors={SECTION_COLORS}
               onChangeComplete={handleColorChange}

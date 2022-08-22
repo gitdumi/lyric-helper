@@ -57,7 +57,7 @@
   top: 50%;
   left: 100%;
   margin-left: 20px;
-  transform: translate(-109%, -12%);
+  transform: translate(-107%, -25%);
   padding: 0;
 
   position: absolute;
@@ -95,7 +95,7 @@
 }
 
 .section-card--content__lyrics {
-  min-width: 25rem;
+  min-width: 20rem;
   width: 100%;
   height: 100%;
   padding: 0.3rem 0;
