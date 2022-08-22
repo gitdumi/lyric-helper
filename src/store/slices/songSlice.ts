@@ -1,18 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getNewSection } from '../../context/InitData';
+import { getNewSection, getNewSong } from '../InitData';
 import { RootState } from '../store';
 import { getNewKey } from '../../utils/utils';
 import { SectionState, SongState } from '../interfaces';
 
-const initialState = {
-  id: 'first',
-  title: 'First',
-  sections: [],
-  config: {
-    selectedSylCount: 8,
-    longestSylCount: 8
-  }
-} as SongState;
+const initialState = getNewSong() as SongState;
 
 export const songSlice = createSlice({
   name: 'section',

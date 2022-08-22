@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { getNewSong } from '../../context/InitData';
+import { getNewSong } from '../InitData';
 import { MainDataState, SongState } from '../interfaces';
 
 const initialState = {
@@ -17,7 +17,6 @@ export const mainSlice = createSlice({
       state.isLoggedIn = !state.isLoggedIn;
     },
     setCurrentSongId: (state, action: PayloadAction<string>) => {
-      console.log('setting id ' + action.payload);
       state.selected = action.payload;
     },
     addSong: (state) => {
@@ -27,7 +26,7 @@ export const mainSlice = createSlice({
       };
     },
     saveSong: (state, actions: PayloadAction<SongState>) => {
-      let updatedSongs: SongState[] = state.songs.map((song: SongState) => {
+      const updatedSongs: SongState[] = state.songs.map((song: SongState) => {
         console.log('saving song');
         if (song.id === state.selected) {
           return actions.payload;

@@ -79,7 +79,7 @@ export default function SectionCard(props: {
   const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
     return (
       <Draggable key={`draggable-${lyric.id}`} draggableId={`SL-DRAG-${lyric.id}`} index={index}>
-        {(provided, snapshot) => {
+        {(provided) => {
           return (
             <div ref={provided.innerRef} className="draggable-lyric" {...provided.draggableProps}>
               <SectionLyric
@@ -158,7 +158,7 @@ export default function SectionCard(props: {
           </button>
           <button
             className="section-duplicate svg-wrapper"
-            onClick={(e) => handleDuplicate(sectionIndex)}
+            onClick={() => handleDuplicate(sectionIndex)}
           >
             <IoSyncCircleOutline
               className="react-button sync"
@@ -198,7 +198,7 @@ export default function SectionCard(props: {
         <div className="section-card--content__lyrics" style={{ backgroundColor: 'transparent' }}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
-              {(provided, snapshot) => {
+              {(provided) => {
                 return (
                   <div
                     className="droppableLyric"

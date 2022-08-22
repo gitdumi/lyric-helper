@@ -3,7 +3,7 @@ import { getNewKey } from '../utils/utils';
 import { useEffect } from 'react';
 import { Button, List, ListItemButton, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addSong,
   selectSongs,
@@ -53,7 +53,7 @@ function MySongsList() {
     >
       <Button
         variant="contained"
-        onClick={(e) => {
+        onClick={() => {
           dispatch(addSong());
         }}
       >

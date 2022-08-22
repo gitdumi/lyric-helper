@@ -20,7 +20,7 @@ export default function SectionLyric(props: {
   const dispatch = useDispatch();
   const [isHover, setIsHover] = useState(false);
   const { index, sectionIndex, provided } = props;
-  const { value, id } = songData.sections[sectionIndex].lyrics[index];
+  const { value } = songData.sections[sectionIndex].lyrics[index];
 
   const randomButton = useRef() as any;
   const inputField = useRef() as any;

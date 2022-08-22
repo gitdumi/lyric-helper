@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
 import { reorder } from '../utils/utils';
-import { ANIMATION_TIMEOUT, LS_KEYS, MAX_CHARS } from '../utils/constants';
+import { ANIMATION_TIMEOUT, MAX_CHARS } from '../utils/constants';
 import SectionCard from '../components/song/section/SectionCard';
 import { COLORS, theme } from '../lib/Theme';
 import './SongPage.css';
@@ -35,6 +35,13 @@ function SongPage() {
 
   const navigate = useNavigate();
 
+  console.log(songData);
+  console.log(songStateCopy);
+
+  useEffect(() => {
+    dispatch(setSong(songStateCopy));
+  }, []);
+
   useEffect(() => {
     // setting the copy of the selected song from main state to the song slice,
     // which will be used to save the local state of the song
@@ -66,7 +73,11 @@ function SongPage() {
     if (!result.destination) {
       return;
     }
-    const items = reorder(songData.sections, result.source.index, result.destination.index);
+    const items = reorder(
+      songData.sections,
+      result.source.index,
+      result.destination.index
+    ) as SectionState[];
     dispatch(reorderSections(items));
   }
 

@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 import SongPage from './pages/SongPage';
 import AppMenu from './components/AppMenu';
 import { Box } from '@mui/material';
-import { SongContextProvider } from './context/SongContext';
 
 function App() {
   return (
@@ -20,14 +19,7 @@ function App() {
       <Routes>
         <Route path="/">
           <Route path="song">
-            <Route
-              path=":songId"
-              element={
-                <SongContextProvider>
-                  <SongPage />
-                </SongContextProvider>
-              }
-            />
+            <Route path=":songId" element={<SongPage />} />
           </Route>
         </Route>
       </Routes>

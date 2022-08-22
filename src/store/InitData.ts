@@ -1,6 +1,6 @@
 import { getNewKey } from '../utils/utils';
 import { getRandomSection } from '../utils/constants';
-import { SectionState, SongState } from '../store/interfaces';
+import { SectionState, SongState } from './interfaces';
 
 export function getNewSong(): SongState {
   return {
@@ -34,13 +34,3 @@ export function getNewSection(): SectionState {
     count: 0
   };
 }
-
-export const generateNewEntity = (entity: any): typeof entity => {
-  if (entity.id) {
-    const newEntity = { ...entity };
-    newEntity.id = getNewKey();
-    return newEntity;
-  }
-};
-
-export const SAMPLE_SONGS: SongState[] = [];
