@@ -54,9 +54,8 @@ export const selectSongs = (state: RootState) => state.main.songs;
 
 export const selectCurrentSongId = (state: RootState) => state.main.selected;
 
-export const selectSongById = (state: typeof initialState, id: string) => {
-  const index: number = state.songs.findIndex((song: SongState) => song.id === id);
-  return state.songs[index];
+export const selectPickedSong = (state: RootState) => {
+  return { ...state.main.songs.find((song) => song.id === state.main.selected) };
 };
 
 export const { logIn, addSong, saveSong, deleteSong, setCurrentSongId } = mainSlice.actions;

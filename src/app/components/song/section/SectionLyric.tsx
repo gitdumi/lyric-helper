@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { getLyric } from '../../../lib/hipster';
+import { getLyric } from '../../../../lib/hipster';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
-import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../utils/constants';
+import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../../utils/constants';
 import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSectionLyric, selectSong, updateSectionLyric } from '../songSlice';
+import { deleteSectionLyric, selectCurrentSong, updateSectionLyric } from '../currentSongSlice';
 
 export default function SectionLyric(props: {
   index: number;
@@ -12,7 +12,7 @@ export default function SectionLyric(props: {
   value: string;
   provided: any;
 }) {
-  const songData = useSelector(selectSong);
+  const songData = useSelector(selectCurrentSong);
   const dispatch = useDispatch();
   const [isHover, setIsHover] = useState(false);
   const { index, sectionIndex, provided } = props;

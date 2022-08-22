@@ -1,35 +1,34 @@
 import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
-import { reorder } from '../../utils/utils';
-import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../utils/constants';
+import { reorder } from '../../../utils/utils';
+import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../utils/constants';
 import SectionCard from './section/SectionCard';
-import { COLORS, theme } from '../../lib/Theme';
+import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
 import { Box, Button, Paper } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSong, saveSong, selectSongs } from '../../app/mainSlice';
+import { deleteSong, saveSong, selectPickedSong, selectSongs } from '../../mainSlice';
 import {
   addSection,
   updateSongTitle,
-  selectSong,
+  selectCurrentSong,
   deleteSection,
   duplicateSection,
   reorderSections,
-  setSong,
-  selectCurrentSong
-} from './songSlice';
-import { SectionState } from '../../app/interfaces';
+  setSong
+} from './currentSongSlice';
+import { SectionState } from '../../interfaces';
 
 function SongPage() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const songs = useSelector(selectSongs);
-  const currentSong = useSelector(selectCurrentSong);
-  const songData = useSelector(selectSong);
+  const currentSong = useSelector(selectPickedSong);
+  const songData = useSelector(selectCurrentSong);
 
   useEffect(() => {
     //Setting the song in store to the selected one

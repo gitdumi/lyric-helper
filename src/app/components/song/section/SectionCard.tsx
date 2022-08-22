@@ -1,8 +1,8 @@
 import React, { LegacyRef, useRef, useState } from 'react';
 import SectionLyric from './SectionLyric';
-import { Lyric } from '../../../app/interfaces';
-import { getLyric } from '../../../lib/hipster';
-import { reorder } from '../../../utils/utils';
+import { Lyric } from '../../../interfaces';
+import { getLyric } from '../../../../lib/hipster';
+import { reorder } from '../../../../utils/utils';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import {
   AiOutlineCloseCircle,
@@ -10,17 +10,17 @@ import {
   IoSyncCircleOutline,
   GoPrimitiveDot
 } from 'react-icons/all';
-import { MAX_CHARS } from '../../../utils/constants';
+import { MAX_CHARS } from '../../../../utils/constants';
 import { GithubPicker } from 'react-color';
 import './SectionCard.css';
-import { SECTION_COLORS } from '../../../lib/Theme';
+import { SECTION_COLORS } from '../../../../lib/Theme';
 import {
   addSectionLyric,
   reorderSectionLyrics,
-  selectSong,
+  selectCurrentSong,
   updateSectionColor,
   updateSectionTitle
-} from '../songSlice';
+} from '../currentSongSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SectionCard(props: {
@@ -31,7 +31,7 @@ export default function SectionCard(props: {
   provided: any;
 }) {
   const dispatch = useDispatch();
-  const songData = useSelector(selectSong);
+  const songData = useSelector(selectCurrentSong);
   const { sectionIndex, handleDuplicate, handleDelete, sectionId, provided } = props;
   const sectionData = songData.sections[sectionIndex];
   const { lyrics } = sectionData;

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getNewSection, getNewSong } from '../../app/initData';
-import { RootState } from '../../app/store';
-import { getNewKey } from '../../utils/utils';
-import { SectionState, SongState } from '../../app/interfaces';
+import { getNewSection, getNewSong } from '../../initData';
+import { RootState } from '../../store';
+import { getNewKey } from '../../../utils/utils';
+import { SectionState, SongState } from '../../interfaces';
 
 const initialState = getNewSong() as SongState;
 
-export const songSlice = createSlice({
+export const currentSongSlice = createSlice({
   name: 'section',
   initialState,
   reducers: {
@@ -99,13 +99,9 @@ export const songSlice = createSlice({
   }
 });
 
-export const selectSong = (state: RootState) => state.song;
+export const selectCurrentSong = (state: RootState) => state.currentSong;
 
-export const selectCurrentSong = (state: RootState) => {
-  return { ...state.main.songs.find((song) => song.id === state.main.selected) };
-};
-
-export const selectSections = (state: RootState) => state.song.sections;
+export const selectSections = (state: RootState) => state.currentSong.sections;
 
 export const {
   setSong,
@@ -120,6 +116,6 @@ export const {
   addSectionLyric,
   reorderSectionLyrics,
   deleteSectionLyric
-} = songSlice.actions;
+} = currentSongSlice.actions;
 
-export default songSlice.reducer;
+export default currentSongSlice.reducer;

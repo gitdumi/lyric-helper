@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { getNewKey } from '../../utils/utils';
+import { getNewKey } from '../../../utils/utils';
 import { useEffect } from 'react';
 import { Button, List, ListItemButton, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSong, selectSongs, selectCurrentSongId, setCurrentSongId } from '../../app/mainSlice';
-import { selectCurrentSong } from '../song/songSlice';
+import { addSong, selectSongs, selectCurrentSongId, setCurrentSongId } from '../../mainSlice';
+import { selectCurrentSong } from '../song/currentSongSlice';
 
 function MySongsList() {
   const navigate = useNavigate();

@@ -1,10 +1,10 @@
 import { combineReducers, createStore } from '@reduxjs/toolkit';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import songSlice from '../components/song/songSlice';
+import currentSongSlice from './components/song/currentSongSlice';
 import mainSlice from './mainSlice';
 import { loadState, saveState } from '../utils/localStorage';
 
-const reducers = combineReducers({ song: songSlice, main: mainSlice });
+const reducers = combineReducers({ currentSong: currentSongSlice, main: mainSlice });
 
 // const store = configureStore({ reducer });
 

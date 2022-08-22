@@ -1,8 +1,8 @@
 import './App.css';
 import * as React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import SongPage from './components/song/SongPage';
-import AppMenu from './components/menu/AppMenu';
+import SongPage from './app/components/song/SongPage';
+import AppMenu from './app/components/menu/AppMenu';
 import { Box } from '@mui/material';
 
 function App() {
