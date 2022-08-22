@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import AppMenu from '../components/AppMenu';
+import AppMenu from '../components/menu/AppMenu';
 
 test('Open menu', () => {
   render(<AppMenu />);

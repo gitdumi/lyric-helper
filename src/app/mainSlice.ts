@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-import { getNewSong } from '../InitData';
-import { MainDataState, SongState } from '../interfaces';
+import { RootState } from './store';
+import { getNewSong } from './initData';
+import { MainDataState, SongState } from './interfaces';
 
 const initialState = {
   songs: [],

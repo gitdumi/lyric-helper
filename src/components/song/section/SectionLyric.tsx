@@ -1,14 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { getLyric } from '../../../utils/hipster';
+import { getLyric } from '../../../lib/hipster';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
 import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../utils/constants';
 import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteSectionLyric,
-  selectSong,
-  updateSectionLyric
-} from '../../../store/slices/songSlice';
+import { deleteSectionLyric, selectSong, updateSectionLyric } from '../songSlice';
 
 export default function SectionLyric(props: {
   index: number;

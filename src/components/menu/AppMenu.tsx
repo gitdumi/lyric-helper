@@ -3,8 +3,8 @@ import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
-import MySongsList from '../pages/MySongsList';
-import { theme } from '../lib/Theme';
+import MySongsList from './MySongsList';
+import { theme } from '../../lib/Theme';
 
 const drawerWidth = '240px';
 

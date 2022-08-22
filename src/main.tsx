@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './lib/Theme';
 import { Provider } from 'react-redux';
-import store from './store/store';
+import store from './app/store';
 
 ReactDOM.render(
   // <React.StrictMode>

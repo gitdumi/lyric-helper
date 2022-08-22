@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getNewSection, getNewSong } from '../InitData';
-import { RootState } from '../store';
+import { getNewSection, getNewSong } from '../../app/initData';
+import { RootState } from '../../app/store';
 import { getNewKey } from '../../utils/utils';
-import { SectionState, SongState } from '../interfaces';
+import { SectionState, SongState } from '../../app/interfaces';
 
 const initialState = getNewSong() as SongState;
 

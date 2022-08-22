@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
-import { reorder } from '../utils/utils';
-import { ANIMATION_TIMEOUT, MAX_CHARS } from '../utils/constants';
-import SectionCard from '../components/song/section/SectionCard';
-import { COLORS, theme } from '../lib/Theme';
+import { reorder } from '../../utils/utils';
+import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../utils/constants';
+import SectionCard from './section/SectionCard';
+import { COLORS, theme } from '../../lib/Theme';
 import './SongPage.css';
 import { Box, Button, Paper } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { deleteSong, saveSong, selectSongById, selectSongs } from '../store/slices/mainSlice';
+import { RootState } from '../../app/store';
+import { deleteSong, saveSong, selectSongById, selectSongs } from '../../app/mainSlice';
 import {
   addSection,
   updateSongTitle,
@@ -20,8 +20,8 @@ import {
   deleteSection,
   duplicateSection,
   reorderSections
-} from '../store/slices/songSlice';
-import { SectionState } from '../store/interfaces';
+} from './songSlice';
+import { SectionState } from '../../app/interfaces';
 
 function SongPage() {
   const dispatch = useDispatch();

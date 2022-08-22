@@ -1,7 +1,7 @@
 import React, { LegacyRef, useRef, useState } from 'react';
 import SectionLyric from './SectionLyric';
-import { Lyric } from '../../../store/interfaces';
-import { getLyric } from '../../../utils/hipster';
+import { Lyric } from '../../../app/interfaces';
+import { getLyric } from '../../../lib/hipster';
 import { reorder } from '../../../utils/utils';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import {
@@ -20,7 +20,7 @@ import {
   selectSong,
   updateSectionColor,
   updateSectionTitle
-} from '../../../store/slices/songSlice';
+} from '../songSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SectionCard(props: {
