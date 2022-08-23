@@ -65,6 +65,9 @@ function MySongsList({ setOpen }) {
         onClick={() => {
           dispatch(addSong());
           dispatch(setCurrentSongId(songId));
+          if (isResponsive) {
+            setOpen(false);
+          }
         }}
       >
         Add song
