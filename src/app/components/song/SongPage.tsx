@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
 import { reorder } from '../../../utils/utils';
-import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../utils/constants';
+import { ANIMATION_TIMEOUT, MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/constants';
 import SectionCard from './section/SectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
@@ -10,7 +10,13 @@ import { Box, Button, Paper } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSong, saveSong, selectPickedSong, selectSongs } from '../../mainSlice';
+import {
+  deleteSong,
+  saveSong,
+  selectCurrentSongId,
+  selectPickedSong,
+  selectSongs
+} from '../../mainSlice';
 import {
   addSection,
   updateSongTitle,
@@ -21,6 +27,7 @@ import {
   setSong
 } from './currentSongSlice';
 import { SectionState } from '../../interfaces';
+import { useMediaQuery } from 'react-responsive';
 
 function SongPage() {
   const dispatch = useDispatch();
@@ -28,7 +35,9 @@ function SongPage() {
   const navigate = useNavigate();
   const songs = useSelector(selectSongs);
   const currentSong = useSelector(selectPickedSong);
+  const currentSongId = useSelector(selectCurrentSongId);
   const songData = useSelector(selectCurrentSong);
+  const isResponsive = useMediaQuery({ maxWidth: RESPONSIVE_WIDTH });
 
   useEffect(() => {
     //Setting the song in store to the selected one
@@ -38,7 +47,7 @@ function SongPage() {
     } else {
       navigate('/');
     }
-  }, [songs, location.pathname]);
+  }, [songs, location.pathname, currentSongId]);
 
   function handleDeleteSection(
     event: { stopPropagation: () => void; currentTarget: { closest: (arg0: string) => any } },
@@ -92,8 +101,10 @@ function SongPage() {
         flexDirection: 'column',
         alignItems: 'center',
         height: '100%',
-        width: '100%',
-        overflow: 'scroll'
+        overflow: 'auto',
+        pl: '5rem',
+        pr: '1rem',
+        width: 'device-width'
       }}
     >
       <input

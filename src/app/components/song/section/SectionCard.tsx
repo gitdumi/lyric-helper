@@ -10,7 +10,7 @@ import {
   IoSyncCircleOutline,
   GoPrimitiveDot
 } from 'react-icons/all';
-import { MAX_CHARS } from '../../../../utils/constants';
+import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import { GithubPicker } from 'react-color';
 import './SectionCard.css';
 import { SECTION_COLORS } from '../../../../lib/Theme';
@@ -22,6 +22,7 @@ import {
   updateSectionTitle
 } from '../currentSongSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -37,6 +38,7 @@ export default function SectionCard(props: {
   const { lyrics } = sectionData;
   const [isHover, setIsHover] = useState(false);
   const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
+  const isResponsive = useMediaQuery({ maxWidth: RESPONSIVE_WIDTH });
 
   const addButton = useRef() as LegacyRef<HTMLButtonElement>;
 
@@ -102,7 +104,8 @@ export default function SectionCard(props: {
       style={{
         backgroundColor: sectionData.color,
         border: 'solid 2px ' + sectionData.color,
-        boxShadow: '5px 5px 0 ' + sectionData.color
+        boxShadow: '5px 5px 0 ' + sectionData.color,
+        maxWidth: isResponsive ? '20rem' : '40rem'
       }}
     >
       <div

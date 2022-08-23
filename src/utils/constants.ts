@@ -1,13 +1,8 @@
 import { COLORS } from '../lib/Theme';
 
 export const MAX_CHARS = 80;
-
+export const RESPONSIVE_WIDTH = '700px';
 export const ANIMATION_TIMEOUT = 500;
-
-export const LS_KEYS = {
-  SONGS: 'SONGS',
-  CURRENT: 'CURRENT'
-};
 
 export const SECTION_TEMPLATES = [
   {

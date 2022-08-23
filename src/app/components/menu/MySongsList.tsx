@@ -5,17 +5,18 @@ import { Button, List, ListItemButton, Tooltip, Typography } from '@mui/material
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSong, selectSongs, selectCurrentSongId, setCurrentSongId } from '../../mainSlice';
-import { selectCurrentSong } from '../song/currentSongSlice';
+import { useMediaQuery } from 'react-responsive';
+import { RESPONSIVE_WIDTH } from '../../../utils/constants';
 
-function MySongsList() {
+// @ts-ignore
+function MySongsList({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const songs = useSelector(selectSongs);
   const songId = useSelector(selectCurrentSongId);
+  const isResponsive = useMediaQuery({ maxWidth: RESPONSIVE_WIDTH });
 
   useEffect(() => {
-    console.log('songs', { songs });
-    console.log(songId);
     //Navigating to the newly selected song
     if (songs.length > 0) {
       navigate(`song/${songId}`, { replace: false });
@@ -23,9 +24,8 @@ function MySongsList() {
   }, [songId]);
 
   useEffect(() => {
-    //Updating the current selected song to the newly added one
-    if (songs.length > 0) {
-      dispatch(setCurrentSongId(songs[songs.length - 1].id));
+    if (songs.length === 1) {
+      dispatch(setCurrentSongId(songs[0].id));
     }
   }, [songs]);
 
@@ -41,6 +41,9 @@ function MySongsList() {
           key={`link-${song.id}`}
           onClick={() => {
             dispatch(setCurrentSongId(song.id));
+            if (isResponsive) {
+              setOpen(false);
+            }
           }}
         >
           <Typography noWrap>{song.title}</Typography>
