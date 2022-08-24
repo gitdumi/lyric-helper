@@ -15,6 +15,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
   }),
+  height: '100%',
   overflowX: 'hidden',
   borderColor: theme.palette.primary.main
 });

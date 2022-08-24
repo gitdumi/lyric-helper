@@ -10,6 +10,18 @@ export const SECTION_TEMPLATES = [
     color: COLORS.GREEN
   },
   {
+    name: 'Verse',
+    color: COLORS.GREEN
+  },
+  {
+    name: 'Verse',
+    color: COLORS.GREEN
+  },
+  {
+    name: 'Chorus',
+    color: COLORS.PURPLE
+  },
+  {
     name: 'Chorus',
     color: COLORS.PURPLE
   },

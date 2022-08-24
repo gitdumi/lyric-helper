@@ -2,6 +2,8 @@ export interface MainDataState {
   songs: SongState[];
   selected: string;
   isLoggedIn: boolean;
+  isGuest: boolean;
+  isLoading: boolean;
 }
 
 export interface SongState {

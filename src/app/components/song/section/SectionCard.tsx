@@ -22,7 +22,7 @@ import {
   updateSectionTitle
 } from '../currentSongSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from '@mui/material';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -38,7 +38,7 @@ export default function SectionCard(props: {
   const { lyrics } = sectionData;
   const [isHover, setIsHover] = useState(false);
   const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
-  const isResponsive = useMediaQuery({ maxWidth: RESPONSIVE_WIDTH });
+  const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   const addButton = useRef() as LegacyRef<HTMLButtonElement>;
 

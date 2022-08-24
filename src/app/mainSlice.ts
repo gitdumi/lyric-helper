@@ -2,19 +2,35 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { getNewSong } from './initData';
 import { MainDataState, SongState } from './interfaces';
+import { googleSignOut } from '../../firebase/firebaseConfig';
 
 const initialState = {
   songs: [],
   selected: '0',
-  isLoggedIn: false
+  isLoggedIn: false,
+  isGuest: false,
+  isLoading: false
 } as MainDataState;
 
 export const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    logIn: (state) => {
-      state.isLoggedIn = !state.isLoggedIn;
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    signIn: (state) => {
+      state.isLoggedIn = true;
+      state.isGuest = false;
+    },
+    signOut: () => {
+      googleSignOut().then(() => {
+        console.log('Sign out successful');
+      });
+      return initialState;
+    },
+    setGuest: (state) => {
+      state.isGuest = true;
     },
     setCurrentSongId: (state, action: PayloadAction<string>) => {
       state.selected = action.payload;
@@ -50,6 +66,8 @@ export const mainSlice = createSlice({
   }
 });
 
+export const selectMain = (state: RootState) => state.main;
+
 export const selectSongs = (state: RootState) => state.main.songs;
 
 export const selectCurrentSongId = (state: RootState) => state.main.selected;
@@ -58,6 +76,15 @@ export const selectPickedSong = (state: RootState) => {
   return { ...state.main.songs.find((song) => song.id === state.main.selected) };
 };
 
-export const { logIn, addSong, saveSong, deleteSong, setCurrentSongId } = mainSlice.actions;
+export const {
+  setLoading,
+  signIn,
+  signOut,
+  setGuest,
+  addSong,
+  saveSong,
+  deleteSong,
+  setCurrentSongId
+} = mainSlice.actions;
 
 export default mainSlice.reducer;

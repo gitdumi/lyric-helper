@@ -21,3 +21,11 @@ export function reorder(list: SectionState[] | Lyric[], startIndex: number, endI
 
   return result;
 }
+
+export function promiseState(promise: Promise<any>) {
+  const t = {};
+  return Promise.race([promise, t]).then(
+    (v) => (v === t ? 'pending' : 'fulfilled'),
+    () => 'rejected'
+  );
+}

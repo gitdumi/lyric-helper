@@ -4,17 +4,28 @@ import { useEffect } from 'react';
 import { Button, List, ListItemButton, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSong, selectSongs, selectCurrentSongId, setCurrentSongId } from '../../mainSlice';
-import { useMediaQuery } from 'react-responsive';
+import {
+  addSong,
+  selectSongs,
+  selectCurrentSongId,
+  setCurrentSongId,
+  signOut,
+  selectMain,
+  signIn,
+  setLoading
+} from '../../mainSlice';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { RESPONSIVE_WIDTH } from '../../../utils/constants';
+import { signInWithGoogle } from '../../../../firebase/firebaseConfig';
 
 // @ts-ignore
 function MySongsList({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector(selectMain);
   const songs = useSelector(selectSongs);
   const songId = useSelector(selectCurrentSongId);
-  const isResponsive = useMediaQuery({ maxWidth: RESPONSIVE_WIDTH });
+  const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
     //Navigating to the newly selected song
@@ -28,6 +39,15 @@ function MySongsList({ setOpen }) {
       dispatch(setCurrentSongId(songs[0].id));
     }
   }, [songs]);
+
+  function handleSignInClick() {
+    dispatch(setLoading(true));
+    signInWithGoogle().then(() => {
+      console.log('google songlist');
+      dispatch(signIn());
+      dispatch(setLoading(false));
+    });
+  }
 
   const songLinks = songs.map((song) => {
     return (
@@ -73,6 +93,33 @@ function MySongsList({ setOpen }) {
         Add song
       </Button>
       {songLinks}
+      {isLoggedIn ? (
+        <Button
+          sx={{
+            mt: 'auto'
+          }}
+          variant="text"
+          onClick={() => {
+            dispatch(signOut());
+            dispatch(setCurrentSongId('0'));
+            if (isResponsive) {
+              setOpen(false);
+            }
+          }}
+        >
+          Sign out
+        </Button>
+      ) : (
+        <Button
+          sx={{
+            mt: 'auto'
+          }}
+          variant="text"
+          onClick={handleSignInClick}
+        >
+          Sign In
+        </Button>
+      )}
     </List>
   );
 }

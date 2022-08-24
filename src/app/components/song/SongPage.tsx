@@ -6,7 +6,7 @@ import { ANIMATION_TIMEOUT, MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/c
 import SectionCard from './section/SectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
-import { Box, Button, Paper } from '@mui/material';
+import { Box, Button, Paper, useMediaQuery } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +27,6 @@ import {
   setSong
 } from './currentSongSlice';
 import { SectionState } from '../../interfaces';
-import { useMediaQuery } from 'react-responsive';
 
 function SongPage() {
   const dispatch = useDispatch();
@@ -37,7 +36,7 @@ function SongPage() {
   const currentSong = useSelector(selectPickedSong);
   const currentSongId = useSelector(selectCurrentSongId);
   const songData = useSelector(selectCurrentSong);
-  const isResponsive = useMediaQuery({ maxWidth: RESPONSIVE_WIDTH });
+  const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
     //Setting the song in store to the selected one
@@ -75,7 +74,7 @@ function SongPage() {
     dispatch(reorderSections(items));
   }
 
-  const sectionComponents = songData.sections.map((section: SectionState, index: number) => (
+  const sectionComponents = songData?.sections?.map((section: SectionState, index: number) => (
     <Draggable key={section.id} draggableId={section.id} index={index}>
       {(provided) => {
         return (
@@ -115,8 +114,8 @@ function SongPage() {
         onChange={(e) => dispatch(updateSongTitle(e.target.value))}
         maxLength={MAX_CHARS / 2}
         style={{
-          minWidth: `${songData.title.length + 1}ch`,
-          color: `${songData.sections[0]?.color || COLORS.GREEN}`
+          minWidth: `${(songData.title?.length ?? 0) + 1}ch`,
+          color: `${songData.sections?.[0]?.color || COLORS.GREEN}`
         }}
       />
       {/*@ts-ignore*/}
@@ -134,7 +133,7 @@ function SongPage() {
         <button
           style={{
             marginBottom: '100px',
-            marginTop: `${songData.sections.length > 0 ? '0' : '1rem'}`
+            marginTop: `${songData.sections?.length > 0 ? '0' : '1rem'}`
           }}
           id="add-section"
           onClick={() => {
