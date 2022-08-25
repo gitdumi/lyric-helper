@@ -6,7 +6,7 @@ import { ANIMATION_TIMEOUT, MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/c
 import SectionCard from './section/SectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
-import { Box, Button, Paper, useMediaQuery } from '@mui/material';
+import { Box, Button, Paper, Tooltip, useMediaQuery } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,19 +48,6 @@ function SongPage() {
     }
   }, [songs, location.pathname, currentSongId]);
 
-  function handleDeleteSection(
-    event: { stopPropagation: () => void; currentTarget: { closest: (arg0: string) => any } },
-    sectionId: string
-  ) {
-    event.stopPropagation();
-    const container = event.currentTarget.closest('.section-card');
-    container.style.transition = 'all 0.5s';
-    container.style.opacity = '0';
-    setTimeout(function () {
-      dispatch(deleteSection(sectionId));
-    }, ANIMATION_TIMEOUT);
-  }
-
   function onDragEnd(result: { destination: { index: number }; source: { index: number } }) {
     // dropped outside the list
     if (!result.destination) {
@@ -85,7 +72,7 @@ function SongPage() {
               sectionIndex={index}
               sectionId={section.id}
               handleDuplicate={() => dispatch(duplicateSection(index))}
-              handleDelete={(e) => handleDeleteSection(e, section.id)}
+              handleDelete={() => dispatch(deleteSection(section.id))}
             />
           </div>
         );
@@ -166,21 +153,23 @@ function SongPage() {
           Save
         </Button>
 
-        <HighlightOffSharpIcon
-          className="svg-wrapper react-button"
-          id="deleteSongButtonIcon"
-          onClick={() => {
-            dispatch(deleteSong(songData));
-          }}
-          sx={{
-            color: theme.palette.error.main,
-            justifySelf: 'center',
-            mr: '2rem',
-            fontSize: 30,
-            ml: 'auto',
-            cursor: 'pointer'
-          }}
-        />
+        <Tooltip placement="top" title="delete song">
+          <HighlightOffSharpIcon
+            className="svg-wrapper react-button"
+            id="deleteSongButtonIcon"
+            onClick={() => {
+              dispatch(deleteSong(songData));
+            }}
+            sx={{
+              color: theme.palette.error.main,
+              justifySelf: 'center',
+              mr: '2rem',
+              fontSize: 30,
+              ml: 'auto',
+              cursor: 'pointer'
+            }}
+          />
+        </Tooltip>
       </Paper>
     </Box>
   );

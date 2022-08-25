@@ -13,7 +13,7 @@ import {
 import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import { GithubPicker } from 'react-color';
 import './SectionCard.css';
-import { SECTION_COLORS } from '../../../../lib/Theme';
+import { SECTION_COLORS, theme } from '../../../../lib/Theme';
 import {
   addSectionLyric,
   reorderSectionLyrics,
@@ -22,7 +22,8 @@ import {
   updateSectionTitle
 } from '../currentSongSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMediaQuery } from '@mui/material';
+import { Box, Stack, Tooltip, useMediaQuery } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -39,6 +40,7 @@ export default function SectionCard(props: {
   const [isHover, setIsHover] = useState(false);
   const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
+  const [isLoading, setIsLoading] = useState(false);
 
   const addButton = useRef() as LegacyRef<HTMLButtonElement>;
 
@@ -60,8 +62,10 @@ export default function SectionCard(props: {
   }
 
   async function addRandomLyric() {
+    setIsLoading((prev) => !prev);
     const result = await getLyric(songData.config.selectedSylCount);
     dispatch(addSectionLyric({ sectionIndex: sectionIndex, value: result }));
+    setIsLoading((prev) => !prev);
   }
 
   function onDragEnd(result: any) {
@@ -90,6 +94,7 @@ export default function SectionCard(props: {
                 sectionIndex={sectionIndex}
                 index={index}
                 value={lyric.value}
+                setIsLoading={setIsLoading}
               />
             </div>
           );
@@ -103,11 +108,19 @@ export default function SectionCard(props: {
       className="section-card"
       style={{
         backgroundColor: sectionData.color,
-        border: 'solid 2px ' + sectionData.color,
+        borderLeft: 'solid 2px ' + sectionData.color,
+        borderRight: 'solid 2px ' + sectionData.color,
         boxShadow: '5px 5px 0 ' + sectionData.color,
         maxWidth: isResponsive ? '20rem' : '40rem'
       }}
     >
+      {isLoading ? (
+        <Stack sx={{ width: '100%', color: theme.palette.background.paper }} spacing={0}>
+          <LinearProgress variant="indeterminate" color="inherit" sx={{ height: '2px' }} />
+        </Stack>
+      ) : (
+        <Box height={'2px'} color={theme.palette.background.paper} />
+      )}
       <div
         ref={provided.innerRef}
         {...provided.dragHandleProps}
@@ -131,72 +144,81 @@ export default function SectionCard(props: {
               color: sectionData.color
             }}
           />
-          <button
-            ref={addButton}
-            className="section-card--content__add svg-wrapper"
-            onClick={async () => {
-              await addRandomLyric();
-            }}
-          >
-            <AiOutlinePlusCircle
-              color={sectionData.color}
-              style={getVisibility()}
-              className="react-button"
-            />
-          </button>
+          {!isLoading && (
+            <Tooltip placement="top" title="add lyric">
+              <button
+                ref={addButton}
+                className="section-card--content__add svg-wrapper"
+                onClick={async () => {
+                  await addRandomLyric();
+                }}
+              >
+                <AiOutlinePlusCircle
+                  color={sectionData.color}
+                  style={getVisibility()}
+                  className="react-button"
+                />
+              </button>
+            </Tooltip>
+          )}
         </div>
 
-        <div className="section-card--actions">
-          <button
-            className="section-card--content__delete svg-wrapper"
-            onClick={(event) => {
-              handleDelete(event, sectionId);
-            }}
-          >
-            <AiOutlineCloseCircle
-              className="react-button"
+        {!isLoading && (
+          <div className="section-card--actions">
+            <Tooltip placement="top" title="delete section">
+              <button
+                className="section-card--content__delete svg-wrapper"
+                onClick={(event) => {
+                  handleDelete(event, sectionId);
+                }}
+              >
+                <AiOutlineCloseCircle
+                  className="react-button"
+                  color={sectionData.color}
+                  style={getVisibility()}
+                />
+              </button>
+            </Tooltip>
+            <Tooltip placement="top" title="duplicate section">
+              <button
+                className="section-duplicate svg-wrapper"
+                onClick={() => handleDuplicate(sectionIndex)}
+              >
+                <IoSyncCircleOutline
+                  className="react-button sync"
+                  color={sectionData.color}
+                  style={getVisibility()}
+                />
+              </button>
+            </Tooltip>
+
+            {/*<button*/}
+            {/*    className="section-card--content__config svg-wrapper"*/}
+            {/*    onClick={async (e) => {*/}
+
+            {/*    }}*/}
+            {/*>*/}
+            {/*    <FiDivideCircle color={sectionData.color} style={getVisibility()}*/}
+            {/*                    className="react-button divide"/>*/}
+            {/*</button>*/}
+
+            <div
+              className="section-card--actions__color-picker"
               color={sectionData.color}
-              style={getVisibility()}
-            />
-          </button>
-          <button
-            className="section-duplicate svg-wrapper"
-            onClick={() => handleDuplicate(sectionIndex)}
-          >
-            <IoSyncCircleOutline
-              className="react-button sync"
-              color={sectionData.color}
-              style={getVisibility()}
-            />
-          </button>
-
-          {/*<button*/}
-          {/*    className="section-card--content__config svg-wrapper"*/}
-          {/*    onClick={async (e) => {*/}
-
-          {/*    }}*/}
-          {/*>*/}
-          {/*    <FiDivideCircle color={sectionData.color} style={getVisibility()}*/}
-          {/*                    className="react-button divide"/>*/}
-          {/*</button>*/}
-
-          <div
-            className="section-card--actions__color-picker"
-            color={sectionData.color}
-            style={{ visibility: getVisibility() }}
-          >
-            <GoPrimitiveDot color={sectionData.color} style={{ visibility: getVisibility() }} />
-            <GithubPicker
-              className="color-picker"
-              width="125px"
-              triangle={'top-right'}
-              colors={SECTION_COLORS}
-              onChangeComplete={handleColorChange}
-            />
+              style={{ visibility: getVisibility() }}
+            >
+              <GoPrimitiveDot color={sectionData.color} style={{ visibility: getVisibility() }} />
+              <GithubPicker
+                className="color-picker"
+                width="125px"
+                triangle={'top-right'}
+                colors={SECTION_COLORS}
+                onChangeComplete={handleColorChange}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
-
       <div className="section-card--content">
         <div className="section-card--content__lyrics" style={{ backgroundColor: 'transparent' }}>
           <DragDropContext onDragEnd={onDragEnd}>

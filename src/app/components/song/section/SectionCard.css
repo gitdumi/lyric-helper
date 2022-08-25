@@ -4,6 +4,7 @@
   margin-top: 1rem;
   position: relative;
   z-index: 0;
+  border-top: none;
 }
 .section-card:last-child {
   margin-bottom: 1rem;
@@ -97,13 +98,11 @@
 .section-card--content__lyrics {
   min-width: 20rem;
   width: 100%;
-  height: 100%;
-  padding: 0.3rem 0;
-  margin: 0;
+  /*height: 100%;*/
+  margin: 0.3rem 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: scroll;
 }
 
 .section-card--content__lyrics ul {
@@ -116,4 +115,8 @@
   width: 100%;
   list-style-type: none;
   color: var(--text-color);
+}
+
+.section-card--content__lyrics ul:last-child {
+  margin-bottom: 0.5rem;
 }

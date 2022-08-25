@@ -5,17 +5,19 @@ import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../../utils/constants';
 import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteSectionLyric, selectCurrentSong, updateSectionLyric } from '../currentSongSlice';
+import { Tooltip } from '@mui/material';
 
 export default function SectionLyric(props: {
   index: number;
   sectionIndex: number;
   value: string;
   provided: any;
+  setIsLoading: any;
 }) {
   const songData = useSelector(selectCurrentSong);
   const dispatch = useDispatch();
   const [isHover, setIsHover] = useState(false);
-  const { index, sectionIndex, provided } = props;
+  const { index, sectionIndex, provided, setIsLoading } = props;
   const { value } = songData.sections[sectionIndex].lyrics[index];
 
   const randomButton = useRef() as any;
@@ -33,24 +35,24 @@ export default function SectionLyric(props: {
   }
 
   async function handleRandom() {
-    inputField.current!.value = 'loading...';
+    setIsLoading((prev: any) => !prev);
     const result = await getLyric(songData.config.selectedSylCount);
     dispatch(
       updateSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index, value: result.value })
     );
+    setIsLoading((prev: any) => !prev);
   }
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
-    event.preventDefault();
     const container = event.currentTarget.closest('.section-lyric');
     //@ts-ignore
-    container.style.transition = 'all 0.5s';
+    container.style.transition = `all ${ANIMATION_TIMEOUT}ms`;
     //@ts-ignore
     container.style.opacity = '0';
 
     setTimeout(function () {
       dispatch(deleteSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index }));
-    }, ANIMATION_TIMEOUT);
+    }, ANIMATION_TIMEOUT / 3);
   };
 
   return (
@@ -80,15 +82,17 @@ export default function SectionLyric(props: {
         style={{ width: value.length + 1 + 'ch' }}
       />
       <div className={`section-lyric--actions`}>
-        <button
-          className="section-lyric--actions__delete svg-wrapper"
-          onClick={(e) => {
-            handleDelete(e, index);
-            e.stopPropagation();
-          }}
-        >
-          <AiOutlineCloseCircle className="react-button" style={getVisibility()} />
-        </button>
+        <Tooltip placement="top" title="delete lyric">
+          <button
+            className="section-lyric--actions__delete svg-wrapper"
+            onClick={(e) => {
+              handleDelete(e, index);
+              e.stopPropagation();
+            }}
+          >
+            <AiOutlineCloseCircle className="react-button" style={getVisibility()} />
+          </button>
+        </Tooltip>
       </div>
     </li>
   );
