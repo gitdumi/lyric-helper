@@ -69,7 +69,9 @@ export const mainSlice = createSlice({
         songs: updatedSongs
       };
 
-      writeUserData(COLLECTION, updatedState).then(() => {});
+      writeUserData(COLLECTION, updatedState).then(() => {
+        console.log('song saved in db');
+      });
 
       return updatedState;
     },

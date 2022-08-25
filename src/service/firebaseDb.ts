@@ -1,13 +1,7 @@
 import { firestoreDb as db } from './firebaseConfig';
-import { MainDataState, SongState } from '../app/interfaces';
+import { MainDataState } from '../app/interfaces';
 
 export const COLLECTION = 'lyrics';
-
-interface userDbData {
-  uid: string;
-  songs: SongState[];
-  lastUpdated: Date;
-}
 
 export const writeUserData = async (collection: string, content: MainDataState) => {
   console.log('writeuserdatafunc');

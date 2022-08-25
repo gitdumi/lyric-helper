@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import store from './app/store';
 import app from './service/firebaseConfig';
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
   console.log(app);
 });
 
