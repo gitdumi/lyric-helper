@@ -16,7 +16,7 @@ import {
 } from '../../mainSlice';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { RESPONSIVE_WIDTH } from '../../../utils/constants';
-import { signInWithGoogle } from '../../../../firebase/firebaseConfig';
+import { signInWithGoogle } from '../../../service/firebaseConfig';
 
 // @ts-ignore
 function MySongsList({ setOpen }) {
@@ -42,9 +42,9 @@ function MySongsList({ setOpen }) {
 
   function handleSignInClick() {
     dispatch(setLoading(true));
-    signInWithGoogle().then(() => {
+    signInWithGoogle().then((result) => {
       console.log('google songlist');
-      dispatch(signIn());
+      dispatch(signIn(result.user?.uid));
       dispatch(setLoading(false));
     });
   }

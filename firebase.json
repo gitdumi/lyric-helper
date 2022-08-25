@@ -1,7 +1,4 @@
 {
-  "database": {
-    "rules": "database.rules.json"
-  },
   "hosting": {
     "public": "dist",
     "ignore": [
@@ -9,6 +6,12 @@
       "**/.*",
       "**/node_modules/**"
     ]
+  },
+  "emulators": {
+    "hosting": {
+      "host": "localhost",
+      "port": "4012"
+    }
   },
   "firestore": {
     "rules": "firestore.rules",

@@ -2,35 +2,31 @@ import { Box, Button, Typography } from '@mui/material';
 import { theme } from '../../lib/Theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMain, setGuest, setLoading, signIn } from '../mainSlice';
-import { signInWithGoogle } from '../../../firebase/firebaseConfig';
+import { signInWithGoogle } from '../../service/firebaseConfig';
 import { useEffect, useState } from 'react';
-import firebase from '../../../firebase/firebaseConfig';
+import firebase from '../../service/firebaseConfig';
 import { User } from '@firebase/auth-types';
 
 function LandingPage() {
   const { isLoggedIn, isGuest, isLoading } = useSelector(selectMain);
   const dispatch = useDispatch();
-
-  function handleSignInClick() {
-    dispatch(setLoading(true));
-    signInWithGoogle().then(() => {
-      console.log('google');
-      dispatch(signIn());
-      dispatch(setLoading(false));
-    });
-  }
-
   // @ts-ignore
   const [user, setUser] = useState<User>(null);
 
   useEffect(() => {
+    let cancel = false;
+
     dispatch(setLoading(true));
     firebase.auth().onAuthStateChanged((user) => {
+      console.log({ user });
+      if (cancel) {
+        dispatch(setLoading(false));
+        return;
+      }
       if (user) {
         setUser(user);
-        dispatch(signIn());
+        dispatch(signIn(user.uid));
         console.log('Signed in');
-        console.log(user);
       } else {
         // @ts-ignore
         setUser(null);
@@ -38,7 +34,19 @@ function LandingPage() {
       }
     });
     dispatch(setLoading(false));
+
+    return () => {
+      cancel = true;
+    };
   }, []);
+
+  function handleSignInClick() {
+    dispatch(setLoading(true));
+    signInWithGoogle().then((result) => {
+      dispatch(signIn(result.user?.uid));
+      dispatch(setLoading(false));
+    });
+  }
 
   return (
     <Box

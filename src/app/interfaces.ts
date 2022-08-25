@@ -1,4 +1,5 @@
 export interface MainDataState {
+  userId: string;
   songs: SongState[];
   selected: string;
   isLoggedIn: boolean;

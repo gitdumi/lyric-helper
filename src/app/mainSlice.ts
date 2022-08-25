@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { getNewSong } from './initData';
 import { MainDataState, SongState } from './interfaces';
-import { googleSignOut } from '../../firebase/firebaseConfig';
+import { googleSignOut } from '../service/firebaseConfig';
+import { COLLECTION, writeUserData } from '../service/firebaseDb';
 
 const initialState = {
+  userId: 'guest',
   songs: [],
   selected: '0',
   isLoggedIn: false,
@@ -19,9 +21,10 @@ export const mainSlice = createSlice({
     setLoading: (state, action) => {
       state.isLoading = action.payload;
     },
-    signIn: (state) => {
+    signIn: (state, action) => {
       state.isLoggedIn = true;
       state.isGuest = false;
+      state.userId = action.payload || 'guest';
     },
     signOut: () => {
       googleSignOut().then(() => {
@@ -37,7 +40,6 @@ export const mainSlice = createSlice({
     },
     addSong: (state) => {
       const updatedSongs = [...state.songs, getNewSong()];
-      console.log(updatedSongs);
       return {
         ...state,
         songs: updatedSongs,
@@ -53,10 +55,15 @@ export const mainSlice = createSlice({
           return song;
         }
       });
-      return {
+
+      const updatedState = {
         ...state,
         songs: updatedSongs
       };
+
+      writeUserData(COLLECTION, updatedState).then(() => {});
+
+      return updatedState;
     },
     deleteSong: (state, actions: PayloadAction<SongState>) => {
       const songs = state.songs.filter((song) => song.id != actions.payload.id);
