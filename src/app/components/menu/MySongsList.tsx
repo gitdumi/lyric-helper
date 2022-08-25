@@ -35,8 +35,8 @@ function MySongsList({ setOpen }) {
   }, [songId]);
 
   useEffect(() => {
-    if (songs.length === 1) {
-      dispatch(setCurrentSongId(songs[0].id));
+    if (songs.length > 0) {
+      dispatch(setCurrentSongId(songs[songs.length - 1].id));
     }
   }, [songs]);
 
@@ -84,7 +84,6 @@ function MySongsList({ setOpen }) {
         variant="contained"
         onClick={() => {
           dispatch(addSong());
-          dispatch(setCurrentSongId(songId));
           if (isResponsive) {
             setOpen(false);
           }

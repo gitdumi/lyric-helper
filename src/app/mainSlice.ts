@@ -36,9 +36,12 @@ export const mainSlice = createSlice({
       state.selected = action.payload;
     },
     addSong: (state) => {
+      const updatedSongs = [...state.songs, getNewSong()];
+      console.log(updatedSongs);
       return {
         ...state,
-        songs: [...state.songs, getNewSong()]
+        songs: updatedSongs,
+        selected: updatedSongs[updatedSongs.length - 1].id ?? '0'
       };
     },
     saveSong: (state, actions: PayloadAction<SongState>) => {

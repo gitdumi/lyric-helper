@@ -14,14 +14,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('effect app');
     if (isLoggedIn) {
       dispatch(setLoading(false));
     }
   }, []);
-
-  console.log('load', isLoading);
-  console.log(isLoggedIn);
 
   return (
     <Box
