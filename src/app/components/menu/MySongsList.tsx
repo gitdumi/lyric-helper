@@ -43,7 +43,6 @@ function MySongsList({ setOpen }) {
   function handleSignInClick() {
     dispatch(setLoading(true));
     signInWithGoogle().then((result) => {
-      console.log('google songlist');
       dispatch(signIn(result.user?.uid));
       dispatch(setLoading(false));
       navigate('/');

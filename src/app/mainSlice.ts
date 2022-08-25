@@ -56,7 +56,6 @@ export const mainSlice = createSlice({
     },
     saveSong: (state, actions: PayloadAction<SongState>) => {
       const updatedSongs: SongState[] = state.songs.map((song: SongState) => {
-        console.log('saving song');
         if (song.id === state.selected) {
           return actions.payload;
         } else {
@@ -77,11 +76,18 @@ export const mainSlice = createSlice({
     },
     deleteSong: (state, actions: PayloadAction<SongState>) => {
       const songs = state.songs.filter((song) => song.id != actions.payload.id);
-      return {
+
+      const updatedState = {
         ...state,
         songs: songs,
         selected: songs.length > 0 ? songs[songs.length - 1].id : '0'
       };
+
+      writeUserData(COLLECTION, updatedState).then(() => {
+        console.log('song deleted from db');
+      });
+
+      return updatedState;
     }
   }
 });

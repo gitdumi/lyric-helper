@@ -19,7 +19,6 @@ function LandingPage() {
 
     dispatch(setLoading(true));
     firebase.auth().onAuthStateChanged((user) => {
-      console.log({ user });
       if (cancel) {
         dispatch(setLoading(false));
         return;
