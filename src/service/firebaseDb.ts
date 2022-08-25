@@ -26,15 +26,22 @@ export const writeUserData = async (collection: string, content: MainDataState) 
 };
 
 export const read = async (userId: string) => {
-  await db
-    .collection(COLLECTION)
+  const docRef = db.collection(COLLECTION).doc(userId);
+
+  return docRef
     .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc);
-      });
+    .then((doc) => {
+      if (doc.exists) {
+        console.log('Document data:', doc.data());
+        return doc.data();
+      } else {
+        // doc.data() will be undefined in this case
+        console.log('No such document!');
+      }
     })
-    .catch((e) => console.log('read error', e));
+    .catch((error) => {
+      console.log('Error getting document:', error);
+    });
 };
 
 // 1. If the user is not logged in, everything is kept in localstorage and not saved ------ done

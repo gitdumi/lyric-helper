@@ -1,11 +1,12 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, shouldSkipGeneratingVar, Typography } from '@mui/material';
 import { theme } from '../../lib/Theme';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMain, setGuest, setLoading, signIn } from '../mainSlice';
+import { loadDbData, selectMain, setGuest, setLoading, signIn } from '../mainSlice';
 import { signInWithGoogle } from '../../service/firebaseConfig';
 import { useEffect, useState } from 'react';
 import firebase from '../../service/firebaseConfig';
 import { User } from '@firebase/auth-types';
+import { read } from '../../service/firebaseDb';
 
 function LandingPage() {
   const { isLoggedIn, isGuest, isLoading } = useSelector(selectMain);
@@ -27,6 +28,9 @@ function LandingPage() {
         setUser(user);
         dispatch(signIn(user.uid));
         console.log('Signed in');
+        read(user.uid).then((result) => {
+          dispatch(loadDbData(result));
+        });
       } else {
         // @ts-ignore
         setUser(null);

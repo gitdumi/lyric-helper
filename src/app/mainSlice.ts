@@ -26,6 +26,14 @@ export const mainSlice = createSlice({
       state.isGuest = false;
       state.userId = action.payload || 'guest';
     },
+    loadDbData: (state, action) => {
+      if (state.userId != 'guest') {
+        return {
+          ...state,
+          songs: action.payload?.songs ?? []
+        };
+      }
+    },
     signOut: () => {
       googleSignOut().then(() => {
         console.log('Sign out successful');
@@ -94,7 +102,8 @@ export const {
   addSong,
   saveSong,
   deleteSong,
-  setCurrentSongId
+  setCurrentSongId,
+  loadDbData
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

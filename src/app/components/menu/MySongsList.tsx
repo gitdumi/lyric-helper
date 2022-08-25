@@ -46,6 +46,7 @@ function MySongsList({ setOpen }) {
       console.log('google songlist');
       dispatch(signIn(result.user?.uid));
       dispatch(setLoading(false));
+      navigate('/');
     });
   }
 
