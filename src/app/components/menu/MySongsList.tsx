@@ -29,7 +29,7 @@ function MySongsList({ setOpen }) {
 
   useEffect(() => {
     // Navigating to the newly selected song. Handling landing state for logged-in users (which usually have songs).
-    if (songs.length > 0 && isLoggedIn && songs.findIndex((song) => song.id === songId) != -1) {
+    if (songs.length > 0 && songs.findIndex((song) => song.id === songId) != -1) {
       navigate(`song/${songId}`, { replace: false });
     }
   }, [songId]);
