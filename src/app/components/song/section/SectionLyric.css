@@ -11,12 +11,8 @@
   background-color: transparent;
 }
 
-.section-lyric input {
-  min-width: 1ch;
-  justify-self: flex-start;
-  background-color: transparent;
-  border: none;
-  outline: none;
+.section-lyric .span-text {
+  filter: invert(1);
 }
 .section-lyric--actions__random {
   margin-left: 0.5rem;

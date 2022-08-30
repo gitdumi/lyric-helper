@@ -6,7 +6,7 @@ import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/constants';
 import SectionCard from './section/SectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
-import { Box, Button, Paper, Snackbar, Stack, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Button, Paper, Tooltip, useMediaQuery } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -101,7 +101,7 @@ function SongPage() {
         alignItems: 'center',
         height: '100%',
         overflow: 'auto',
-        pl: '5rem',
+        pl: '3rem',
         pr: '1rem',
         width: 'device-width'
       }}

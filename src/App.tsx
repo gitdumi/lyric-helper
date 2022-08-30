@@ -16,8 +16,6 @@ function App() {
   const notification = useSelector(selectLatestNotification);
   const dispatch = useDispatch();
 
-  console.log({ isLoggedIn, isGuest });
-
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(setLoading(false));

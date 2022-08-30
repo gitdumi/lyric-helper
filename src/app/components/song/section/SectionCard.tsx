@@ -24,6 +24,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack, Tooltip, useMediaQuery } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
+import ContentEditable from './ContentEditable';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -130,19 +131,11 @@ export default function SectionCard(props: {
         onMouseLeave={() => setIsHover(false)}
       >
         <div className="section-card--title__left">
-          <input
-            type="text"
-            placeholder="Section"
+          <ContentEditable
+            style={{ color: sectionData.color, fontWeight: 'bold' }}
             value={sectionData.name}
-            // ref={inputField}
-            onChange={handleChange}
-            minLength={3}
-            maxLength={MAX_CHARS / 3}
-            style={{
-              minWidth: '7ch',
-              width: `${sectionData.name.length * 1.1}ch`,
-              color: sectionData.color
-            }}
+            handleChange={handleChange}
+            max={MAX_CHARS / 3}
           />
           {!isLoading && (
             <Tooltip placement="top" title="add lyric">
