@@ -28,17 +28,11 @@ function MySongsList({ setOpen }) {
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
-    //Navigating to the newly selected song
-    if (songs.length > 0) {
+    // Navigating to the newly selected song. Handling landing state for logged-in users (which usually have songs).
+    if (songs.length > 0 && isLoggedIn && songs.findIndex((song) => song.id === songId) != -1) {
       navigate(`song/${songId}`, { replace: false });
     }
   }, [songId]);
-
-  useEffect(() => {
-    if (songs.length > 0) {
-      dispatch(setCurrentSongId(songs[songs.length - 1].id));
-    }
-  }, [songs]);
 
   function handleSignInClick() {
     dispatch(setLoading(true));
