@@ -16,7 +16,7 @@ import {
 } from '../../mainSlice';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { RESPONSIVE_WIDTH } from '../../../utils/constants';
-import { signInWithGoogle } from '../../../service/firebaseConfig';
+import { googleSignOut, signInWithGoogle } from '../../../service/firebaseConfig';
 
 // @ts-ignore
 function MySongsList({ setOpen }) {
@@ -99,8 +99,9 @@ function MySongsList({ setOpen }) {
           }}
           variant="text"
           onClick={() => {
-            dispatch(signOut());
-            dispatch(setCurrentSongId('0'));
+            googleSignOut().then(() => {
+              dispatch(signOut());
+            });
             if (isResponsive) {
               setOpen(false);
             }

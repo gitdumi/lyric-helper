@@ -3,8 +3,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import currentSongSlice from './components/song/currentSongSlice';
 import mainSlice from './mainSlice';
 import { loadState, saveState } from '../utils/localStorage';
+import notificationSlice from './components/misc/notificationSlice';
 
-const reducers = combineReducers({ currentSong: currentSongSlice, main: mainSlice });
+const reducers = combineReducers({
+  currentSong: currentSongSlice,
+  main: mainSlice,
+  notifications: notificationSlice
+});
 
 // const store = configureStore({ reducer });
 

@@ -4,8 +4,6 @@ import { MainDataState } from '../app/interfaces';
 export const COLLECTION = 'lyrics';
 
 export const writeUserData = async (collection: string, content: MainDataState) => {
-  console.log('writeuserdatafunc');
-  console.log({ content });
   return await db
     .collection(collection)
     .doc(content.userId)
@@ -42,4 +40,3 @@ export const read = async (userId: string) => {
 // 1.1. if the user is not logged in, he should not have db write privileges ---- done
 // 2. If the user is logged in, the data should be initialized from the database, and any save action should also do a save in the database
 // 3. If the user has local stuff saved and then signs in, the local snapshot should be saved to the db for the user
-// ?? What if the user has data stored in the db, adds some songs as a guest and then signs in? I think local songs should be appended to db songs and then saved

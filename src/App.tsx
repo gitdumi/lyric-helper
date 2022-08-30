@@ -8,10 +8,15 @@ import LandingPage from './app/components/LandingPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMain, setLoading } from './app/mainSlice';
 import { useEffect } from 'react';
+import { selectLatestNotification } from './app/components/misc/notificationSlice';
+import PopUpMessage from './app/components/misc/PopUpMessage';
 
 function App() {
   const { isLoggedIn, isGuest, isLoading } = useSelector(selectMain);
+  const notification = useSelector(selectLatestNotification);
   const dispatch = useDispatch();
+
+  console.log({ isLoggedIn, isGuest });
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -28,6 +33,7 @@ function App() {
         width: '100%'
       }}
     >
+      {notification != null && <PopUpMessage messageDetails={notification} />}
       {isLoading ? (
         <Typography color="red">LOADING</Typography>
       ) : (

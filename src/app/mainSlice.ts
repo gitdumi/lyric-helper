@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { getNewSong } from './initData';
 import { MainDataState, SongState } from './interfaces';
-import { googleSignOut } from '../service/firebaseConfig';
 import { COLLECTION, writeUserData } from '../service/firebaseDb';
 
 const initialState = {
@@ -35,9 +34,6 @@ export const mainSlice = createSlice({
       }
     },
     signOut: () => {
-      googleSignOut().then(() => {
-        console.log('Sign out successful');
-      });
       return initialState;
     },
     setGuest: (state) => {

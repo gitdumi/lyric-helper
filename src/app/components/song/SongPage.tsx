@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
 import { reorder } from '../../../utils/utils';
-import { ANIMATION_TIMEOUT, MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/constants';
+import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/constants';
 import SectionCard from './section/SectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
-import { Box, Button, Paper, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Button, Paper, Snackbar, Stack, Tooltip, useMediaQuery } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,6 +27,8 @@ import {
   setSong
 } from './currentSongSlice';
 import { SectionState } from '../../interfaces';
+import { addNotification } from '../misc/notificationSlice';
+import { NOTIFICATIONS } from '../misc/PopUpMessage';
 
 function SongPage() {
   const dispatch = useDispatch();
@@ -36,6 +38,7 @@ function SongPage() {
   const currentSong = useSelector(selectPickedSong);
   const currentSongId = useSelector(selectCurrentSongId);
   const songData = useSelector(selectCurrentSong);
+
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
@@ -47,6 +50,16 @@ function SongPage() {
       navigate('/');
     }
   }, [songs, location.pathname, currentSongId]);
+
+  function handleSaveSong() {
+    dispatch(saveSong(songData));
+    dispatch(addNotification(NOTIFICATIONS.SAVE_SONG));
+  }
+
+  function handleDeleteSong() {
+    dispatch(deleteSong(songData));
+    dispatch(addNotification(NOTIFICATIONS.DELETED));
+  }
 
   function onDragEnd(result: { destination: { index: number }; source: { index: number } }) {
     // dropped outside the list
@@ -148,7 +161,7 @@ function SongPage() {
         <Button
           variant="contained"
           sx={{ justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(48px)' }}
-          onClick={() => dispatch(saveSong(songData))}
+          onClick={handleSaveSong}
         >
           Save
         </Button>
@@ -157,9 +170,7 @@ function SongPage() {
           <HighlightOffSharpIcon
             className="svg-wrapper react-button"
             id="deleteSongButtonIcon"
-            onClick={() => {
-              dispatch(deleteSong(songData));
-            }}
+            onClick={handleDeleteSong}
             sx={{
               color: theme.palette.error.main,
               justifySelf: 'center',
