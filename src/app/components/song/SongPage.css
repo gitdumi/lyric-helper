@@ -42,13 +42,14 @@
 #deleteSongButtonIcon {
   transition: 300ms linear all;
 }
-#add-section svg:hover, #deleteSongButtonIcon svg:hover {
+#add-section svg:hover,
+#deleteSongButtonIcon svg:hover {
   height: 1.5rem;
   transform: rotate(180deg);
   filter: grayscale(100);
 }
 
-#add-section:hover svg{
+#add-section:hover svg {
   transform: rotate(180deg);
   -webkit-transform-origin: 50% 50%;
   -moz-transform-origin: 50% 50%;
