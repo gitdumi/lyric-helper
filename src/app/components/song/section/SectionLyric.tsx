@@ -6,7 +6,7 @@ import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteSectionLyric, selectCurrentSong, updateSectionLyric } from '../currentSongSlice';
 import { Tooltip } from '@mui/material';
-import CustomInput from '../../misc/InputAutosize/CustomInput';
+import CustomInput from '../../misc/CustomInput/CustomInput';
 import { theme } from '../../../../lib/Theme';
 
 export default function SectionLyric(props: {

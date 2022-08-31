@@ -29,7 +29,7 @@ import {
 import { SectionState } from '../../interfaces';
 import { addNotification } from '../misc/notificationSlice';
 import { NOTIFICATIONS } from '../misc/PopUpMessage';
-import CustomInput from '../misc/InputAutosize/CustomInput';
+import CustomInput from '../misc/CustomInput/CustomInput';
 
 function SongPage() {
   const dispatch = useDispatch();

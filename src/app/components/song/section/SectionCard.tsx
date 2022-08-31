@@ -24,7 +24,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack, Tooltip, useMediaQuery } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
-import CustomInput from '../../misc/InputAutosize/CustomInput';
+import CustomInput from '../../misc/CustomInput/CustomInput';
 
 export default function SectionCard(props: {
   sectionId: string;
