@@ -1,18 +1,18 @@
 .menu-user {
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    height: fit-content;
-    margin: 0.3rem;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  height: fit-content;
+  margin: 0.3rem;
 }
 
 .menu-user img {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .user-image {
-    width: 30px;
-    border: 1px solid var(--accent-color);
-    border-radius: 50%;
-    filter: drop-shadow(1px 1px 1px grey);
+  width: 30px;
+  border: 1px solid var(--accent-color);
+  border-radius: 50%;
+  filter: drop-shadow(1px 1px 1px grey);
 }
