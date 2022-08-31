@@ -67,7 +67,7 @@ export default function AppMenu() {
   };
 
   const handleDrawerClose = () => {
-    // setOpen(false);
+    setOpen(false);
   };
 
   return (
