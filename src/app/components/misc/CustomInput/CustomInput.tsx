@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CustomInput.css';
 import { ClickAwayListener } from '@mui/material';
+import { theme } from '../../../../lib/Theme';
 
 function CustomInput(props: {
   style?: any;
@@ -14,6 +15,11 @@ function CustomInput(props: {
   const additionalStyles = props.style;
   const [isEdit, setIsEdit] = useState(false);
 
+  const style = {
+    ...additionalStyles,
+    fontFamily: theme.typography.fontFamily
+  };
+
   return (
     <ClickAwayListener
       onClickAway={() => {
@@ -23,7 +29,7 @@ function CustomInput(props: {
       {isEdit ? (
         <input
           className={'input-edit ' + className}
-          style={{ ...additionalStyles }}
+          style={style}
           value={value}
           onChange={handleChange}
           maxLength={max}
@@ -36,7 +42,7 @@ function CustomInput(props: {
         />
       ) : (
         <span
-          style={{ ...additionalStyles }}
+          style={style}
           className={'input-view ' + className}
           onClick={() => {
             setIsEdit(true);
