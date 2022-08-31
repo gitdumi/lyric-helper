@@ -5,7 +5,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 import MySongsList from './MySongsList';
 import { theme } from '../../../lib/Theme';
-import { ClickAwayListener } from '@mui/material';
+import { Box, ClickAwayListener, Typography } from '@mui/material';
+import guestImage from '../../../../public/assets/guest.png';
+import useUser from '../../hooks/userHook';
+import './AppMenu.css';
 
 const drawerWidth = '240px';
 
@@ -43,6 +46,7 @@ const CustomDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
     padding: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
+    alignItems: 'center',
     ...(open && {
       ...openedMixin(drawerTheme),
       '& .MuiDrawer-paper': openedMixin(drawerTheme)
@@ -56,13 +60,14 @@ const CustomDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
 
 export default function AppMenu() {
   const [open, setOpen] = React.useState(false);
+  const user = useUser();
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    // setOpen(false);
   };
 
   return (
@@ -74,24 +79,6 @@ export default function AppMenu() {
         onMouseOver={handleDrawerOpen}
         onMouseLeave={handleDrawerClose}
       >
-        {/*<ListItem key={'modal-title'}*/}
-        {/*          sx={{bgcolor: theme.palette.background.paper, borderBottom: 'solid 1px', borderColor: theme.palette.primary.main,padding: '0.6rem 0', position: 'fixed', zIndex: 2, userSelect: 'none' }}>*/}
-        {/*    <ListItemIcon*/}
-        {/*        sx={{*/}
-        {/*            minWidth: 0,*/}
-        {/*            ml: 2.5,*/}
-        {/*            justifyContent: 'left',*/}
-        {/*            color: theme.palette.primary.main,*/}
-        {/*        }}*/}
-        {/*    ><LyricsSharpIcon/>*/}
-        {/*    </ListItemIcon>*/}
-        {/*    <Typography variant="h6"*/}
-        {/*                sx={{visibility: open ? 'visible' : 'hidden', pl: 1, pr: 2, color: theme.palette.primary.main}}> Lyric*/}
-        {/*        Helper</Typography>*/}
-        {/*</ListItem>*/}
-        {/*<List disablePadding>*/}
-        {/*<Divider sx={{borderColor: `${open ? theme.palette.primary.main : 'transparent'}`}}/>*/}
-
         {!open && (
           <ListItemIcon
             sx={{
@@ -104,7 +91,17 @@ export default function AppMenu() {
             <LyricsSharpIcon />
           </ListItemIcon>
         )}
-        {open && <MySongsList setOpen={setOpen} />}
+        {open && (
+          <>
+            <Box display="flex" className="menu-user">
+              <img className="user-image" src={`${user?.photoURL || guestImage}`} />
+              <Typography variant="body2" color={theme.palette.primary.main}>
+                {user != null ? user?.displayName : 'Guest'}
+              </Typography>
+            </Box>
+            <MySongsList setOpen={setOpen} />
+          </>
+        )}
       </CustomDrawer>
     </ClickAwayListener>
   );

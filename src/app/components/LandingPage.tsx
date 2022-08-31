@@ -1,47 +1,16 @@
 import { Box, Button, shouldSkipGeneratingVar, Typography } from '@mui/material';
 import { theme } from '../../lib/Theme';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadDbData, selectMain, setGuest, setLoading, signIn } from '../mainSlice';
+import { selectMain, setGuest, setLoading, signIn } from '../mainSlice';
 import { signInWithGoogle } from '../../service/firebaseConfig';
-import { useEffect, useState } from 'react';
-import firebase from '../../service/firebaseConfig';
-import { User } from '@firebase/auth-types';
-import { read } from '../../service/firebaseDb';
+import guestImage from '../../../public/assets/guest.png';
+import useUser from '../hooks/userHook';
+import * as React from 'react';
 
 function LandingPage() {
   const { isLoggedIn, isGuest, isLoading } = useSelector(selectMain);
   const dispatch = useDispatch();
-  // @ts-ignore
-  const [user, setUser] = useState<User>(null);
-
-  useEffect(() => {
-    let cancel = false;
-
-    dispatch(setLoading(true));
-    firebase.auth().onAuthStateChanged((user) => {
-      if (cancel) {
-        dispatch(setLoading(false));
-        return;
-      }
-      if (user) {
-        setUser(user);
-        dispatch(signIn(user.uid));
-        console.log('Signed in');
-        read(user.uid).then((result) => {
-          dispatch(loadDbData(result));
-        });
-      } else {
-        // @ts-ignore
-        setUser(null);
-        console.log('Signed out');
-      }
-    });
-    dispatch(setLoading(false));
-
-    return () => {
-      cancel = true;
-    };
-  }, []);
+  const user = useUser();
 
   function handleSignInClick() {
     dispatch(setLoading(true));
@@ -73,13 +42,11 @@ function LandingPage() {
         {(isLoggedIn || isGuest) && (
           <>
             <img
+              className="user-image"
               style={{ width: '40px', borderRadius: '50%' }}
-              src={`${
-                user?.photoURL ||
-                'https://www.seekpng.com/png/full/110-1100707_person-avatar-placeholder.png'
-              }`}
+              src={`${user?.photoURL || guestImage}`}
             />
-            <Typography variant="body2">
+            <Typography variant="body2" color={theme.palette.primary.main}>
               {isLoggedIn && user != null ? user?.displayName : 'Guest'}
             </Typography>
           </>
