@@ -1,0 +1,124 @@
+.section-width {
+  min-width: 25rem;
+}
+
+.section-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  position: relative;
+  z-index: 0;
+  border-top: none;
+}
+.section-card:last-child {
+  margin-bottom: 1rem;
+}
+
+.section-card--title__left {
+  display: flex;
+  margin: 0.2rem 0.5rem;
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.section-card--title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--white);
+}
+
+.section-card--actions {
+  display: flex;
+  justify-self: flex-end;
+  padding-right: 0.5rem;
+  align-items: center;
+}
+
+.section-card--actions__color-picker {
+  margin: 0;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.section-card--actions__color-picker:hover .color-picker {
+  visibility: visible;
+  opacity: 1;
+}
+
+.color-picker {
+  top: 50%;
+  left: 100%;
+  margin-left: 20px;
+  transform: translate(-107%, -25%);
+  padding: 0;
+
+  position: absolute;
+  z-index: 99999999;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--transition-speed);
+}
+
+.color-picker:hover {
+  visibility: visible;
+  opacity: 1;
+}
+
+.section-card--content {
+  display: flex;
+  border: none;
+}
+
+.section-card--content__add {
+  margin: 0;
+  display: flex;
+
+  align-self: center;
+  justify-self: flex-start;
+}
+
+.divide {
+  height: 1.36rem;
+}
+
+.sync {
+  height: 1.6rem;
+}
+
+.section-card--content__lyrics {
+  min-width: 20rem;
+  width: 100%;
+  /*height: 100%;*/
+  margin: 0.3rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-card--content__lyrics ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  list-style-type: none;
+  color: var(--text-color);
+}
+
+.section-card--content__lyrics ul:last-child {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 1000px) {
+  .section-width {
+    min-width: 10rem;
+  }
+}
