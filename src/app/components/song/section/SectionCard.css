@@ -116,3 +116,10 @@
 .section-card--content__lyrics ul:last-child {
   margin-bottom: 0.5rem;
 }
+
+
+@media (max-width: 1000px) {
+  .section-width {
+    min-width: 10rem;
+  }
+}
