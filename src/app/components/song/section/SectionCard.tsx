@@ -24,7 +24,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack, Tooltip, useMediaQuery } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
-import ContentEditable from './ContentEditable';
+import CustomInput from '../../misc/InputAutosize/CustomInput';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -115,76 +115,82 @@ export default function SectionCard(props: {
         maxWidth: isResponsive ? '20rem' : '40rem'
       }}
     >
-      {isLoading ? (
-        <Stack sx={{ width: '100%', color: theme.palette.background.paper }} spacing={0}>
-          <LinearProgress variant="indeterminate" color="inherit" sx={{ height: '2px' }} />
-        </Stack>
-      ) : (
-        <Box height={'2px'} color={theme.palette.background.paper} />
-      )}
-      <div
-        ref={provided.innerRef}
-        {...provided.dragHandleProps}
-        className="section-card--title"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseOver={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        <div className="section-card--title__left">
-          <ContentEditable
-            style={{ color: sectionData.color, fontWeight: 'bold' }}
-            value={sectionData.name}
-            handleChange={handleChange}
-            max={MAX_CHARS / 3}
-          />
-          {!isLoading && (
-            <Tooltip placement="top" title="add lyric">
-              <button
-                ref={addButton}
-                className="section-card--content__add svg-wrapper"
-                onClick={async () => {
-                  await addRandomLyric();
-                }}
-              >
-                <AiOutlinePlusCircle
-                  color={sectionData.color}
-                  style={getVisibility()}
-                  className="react-button"
-                />
-              </button>
-            </Tooltip>
-          )}
-        </div>
+      <div className="section-width">
+        {isLoading ? (
+          <Stack
+            sx={{ width: '100%', color: theme.palette.background.paper, m: 0, p: 0 }}
+            spacing={0}
+          >
+            <LinearProgress variant="indeterminate" color="inherit" sx={{ height: '2px' }} />
+          </Stack>
+        ) : (
+          <Box height={'2px'} color={theme.palette.background.paper} />
+        )}
+        <div
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          className="section-card--title"
+          onMouseEnter={() => setIsHover(true)}
+          onMouseOver={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+        >
+          <div className="section-card--title__left">
+            <CustomInput
+              style={{ color: sectionData.color, font: 'inherit' }}
+              value={sectionData.name}
+              handleChange={handleChange}
+              max={MAX_CHARS / 3}
+            />
+            {!isLoading && (
+              <Tooltip placement="top" title="add lyric">
+                <button
+                  ref={addButton}
+                  className="section-card--content__add svg-wrapper"
+                  onClick={async () => {
+                    await addRandomLyric();
+                  }}
+                >
+                  <AiOutlinePlusCircle
+                    color={sectionData.color}
+                    style={getVisibility()}
+                    className="react-button"
+                  />
+                </button>
+              </Tooltip>
+            )}
+          </div>
 
-        {!isLoading && (
           <div className="section-card--actions">
-            <Tooltip placement="top" title="delete section">
-              <button
-                className="section-card--content__delete svg-wrapper"
-                onClick={(event) => {
-                  handleDelete(event, sectionId);
-                }}
-              >
-                <AiOutlineCloseCircle
-                  className="react-button"
-                  color={sectionData.color}
-                  style={getVisibility()}
-                />
-              </button>
-            </Tooltip>
-            <Tooltip placement="top" title="duplicate section">
-              <button
-                className="section-duplicate svg-wrapper"
-                onClick={() => handleDuplicate(sectionIndex)}
-              >
-                <IoSyncCircleOutline
-                  className="react-button sync"
-                  color={sectionData.color}
-                  style={getVisibility()}
-                />
-              </button>
-            </Tooltip>
-
+            {!isLoading && (
+              <>
+                <Tooltip placement="top" title="delete section">
+                  <button
+                    className="section-card--content__delete svg-wrapper"
+                    onClick={(event) => {
+                      handleDelete(event, sectionId);
+                    }}
+                  >
+                    <AiOutlineCloseCircle
+                      className="react-button"
+                      color={sectionData.color}
+                      style={getVisibility()}
+                    />
+                  </button>
+                </Tooltip>
+                <Tooltip placement="top" title="duplicate section">
+                  <button
+                    className="section-duplicate svg-wrapper"
+                    onClick={() => handleDuplicate(sectionIndex)}
+                  >
+                    <IoSyncCircleOutline
+                      className="react-button sync"
+                      color={sectionData.color}
+                      style={getVisibility()}
+                    />
+                  </button>
+                </Tooltip>
+              </>
+            )}
             {/*<button*/}
             {/*    className="section-card--content__config svg-wrapper"*/}
             {/*    onClick={async (e) => {*/}
@@ -210,7 +216,7 @@ export default function SectionCard(props: {
               />
             </div>
           </div>
-        )}
+        </div>
       </div>
       <div className="section-card--content">
         <div className="section-card--content__lyrics" style={{ backgroundColor: 'transparent' }}>

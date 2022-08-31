@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getLyric } from '../../../../lib/hipster';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
 import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../../utils/constants';
@@ -6,7 +6,8 @@ import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteSectionLyric, selectCurrentSong, updateSectionLyric } from '../currentSongSlice';
 import { Tooltip } from '@mui/material';
-import ContentEditable from './ContentEditable';
+import CustomInput from '../../misc/InputAutosize/CustomInput';
+import { theme } from '../../../../lib/Theme';
 
 export default function SectionLyric(props: {
   index: number;
@@ -25,13 +26,13 @@ export default function SectionLyric(props: {
     return { visibility: isHover ? 'visible' : 'hidden' };
   }
 
-  function handleChange(event: { target: { innerText: string } }) {
+  function handleChange(event: { target: { value: string } }) {
     console.log(`change section ${sectionIndex} lyric ${index}`);
     dispatch(
       updateSectionLyric({
         sectionIndex: sectionIndex,
         lyricIndex: index,
-        value: event.target.innerText
+        value: event.target.value
       })
     );
   }
@@ -74,7 +75,12 @@ export default function SectionLyric(props: {
         <IoColorWandOutline className="react-button" style={getVisibility()} />
       </button>
 
-      <ContentEditable value={value} handleChange={handleChange} max={MAX_CHARS} />
+      <CustomInput
+        style={{ color: theme.palette.text.primary }}
+        value={value}
+        handleChange={handleChange}
+        max={MAX_CHARS}
+      />
 
       <div className={`section-lyric--actions`}>
         <Tooltip placement="top" title="delete lyric">

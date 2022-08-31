@@ -29,6 +29,7 @@ import {
 import { SectionState } from '../../interfaces';
 import { addNotification } from '../misc/notificationSlice';
 import { NOTIFICATIONS } from '../misc/PopUpMessage';
+import CustomInput from '../misc/InputAutosize/CustomInput';
 
 function SongPage() {
   const dispatch = useDispatch();
@@ -106,15 +107,13 @@ function SongPage() {
         width: 'device-width'
       }}
     >
-      <input
+      <CustomInput
         className="song-title"
-        type="text"
         placeholder="Song Title"
         value={songData.title}
-        onChange={(e) => dispatch(updateSongTitle(e.target.value))}
-        maxLength={MAX_CHARS / 2}
+        handleChange={(e: any) => dispatch(updateSongTitle(e.target.value))}
+        max={MAX_CHARS / 2}
         style={{
-          minWidth: `${(songData.title?.length ?? 0) + 1}ch`,
           color: `${songData.sections?.[0]?.color || COLORS.GREEN}`
         }}
       />

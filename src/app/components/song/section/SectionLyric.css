@@ -8,12 +8,10 @@
 .section-lyric {
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: transparent;
 }
 
-.section-lyric .span-text {
-  filter: invert(1);
-}
 .section-lyric--actions__random {
   margin-left: 0.5rem;
   margin-right: 0;

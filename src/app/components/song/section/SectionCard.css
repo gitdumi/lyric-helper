@@ -1,3 +1,7 @@
+.section-width {
+  min-width: 25rem;
+}
+
 .section-card {
   display: flex;
   flex-direction: column;
@@ -23,17 +27,6 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--white);
-}
-
-.section-card--title input {
-  padding: 0.5rem;
-  font-size: 20px;
-  font-weight: 600;
-  /*width: min-content;*/
-  min-width: 1rem;
-  color: var(--accent-color);
-  border: none;
-  outline: none;
 }
 
 .section-card--actions {
