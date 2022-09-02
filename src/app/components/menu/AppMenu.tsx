@@ -73,6 +73,7 @@ export default function AppMenu() {
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <CustomDrawer
+        className="menu"
         variant="permanent"
         open={open}
         onMouseEnter={handleDrawerOpen}

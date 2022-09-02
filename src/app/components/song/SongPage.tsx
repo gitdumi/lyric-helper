@@ -8,14 +8,15 @@ import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
 import { Box, Button, Paper, Tooltip, useMediaQuery } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteSong,
   saveSong,
   selectCurrentSongId,
   selectPickedSong,
-  selectSongs
+  selectSongs,
+  setCurrentSongId
 } from '../../mainSlice';
 import {
   addSection,
@@ -28,8 +29,9 @@ import {
 } from './currentSongSlice';
 import { SectionState } from '../../interfaces';
 import { addNotification } from '../misc/notificationSlice';
-import { NOTIFICATIONS } from '../misc/PopUpMessage';
+import { NOTIFICATIONS } from '../misc/PopUpMessage/PopUpMessage';
 import CustomInput from '../misc/CustomInput/CustomInput';
+import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 
 function SongPage() {
   const dispatch = useDispatch();
@@ -39,7 +41,6 @@ function SongPage() {
   const currentSong = useSelector(selectPickedSong);
   const currentSongId = useSelector(selectCurrentSongId);
   const songData = useSelector(selectCurrentSong);
-
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ function SongPage() {
     if (songs.length > 0) {
       dispatch(setSong(currentSong));
     } else {
-      navigate('/');
+      isResponsive ? navigate('/menu') : navigate('/');
     }
   }, [songs, location.pathname, currentSongId]);
 
@@ -60,6 +61,8 @@ function SongPage() {
   function handleDeleteSong() {
     dispatch(deleteSong(songData));
     dispatch(addNotification(NOTIFICATIONS.DELETED));
+    navigate('/');
+    dispatch(setCurrentSongId('0'));
   }
 
   function onDragEnd(result: { destination: { index: number }; source: { index: number } }) {
@@ -79,7 +82,12 @@ function SongPage() {
     <Draggable key={section.id} draggableId={section.id} index={index}>
       {(provided) => {
         return (
-          <div ref={provided.innerRef} {...provided.draggableProps} id="draggable-section">
+          <div
+            className="section-cards"
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            id="draggable-section"
+          >
             <SectionCard
               provided={{ ...provided }}
               key={`SC-${section.id}`}
@@ -96,15 +104,9 @@ function SongPage() {
 
   return (
     <Box
-      display="flex"
+      className="song-box"
       sx={{
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: '100%',
-        overflow: 'auto',
-        pl: '3rem',
-        pr: '1rem',
-        width: 'device-width'
+        ml: isResponsive ? '1rem' : '4rem'
       }}
     >
       <CustomInput
@@ -131,7 +133,6 @@ function SongPage() {
         </Droppable>
         <button
           style={{
-            marginBottom: '100px',
             marginTop: `${songData.sections?.length > 0 ? '0' : '1rem'}`
           }}
           id="add-section"
@@ -144,24 +145,26 @@ function SongPage() {
         </button>
       </DragDropContext>
       <Paper
+        className="song-footer"
         elevation={3}
         sx={{
-          bgcolor: 'background.paper',
-          textAlign: 'center',
-          width: '100%',
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
+          ml: isResponsive ? '0rem' : '4rem'
+          // justifyContent: isResponsive ? 'space-between' : 'center'
         }}
       >
-        <Button
-          variant="contained"
-          sx={{ justifySelf: 'center', m: '1rem', ml: 'auto', transform: 'translateX(48px)' }}
-          onClick={handleSaveSong}
-        >
+        {isResponsive && (
+          <LyricsSharpIcon
+            className="responsive-menu-nav"
+            sx={{
+              color: theme.palette.primary.main
+            }}
+            onClick={() => {
+              dispatch(setCurrentSongId('0'));
+              navigate('/menu');
+            }}
+          />
+        )}
+        <Button className="save-song" variant="contained" onClick={handleSaveSong}>
           Save
         </Button>
 
@@ -172,10 +175,6 @@ function SongPage() {
             onClick={handleDeleteSong}
             sx={{
               color: theme.palette.error.main,
-              justifySelf: 'center',
-              mr: '2rem',
-              fontSize: 30,
-              ml: 'auto',
               cursor: 'pointer'
             }}
           />

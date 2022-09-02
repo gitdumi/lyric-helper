@@ -1,16 +1,22 @@
-import { Box, Button, shouldSkipGeneratingVar, Typography } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 import { theme } from '../../lib/Theme';
+import './LandingPage.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMain, setGuest, setLoading, signIn } from '../mainSlice';
 import { signInWithGoogle } from '../../service/firebaseConfig';
 import guestImage from '../../../public/assets/guest.png';
 import useUser from '../hooks/userHook';
 import * as React from 'react';
+import { RESPONSIVE_WIDTH } from '../../utils/constants';
+import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
+import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
   const { isLoggedIn, isGuest, isLoading } = useSelector(selectMain);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useUser();
+  const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   function handleSignInClick() {
     dispatch(setLoading(true));
@@ -22,14 +28,9 @@ function LandingPage() {
 
   return (
     <Box
-      display="flex"
+      className="landing-page"
       sx={{
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        height: '100vh',
-        ml: isLoggedIn || isGuest ? '3rem' : '0'
+        ml: isLoggedIn || isGuest ? (!isResponsive ? '3rem' : '') : ''
       }}
     >
       {isLoading && <Typography color="red">LOADING</Typography>}
@@ -45,6 +46,7 @@ function LandingPage() {
               className="user-image"
               style={{ width: '40px', borderRadius: '50%' }}
               src={`${user?.photoURL || guestImage}`}
+              alt=""
             />
             <Typography variant="body2" color={theme.palette.primary.main}>
               {isLoggedIn && user != null ? user?.displayName : 'Guest'}
@@ -63,7 +65,22 @@ function LandingPage() {
         }}
       >
         {isLoggedIn || isGuest ? (
-          'hover over the panel to get started'
+          isResponsive ? (
+            <Box className="landing-click-box">
+              {'click'}
+              <LyricsSharpIcon
+                sx={{
+                  m: '0 0.5rem',
+                  color: theme.palette.primary.main,
+                  cursor: 'pointer'
+                }}
+                onClick={() => navigate('/menu')}
+              />
+              {' to get started'}
+            </Box>
+          ) : (
+            'hover over the panel to get started'
+          )
         ) : (
           <>
             <Button variant="contained" onClick={handleSignInClick}>
@@ -77,13 +94,7 @@ function LandingPage() {
         )}
       </Typography>
       {isGuest && (
-        <Typography
-          variant="body1"
-          color={theme.palette.primary.main}
-          sx={{
-            m: '3rem 0 0 2rem'
-          }}
-        >
+        <Typography variant="body1" color={theme.palette.primary.main}>
           NOTE: as a guest you can only save songs locally. <br /> If you clear your browser data
           your songs will be lost.
         </Typography>

@@ -3,13 +3,16 @@
 .droppableLyric {
   width: 100%;
   transition: var(--transition-speed);
+  position: relative;
 }
 
 .section-lyric {
   display: flex;
   align-items: center;
-  justify-content: center;
   background-color: transparent;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .section-lyric--actions__random {
@@ -18,6 +21,7 @@
   transform: translateY(-2px);
 }
 .section-lyric--actions__delete {
+  margin-left: auto;
   transform: translateY(-2px);
 }
 

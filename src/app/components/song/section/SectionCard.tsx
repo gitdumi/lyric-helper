@@ -38,9 +38,9 @@ export default function SectionCard(props: {
   const { sectionIndex, handleDuplicate, handleDelete, sectionId, provided } = props;
   const sectionData = songData.sections[sectionIndex];
   const { lyrics } = sectionData;
-  const [isHover, setIsHover] = useState(false);
-  const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
+  const [isHover, setIsHover] = useState(isResponsive);
+  const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const addButton = useRef() as LegacyRef<HTMLButtonElement>;
@@ -106,16 +106,16 @@ export default function SectionCard(props: {
 
   return (
     <div
-      className="section-card"
+      className="section-card section-width"
       style={{
         backgroundColor: sectionData.color,
         borderLeft: 'solid 2px ' + sectionData.color,
         borderRight: 'solid 2px ' + sectionData.color,
         boxShadow: '5px 5px 0 ' + sectionData.color,
-        maxWidth: isResponsive ? '20rem' : '40rem'
+        maxWidth: isResponsive ? '320px' : '40rem'
       }}
     >
-      <div className="section-width">
+      <div>
         {isLoading ? (
           <Stack
             sx={{ width: '100%', color: theme.palette.background.paper, m: 0, p: 0 }}
@@ -132,7 +132,7 @@ export default function SectionCard(props: {
           className="section-card--title"
           onMouseEnter={() => setIsHover(true)}
           onMouseOver={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
+          onMouseLeave={() => setIsHover(isResponsive)}
         >
           <div className="section-card--title__left">
             <CustomInput
@@ -191,16 +191,6 @@ export default function SectionCard(props: {
                 </Tooltip>
               </>
             )}
-            {/*<button*/}
-            {/*    className="section-card--content__config svg-wrapper"*/}
-            {/*    onClick={async (e) => {*/}
-
-            {/*    }}*/}
-            {/*>*/}
-            {/*    <FiDivideCircle color={sectionData.color} style={getVisibility()}*/}
-            {/*                    className="react-button divide"/>*/}
-            {/*</button>*/}
-
             <div
               className="section-card--actions__color-picker"
               color={sectionData.color}

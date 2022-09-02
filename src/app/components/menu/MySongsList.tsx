@@ -14,22 +14,19 @@ import {
   signIn,
   setLoading
 } from '../../mainSlice';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { RESPONSIVE_WIDTH } from '../../../utils/constants';
 import { googleSignOut, signInWithGoogle } from '../../../service/firebaseConfig';
 
 // @ts-ignore
-function MySongsList({ setOpen }) {
+function MySongsList(props: { setOpen? }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector(selectMain);
   const songs = useSelector(selectSongs);
   const songId = useSelector(selectCurrentSongId);
-  const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
     if (songs.length > 0 && songs.findIndex((song) => song.id === songId) != -1) {
-      navigate(`song/${songId}`, { replace: false });
+      navigate(`/song/${songId}`, { replace: false });
     }
   }, [songId]);
 
@@ -54,9 +51,6 @@ function MySongsList({ setOpen }) {
           key={`link-${song.id}`}
           onClick={() => {
             dispatch(setCurrentSongId(song.id));
-            if (isResponsive) {
-              setOpen(false);
-            }
           }}
         >
           <Typography noWrap>{song.title}</Typography>
@@ -77,9 +71,6 @@ function MySongsList({ setOpen }) {
         variant="contained"
         onClick={() => {
           dispatch(addSong());
-          if (isResponsive) {
-            setOpen(false);
-          }
         }}
       >
         Add song
@@ -95,9 +86,6 @@ function MySongsList({ setOpen }) {
             googleSignOut().then(() => {
               dispatch(signOut());
             });
-            if (isResponsive) {
-              setOpen(false);
-            }
           }}
         >
           Sign out
