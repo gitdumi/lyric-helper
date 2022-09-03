@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getLyric } from '../../../../lib/hipster';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
-import { ANIMATION_TIMEOUT, MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
+import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -31,10 +31,6 @@ export default function SectionLyric(props: {
     setIsHover(isResponsive);
   }, [isResponsive]);
 
-  function getVisibility(): any {
-    return { visibility: isHover ? 'visible' : 'hidden' };
-  }
-
   function handleChange(event: { target: { value: string } }) {
     console.log(`change section ${sectionIndex} lyric ${index}`);
     dispatch(
@@ -47,24 +43,16 @@ export default function SectionLyric(props: {
   }
 
   async function handleRandom() {
-    setIsLoading((prev: any) => !prev);
+    setIsLoading(true);
     const result = await getLyric(songData.config.selectedSylCount);
     dispatch(
       updateSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index, value: result.value })
     );
-    setIsLoading((prev: any) => !prev);
+    setIsLoading(false);
   }
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
-    const container = event.currentTarget.closest('.section-lyric');
-    //@ts-ignore
-    container.style.transition = `all ${ANIMATION_TIMEOUT}ms`;
-    //@ts-ignore
-    container.style.opacity = '0';
-
-    setTimeout(function () {
-      dispatch(deleteSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index }));
-    }, ANIMATION_TIMEOUT / 3);
+    dispatch(deleteSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index }));
   };
 
   const hoverHandler = {
@@ -94,7 +82,10 @@ export default function SectionLyric(props: {
           await handleRandom();
         }}
       >
-        <IoColorWandOutline className="react-button" style={getVisibility()} />
+        <IoColorWandOutline
+          className="react-button"
+          style={{ visibility: isHover ? 'visible' : 'hidden' }}
+        />
       </button>
 
       <CustomInput
@@ -113,7 +104,10 @@ export default function SectionLyric(props: {
               e.stopPropagation();
             }}
           >
-            <AiOutlineCloseCircle className="react-button" style={getVisibility()} />
+            <AiOutlineCloseCircle
+              className="react-button"
+              style={{ visibility: isHover ? 'visible' : 'hidden' }}
+            />
           </button>
         </Tooltip>
       </div>

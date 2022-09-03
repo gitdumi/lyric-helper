@@ -10,7 +10,7 @@ function LoaderOverlay() {
         <Stack sx={{ color: theme.palette.primary.main }} spacing={0}>
           <CircularProgress className={'loader-spinner'} color={'inherit'} />
         </Stack>
-        <Typography variant="body1">give it a minute... it's going through space</Typography>
+        <Typography variant="body1">give it a minute... it&apos;s going through space</Typography>
       </Box>
     </Modal>
   );

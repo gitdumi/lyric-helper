@@ -113,7 +113,7 @@ function SongPage() {
         className="song-title"
         placeholder="Song Title"
         value={songData.title}
-        handleChange={(e: any) => dispatch(updateSongTitle(e.target.value))}
+        handleChange={(e) => dispatch(updateSongTitle(e.target.value))}
         max={MAX_CHARS / 2}
         style={{
           color: `${songData.sections?.[0]?.color || COLORS.GREEN}`

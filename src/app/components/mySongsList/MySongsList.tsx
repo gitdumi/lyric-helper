@@ -17,7 +17,6 @@ import {
 import { googleSignOut, signInWithGoogle } from '../../../service/firebaseConfig';
 import './MySongsList.css';
 
-// @ts-ignore
 function MySongsList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -80,6 +79,7 @@ function MySongsList() {
           onClick={() => {
             googleSignOut().then(() => {
               dispatch(signOut());
+              navigate('/');
             });
           }}
         >

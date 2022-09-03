@@ -7,8 +7,7 @@ import { useDispatch } from 'react-redux';
 
 function useUser() {
   const dispatch = useDispatch();
-  // @ts-ignore
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     let cancel = false;
@@ -27,7 +26,6 @@ function useUser() {
           dispatch(loadDbData(result));
         });
       } else {
-        // @ts-ignore
         setUser(null);
         console.log('Signed out');
       }
