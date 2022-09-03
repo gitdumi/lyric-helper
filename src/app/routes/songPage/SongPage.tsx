@@ -8,7 +8,7 @@ import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
 import { Box, Button, Paper, Tooltip, useMediaQuery } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteSong,
@@ -40,13 +40,14 @@ function SongPage() {
   const songs = useSelector(selectSongs);
   const currentSong = useSelector(selectPickedSong);
   const currentSongId = useSelector(selectCurrentSongId);
+  const urlId = useParams().songId;
   const songData = useSelector(selectCurrentSong);
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
+    console.log(urlId);
     //Setting the song in store to the selected one
-    //Also, once the song list gets modified, updating the song slice with the newly selected song (fixes navigation after delete)
-    if (songs.length > 0) {
+    if (songs.length > 0 && songs.findIndex((song) => song.id === urlId) != -1) {
       dispatch(setSong(currentSong));
     } else {
       isResponsive ? navigate('/menu') : navigate('/');

@@ -87,7 +87,7 @@ export default function SectionLyric(props: {
           <AutoFixHighIcon
             fontSize="inherit"
             className="wand"
-            style={{ visibility: isHover ? 'visible' : 'hidden' }}
+            style={{ visibility: isHover ? 'visible' : 'hidden', color: 'inherit' }}
           />
         </button>
       </Tooltip>
@@ -109,7 +109,7 @@ export default function SectionLyric(props: {
           >
             <HighlightOffIcon
               fontSize="inherit"
-              style={{ visibility: isHover ? 'visible' : 'hidden' }}
+              style={{ visibility: isHover ? 'visible' : 'hidden', color: 'inherit' }}
             />
           </button>
         </Tooltip>
