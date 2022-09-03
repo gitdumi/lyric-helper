@@ -1,4 +1,4 @@
-import React, { LegacyRef, useRef, useState } from 'react';
+import React, { LegacyRef, useEffect, useRef, useState } from 'react';
 import SectionLyric from '../sectionLyric';
 import { Lyric } from '../../../store/utils/interfaces';
 import { getLyric } from '../../../../lib/hipster';
@@ -40,10 +40,14 @@ export default function SectionCard(props: {
   const { lyrics } = sectionData;
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
   const [isHover, setIsHover] = useState(isResponsive);
-  const [isHoverColorPicker, setIsHoverColorPicker] = useState(false);
+  const [isHoverColorPicker, setIsHoverColorPicker] = useState(isResponsive);
   const [isLoading, setIsLoading] = useState(false);
 
   const addButton = useRef() as LegacyRef<HTMLButtonElement>;
+
+  useEffect(() => {
+    setIsHover(isResponsive);
+  }, [isResponsive]);
 
   function getVisibility(): any {
     return { visibility: `${isHover || isHoverColorPicker ? 'visible' : 'hidden'}` };
@@ -63,10 +67,10 @@ export default function SectionCard(props: {
   }
 
   async function addRandomLyric() {
-    setIsLoading((prev) => !prev);
+    setIsLoading(true);
     const result = await getLyric(songData.config.selectedSylCount);
     dispatch(addSectionLyric({ sectionIndex: sectionIndex, value: result }));
-    setIsLoading((prev) => !prev);
+    setIsLoading(false);
   }
 
   function onDragEnd(result: any) {
@@ -82,6 +86,19 @@ export default function SectionCard(props: {
 
     dispatch(reorderSectionLyrics({ sectionIndex: sectionIndex, lyrics: newLyrics }));
   }
+
+  const hoverHandler = {
+    onHover: () => {
+      if (!isResponsive) {
+        setIsHover(true);
+      }
+    },
+    onLeave: () => {
+      if (!isResponsive) {
+        setIsHover(false);
+      }
+    }
+  };
 
   const lyricElements = lyrics.map((lyric: Lyric, index: number) => {
     return (
@@ -130,9 +147,9 @@ export default function SectionCard(props: {
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           className="section-card--title"
-          onMouseEnter={() => setIsHover(true)}
-          onMouseOver={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(isResponsive)}
+          onMouseEnter={hoverHandler.onHover}
+          onMouseOver={hoverHandler.onHover}
+          onMouseLeave={hoverHandler.onLeave}
         >
           <div className="section-card--title__left">
             <CustomInput
