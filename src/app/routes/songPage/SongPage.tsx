@@ -3,7 +3,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { AiOutlinePlusCircle } from 'react-icons/all';
 import { reorder } from '../../../utils/utils';
 import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/constants';
-import SectionCard from './section/SectionCard';
+import SectionCard from '../../components/song/sectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
 import { Box, Button, Paper, Tooltip, useMediaQuery } from '@mui/material';
@@ -17,7 +17,7 @@ import {
   selectPickedSong,
   selectSongs,
   setCurrentSongId
-} from '../../mainSlice';
+} from '../../store/mainSlice';
 import {
   addSection,
   updateSongTitle,
@@ -26,12 +26,12 @@ import {
   duplicateSection,
   reorderSections,
   setSong
-} from './currentSongSlice';
-import { SectionState } from '../../interfaces';
-import { addNotification } from '../misc/notificationSlice';
-import { NOTIFICATIONS } from '../misc/PopUpMessage/PopUpMessage';
-import CustomInput from '../misc/CustomInput/CustomInput';
+} from '../../store/currentSongSlice';
+import { SectionState } from '../../store/utils/interfaces';
+import { addNotification } from '../../store/notificationSlice';
+import CustomInput from '../../components/misc/customInput';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
+import { NOTIFICATIONS } from '../../components/misc/popUpMessage';
 
 function SongPage() {
   const dispatch = useDispatch();

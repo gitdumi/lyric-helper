@@ -1,6 +1,6 @@
 import React, { LegacyRef, useRef, useState } from 'react';
-import SectionLyric from './SectionLyric';
-import { Lyric } from '../../../interfaces';
+import SectionLyric from '../sectionLyric';
+import { Lyric } from '../../../store/utils/interfaces';
 import { getLyric } from '../../../../lib/hipster';
 import { reorder } from '../../../../utils/utils';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -20,11 +20,11 @@ import {
   selectCurrentSong,
   updateSectionColor,
   updateSectionTitle
-} from '../currentSongSlice';
+} from '../../../store/currentSongSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack, Tooltip, useMediaQuery } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
-import CustomInput from '../../misc/CustomInput/CustomInput';
+import CustomInput from '../../misc/customInput';
 
 export default function SectionCard(props: {
   sectionId: string;

@@ -1,5 +1,5 @@
 import { firestoreDb as db } from './firebaseConfig';
-import { MainDataState } from '../app/interfaces';
+import { MainDataState } from '../app/store/utils/interfaces';
 
 export const COLLECTION = 'lyrics';
 

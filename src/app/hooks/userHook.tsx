@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { User } from '@firebase/auth-types';
-import { loadDbData, setLoading, signIn } from '../mainSlice';
+import { loadDbData, setLoading, signIn } from '../store/mainSlice';
 import firebase from '../../service/firebaseConfig';
 import { read } from '../../service/firebaseDb';
 import { useDispatch } from 'react-redux';

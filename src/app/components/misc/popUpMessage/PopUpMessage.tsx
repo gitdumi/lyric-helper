@@ -1,6 +1,6 @@
 import { Alert, Snackbar, useMediaQuery } from '@mui/material';
 import React, { useEffect } from 'react';
-import { NotificationState, removeNotification } from '../notificationSlice';
+import { NotificationState, removeNotification } from '../../../store/notificationSlice';
 import { NOTIFICATION_SHOW_DURATION, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import { getNewKey } from '../../../../utils/utils';
 import { useDispatch } from 'react-redux';

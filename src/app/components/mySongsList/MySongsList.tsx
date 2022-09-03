@@ -13,11 +13,12 @@ import {
   selectMain,
   signIn,
   setLoading
-} from '../../mainSlice';
+} from '../../store/mainSlice';
 import { googleSignOut, signInWithGoogle } from '../../../service/firebaseConfig';
+import './MySongsList.css';
 
 // @ts-ignore
-function MySongsList(props: { setOpen? }) {
+function MySongsList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector(selectMain);
@@ -60,13 +61,7 @@ function MySongsList(props: { setOpen? }) {
   });
 
   return (
-    <List
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        p: 0
-      }}
-    >
+    <List className={'my-songs-list'}>
       <Button
         variant="contained"
         onClick={() => {

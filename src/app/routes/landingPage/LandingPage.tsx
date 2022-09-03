@@ -1,13 +1,13 @@
 import { Box, Button, Typography, useMediaQuery } from '@mui/material';
-import { theme } from '../../lib/Theme';
+import { theme } from '../../../lib/Theme';
 import './LandingPage.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMain, setGuest, setLoading, signIn } from '../mainSlice';
-import { signInWithGoogle } from '../../service/firebaseConfig';
-import guestImage from '../../../public/assets/guest.png';
-import useUser from '../hooks/userHook';
+import { selectMain, setGuest, setLoading, signIn } from '../../store/mainSlice';
+import { signInWithGoogle } from '../../../service/firebaseConfig';
+import guestImage from '../../../../public/assets/guest.png';
+import useUser from '../../hooks/userHook';
 import * as React from 'react';
-import { RESPONSIVE_WIDTH } from '../../utils/constants';
+import { RESPONSIVE_WIDTH } from '../../../utils/constants';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 import { useNavigate } from 'react-router-dom';
 

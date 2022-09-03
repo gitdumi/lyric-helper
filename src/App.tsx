@@ -1,18 +1,18 @@
 import './App.css';
 import * as React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import SongPage from './app/components/song/SongPage';
-import AppMenu from './app/components/menu/AppMenu';
+import SongPage from './app/routes/songPage';
+import AppMenu from './app/components/menu';
 import { Box, useMediaQuery } from '@mui/material';
-import LandingPage from './app/components/LandingPage';
+import LandingPage from './app/routes/landingPage';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMain, setLoading } from './app/mainSlice';
+import { selectMain, setLoading } from './app/store/mainSlice';
 import { useEffect } from 'react';
-import { selectLatestNotification } from './app/components/misc/notificationSlice';
-import PopUpMessage from './app/components/misc/PopUpMessage/PopUpMessage';
+import { selectLatestNotification } from './app/store/notificationSlice';
 import { RESPONSIVE_WIDTH } from './utils/constants';
-import ResponsiveMenu from './app/components/menu/responsiveMenu/ResponsiveMenu';
-import LoaderOverlay from './app/components/misc/LoadingModal/LoaderOverlay';
+import ResponsiveMenu from './app/routes/responsiveMenu';
+import LoaderOverlay from './app/components/misc/loaderOverlay';
+import PopUpMessage from './app/components/misc/popUpMessage';
 
 function App() {
   const { isLoggedIn, isGuest, isLoading } = useSelector(selectMain);

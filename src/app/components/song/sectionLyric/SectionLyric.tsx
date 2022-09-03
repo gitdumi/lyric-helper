@@ -4,9 +4,13 @@ import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
 import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../../utils/constants';
 import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSectionLyric, selectCurrentSong, updateSectionLyric } from '../currentSongSlice';
+import {
+  deleteSectionLyric,
+  selectCurrentSong,
+  updateSectionLyric
+} from '../../../store/currentSongSlice';
 import { Tooltip } from '@mui/material';
-import CustomInput from '../../misc/CustomInput/CustomInput';
+import CustomInput from '../../misc/customInput';
 import { theme } from '../../../../lib/Theme';
 
 export default function SectionLyric(props: {

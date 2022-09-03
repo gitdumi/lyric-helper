@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { getNewSong } from './initData';
-import { MainDataState, SongState } from './interfaces';
-import { COLLECTION, writeUserData } from '../service/firebaseDb';
+import { MainDataState, SongState } from './utils/interfaces';
+import { COLLECTION, writeUserData } from '../../service/firebaseDb';
 
 const initialState = {
   userId: 'guest',

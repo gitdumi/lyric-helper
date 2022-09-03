@@ -1,6 +1,6 @@
-import { getNewKey } from '../utils/utils';
-import { getRandomSection } from '../utils/constants';
-import { SectionState, SongState } from './interfaces';
+import { getNewKey } from '../../utils/utils';
+import { getRandomSection } from '../../utils/constants';
+import { SectionState, SongState } from './utils/interfaces';
 
 export function getNewSong(): SongState {
   return {

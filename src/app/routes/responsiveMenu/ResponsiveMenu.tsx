@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Box, Typography, useMediaQuery } from '@mui/material';
-import guestImage from '../../../../../public/assets/guest.png';
+import guestImage from '../../../../public/assets/guest.png';
 import './ResponsiveMenu.css';
-import useUser from '../../../hooks/userHook';
-import { theme } from '../../../../lib/Theme';
-import MySongsList from '../MySongsList';
-import { RESPONSIVE_WIDTH } from '../../../../utils/constants';
+import useUser from '../../hooks/userHook';
+import { theme } from '../../../lib/Theme';
+import MySongsList from '../../components/mySongsList';
+import { RESPONSIVE_WIDTH } from '../../../utils/constants';
 
 function ResponsiveMenu() {
   const user = useUser();

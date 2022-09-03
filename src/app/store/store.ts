@@ -1,9 +1,9 @@
 import { combineReducers, createStore } from '@reduxjs/toolkit';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import currentSongSlice from './components/song/currentSongSlice';
+import currentSongSlice from './currentSongSlice';
 import mainSlice from './mainSlice';
-import { loadState, saveState } from '../utils/localStorage';
-import notificationSlice from './components/misc/notificationSlice';
+import { loadState, saveState } from './utils/localStorage';
+import notificationSlice from './notificationSlice';
 
 const reducers = combineReducers({
   currentSong: currentSongSlice,

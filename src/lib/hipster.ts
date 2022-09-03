@@ -1,5 +1,5 @@
 import { getNewKey } from '../utils/utils';
-import { Lyric } from '../app/interfaces';
+import { Lyric } from '../app/store/utils/interfaces';
 
 export function getLyric(syllableCount: number) {
   return fetchLyric().then((all) => {
