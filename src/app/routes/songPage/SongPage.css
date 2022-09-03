@@ -32,7 +32,7 @@
   padding: 0;
 }
 
-.react-button:hover:not(#add-section svg) {
+.react-button:hover {
   cursor: pointer;
 }
 
@@ -52,31 +52,31 @@
 
 #add-section svg {
   height: 1.5rem;
-  transform: translateY(1px);
+}
+
+#add-section span{
+  transform: translateY(-2px);
 }
 
 #deleteSongButtonIcon {
   transition: 300ms linear all;
 }
-#add-section svg:hover,
+
+#add-section .react-button:hover,
 #deleteSongButtonIcon svg:hover {
   height: 1.5rem;
   transform: rotate(180deg);
   filter: grayscale(100);
 }
 
-#add-section:hover svg {
-  transform: rotate(180deg);
-  -webkit-transform-origin: 50% 50%;
-  -moz-transform-origin: 50% 50%;
-  -ms-transform-origin: 50% 50%;
-  -o-transform-origin: 50% 50%;
-  transform-origin: 50% 50%;
-}
-
-#add-section:hover {
+#add-section:hover,
+#add-section:hover span,
+#add-section:hover .react-button{
   filter: grayscale(100);
   cursor: pointer;
+}
+#add-section:hover .react-button {
+  transform: rotate(180deg);
 }
 
 /*footer*/

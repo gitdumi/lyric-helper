@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getLyric } from '../../../../lib/hipster';
-import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
 import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import './SectionLyric.css';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteSectionLyric,
@@ -76,18 +77,20 @@ export default function SectionLyric(props: {
       onMouseOver={hoverHandler.onHover}
       onMouseLeave={hoverHandler.onLeave}
     >
-      <button
-        className="section-lyric--actions__random svg-wrapper"
-        onClick={async () => {
-          await handleRandom();
-        }}
-      >
-        <IoColorWandOutline
-          className="react-button"
-          style={{ visibility: isHover ? 'visible' : 'hidden' }}
-        />
-      </button>
-
+      <Tooltip placement="top" title="randomize">
+        <button
+          className="svg-wrapper react-button section-lyric--actions__random "
+          onClick={async () => {
+            await handleRandom();
+          }}
+        >
+          <AutoFixHighIcon
+            fontSize="inherit"
+            className="wand"
+            style={{ visibility: isHover ? 'visible' : 'hidden' }}
+          />
+        </button>
+      </Tooltip>
       <CustomInput
         style={{ color: theme.palette.text.primary }}
         value={value}
@@ -98,14 +101,14 @@ export default function SectionLyric(props: {
       <div className={`section-lyric--actions`}>
         <Tooltip placement="top" title="delete lyric">
           <button
-            className="section-lyric--actions__delete svg-wrapper"
+            className="section-lyric--actions__delete svg-wrapper react-button"
             onClick={(e) => {
               handleDelete(e, index);
               e.stopPropagation();
             }}
           >
-            <AiOutlineCloseCircle
-              className="react-button"
+            <HighlightOffIcon
+              fontSize="inherit"
               style={{ visibility: isHover ? 'visible' : 'hidden' }}
             />
           </button>

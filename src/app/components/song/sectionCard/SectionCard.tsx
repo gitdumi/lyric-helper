@@ -4,12 +4,6 @@ import { Lyric } from '../../../store/utils/interfaces';
 import { getLyric } from '../../../../lib/hipster';
 import { reorder } from '../../../../utils/utils';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import {
-  AiOutlineCloseCircle,
-  AiOutlinePlusCircle,
-  IoSyncCircleOutline,
-  GoPrimitiveDot
-} from 'react-icons/all';
 import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import { GithubPicker } from 'react-color';
 import './SectionCard.css';
@@ -25,6 +19,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stack, Tooltip, useMediaQuery } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 import CustomInput from '../../misc/customInput';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
+import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -95,7 +93,7 @@ export default function SectionCard(props: {
     },
     onLeave: () => {
       if (!isResponsive) {
-        setIsHover(false);
+        // setIsHover(false);
       }
     }
   };
@@ -162,16 +160,12 @@ export default function SectionCard(props: {
               <Tooltip placement="top" title="add lyric">
                 <button
                   ref={addButton}
-                  className="section-card--content__add svg-wrapper"
+                  className="section-card--content__add svg-wrapper react-button "
                   onClick={async () => {
                     await addRandomLyric();
                   }}
                 >
-                  <AiOutlinePlusCircle
-                    color={sectionData.color}
-                    style={getVisibility()}
-                    className="react-button"
-                  />
+                  <ControlPointIcon style={{ ...getVisibility(), color: sectionData.color }} />
                 </button>
               </Tooltip>
             )}
@@ -182,27 +176,27 @@ export default function SectionCard(props: {
               <>
                 <Tooltip placement="top" title="delete section">
                   <button
-                    className="section-card--content__delete svg-wrapper"
+                    className="section-card--content__delete react-button svg-wrapper"
                     onClick={(event) => {
                       handleDelete(event, sectionId);
                     }}
                   >
-                    <AiOutlineCloseCircle
-                      className="react-button"
-                      color={sectionData.color}
-                      style={getVisibility()}
+                    <HighlightOffSharpIcon
+                      style={{ ...getVisibility(), color: sectionData.color }}
                     />
                   </button>
                 </Tooltip>
                 <Tooltip placement="top" title="duplicate section">
                   <button
-                    className="section-duplicate svg-wrapper"
+                    className="section-duplicate svg-wrapper react-button "
                     onClick={() => handleDuplicate(sectionIndex)}
                   >
-                    <IoSyncCircleOutline
-                      className="react-button sync"
-                      color={sectionData.color}
-                      style={getVisibility()}
+                    <ControlPointDuplicateIcon
+                      className="sync"
+                      style={{
+                        ...getVisibility(),
+                        color: sectionData.color
+                      }}
                     />
                   </button>
                 </Tooltip>
@@ -213,7 +207,10 @@ export default function SectionCard(props: {
               color={sectionData.color}
               style={{ visibility: getVisibility() }}
             >
-              <GoPrimitiveDot color={sectionData.color} style={{ visibility: getVisibility() }} />
+              <FiberManualRecordIcon
+                fontSize={'inherit'}
+                style={{ ...getVisibility(), color: sectionData.color }}
+              />
               <GithubPicker
                 className="color-picker"
                 width="125px"

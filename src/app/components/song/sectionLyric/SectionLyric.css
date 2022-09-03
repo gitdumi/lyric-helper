@@ -9,24 +9,27 @@
 .section-lyric {
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: transparent;
   margin: 0;
-  padding: 0;
+  padding: 0 0.2rem;
   width: 100%;
 }
 
 .section-lyric--actions__random {
-  margin-left: 0.5rem;
   margin-right: 0;
-  transform: translateY(-2px);
 }
+
 .section-lyric--actions__delete {
   margin-left: auto;
-  transform: translateY(-2px);
 }
 
 .section-lyric:hover {
   filter: invert(1);
+}
+
+.wand {
+ font-size: small;
 }
 
 .section-lyric--actions {

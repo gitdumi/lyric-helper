@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { AiOutlinePlusCircle } from 'react-icons/all';
 import { reorder } from '../../../utils/utils';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/constants';
 import SectionCard from '../../components/song/sectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
@@ -140,8 +140,10 @@ function SongPage() {
             dispatch(addSection());
           }}
         >
-          <AiOutlinePlusCircle className="react-button" id="addSectionButtonIcon" />
-          section
+          <div className="react-button">
+            <ControlPointIcon />
+          </div>
+          <span>section</span>
         </button>
       </DragDropContext>
       <Paper

@@ -28,22 +28,24 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--white);
+  position: relative;
 }
 
 .section-card--actions {
   display: flex;
-  justify-self: flex-end;
-  padding-right: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
   align-items: center;
 }
 
 .section-card--actions__color-picker {
-  margin: 0;
-  width: 1rem;
-  height: 1rem;
-  padding: 0;
+  margin: 0 0 0 0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding-top: 0.5rem;
   border-radius: 50%;
   cursor: pointer;
+  position: relative;
 }
 
 .section-card--actions__color-picker:hover .color-picker {
@@ -55,7 +57,7 @@
   top: 50%;
   left: 100%;
   margin-left: 20px;
-  transform: translate(-107%, -25%);
+  transform: translate(-113%, -25%);
   padding: 0;
 
   position: absolute;
