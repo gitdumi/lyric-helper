@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getLyric } from '../../../../lib/hipster';
 import { AiOutlineCloseCircle, IoColorWandOutline } from 'react-icons/all';
-import { ANIMATION_TIMEOUT, MAX_CHARS } from '../../../../utils/constants';
+import { ANIMATION_TIMEOUT, MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import './SectionLyric.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,7 +9,7 @@ import {
   selectCurrentSong,
   updateSectionLyric
 } from '../../../store/currentSongSlice';
-import { Tooltip } from '@mui/material';
+import { Tooltip, useMediaQuery } from '@mui/material';
 import CustomInput from '../../misc/customInput';
 import { theme } from '../../../../lib/Theme';
 
@@ -22,9 +22,14 @@ export default function SectionLyric(props: {
 }) {
   const songData = useSelector(selectCurrentSong);
   const dispatch = useDispatch();
-  const [isHover, setIsHover] = useState(false);
+  const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
+  const [isHover, setIsHover] = useState(isResponsive);
   const { index, sectionIndex, provided, setIsLoading } = props;
   const { value } = songData.sections[sectionIndex].lyrics[index];
+
+  useEffect(() => {
+    setIsHover(isResponsive);
+  }, [isResponsive]);
 
   function getVisibility(): any {
     return { visibility: isHover ? 'visible' : 'hidden' };
@@ -62,13 +67,26 @@ export default function SectionLyric(props: {
     }, ANIMATION_TIMEOUT / 3);
   };
 
+  const hoverHandler = {
+    onHover: () => {
+      if (!isResponsive) {
+        setIsHover(true);
+      }
+    },
+    onLeave: () => {
+      if (!isResponsive) {
+        setIsHover(false);
+      }
+    }
+  };
+
   return (
     <li
       {...provided.dragHandleProps}
       className="section-lyric"
-      onMouseEnter={() => setIsHover(true)}
-      onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onMouseEnter={hoverHandler.onHover}
+      onMouseOver={hoverHandler.onHover}
+      onMouseLeave={hoverHandler.onLeave}
     >
       <button
         className="section-lyric--actions__random svg-wrapper"
