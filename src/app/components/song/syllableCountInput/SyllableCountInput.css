@@ -1,7 +1,6 @@
 .syl-count-input {
     border: 0;
     outline: 0;
-    margin-top: 2rem;
     height: 4ch;
     width: 4ch;
     border-radius: 50%;
@@ -11,7 +10,10 @@
     font-weight: bold;
     box-shadow: 2px 2px 2px lightgray;
     background-color: var(--accent-color);
+}
 
+.floating-input {
+    margin-top: 2rem;
     position: fixed;
     right: 2rem;
     top: 50%;
@@ -19,23 +21,6 @@
     z-index: 10;
 }
 
-.syl-count-input-responsive {
-    display: flex;
-
-    border: 0;
-    outline: 0;
-    height: 4ch;
-    width: 4ch;
-    border-radius: 50%;
-
-    text-align: center;
-    font-size: large;
-    font-weight: bold;
-    box-shadow: 2px 2px 2px lightgray;
-    background-color: var(--accent-color);
-}
-
-.syl-count-input:focus,
-.syl-count-input-responsive:focus {
+.syl-count-input:focus {
     background-color: var(--accent-color-contrast);
 }
