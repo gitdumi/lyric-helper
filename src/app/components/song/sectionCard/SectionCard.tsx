@@ -23,6 +23,8 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import ControlPointDuplicateIcon from '@mui/icons-material/ControlPointDuplicate';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import useLyricDb from '../../../hooks/dbHook';
+import convertToUiLyric from '../../../../service/lyric-db/dbLyricAdapter';
 
 export default function SectionCard(props: {
   sectionId: string;
@@ -40,6 +42,7 @@ export default function SectionCard(props: {
   const [isHover, setIsHover] = useState(isResponsive);
   const [isHoverColorPicker, setIsHoverColorPicker] = useState(isResponsive);
   const [isLoading, setIsLoading] = useState(false);
+  const { db } = useLyricDb();
 
   const addButton = useRef() as LegacyRef<HTMLButtonElement>;
 
@@ -66,7 +69,7 @@ export default function SectionCard(props: {
 
   async function addRandomLyric() {
     setIsLoading(true);
-    const result = await getLyric(songData.config.selectedSylCount);
+    const result = convertToUiLyric(db.lyrics[Math.floor(Math.random() * db.lyrics.length - 1)]);
     dispatch(addSectionLyric({ sectionIndex: sectionIndex, value: result }));
     setIsLoading(false);
   }

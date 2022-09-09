@@ -6,7 +6,7 @@ import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../utils/constants';
 import SectionCard from '../../components/song/sectionCard';
 import { COLORS, theme } from '../../../lib/Theme';
 import './SongPage.css';
-import { Box, Button, Paper, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Button, Input, Paper, Tooltip, useMediaQuery } from '@mui/material';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +32,9 @@ import { addNotification } from '../../store/notificationSlice';
 import CustomInput from '../../components/misc/customInput';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 import { NOTIFICATIONS } from '../../components/misc/popUpMessage';
+import useLyricDb from '../../hooks/dbHook';
+import { selectCurrentSylCount, setCurrent } from '../../store/dbSlice';
+import SyllableCountInput from '../../components/song/syllableCountInput/SyllableCountInput';
 
 function SongPage() {
   const dispatch = useDispatch();
@@ -42,10 +45,10 @@ function SongPage() {
   const currentSongId = useSelector(selectCurrentSongId);
   const urlId = useParams().songId;
   const songData = useSelector(selectCurrentSong);
+  const { db, setCurrentSylCount } = useLyricDb();
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {
-    console.log(urlId);
     //Setting the song in store to the selected one
     if (songs.length > 0 && songs.findIndex((song) => song.id === urlId) != -1) {
       dispatch(setSong(currentSong));
@@ -110,6 +113,7 @@ function SongPage() {
         ml: isResponsive ? '1rem' : '4rem'
       }}
     >
+      {!isResponsive && <SyllableCountInput responsive={false} />}
       <CustomInput
         className="song-title"
         placeholder="Song Title"
@@ -156,16 +160,19 @@ function SongPage() {
         }}
       >
         {isResponsive && (
-          <LyricsSharpIcon
-            className="responsive-menu-nav"
-            sx={{
-              color: theme.palette.primary.main
-            }}
-            onClick={() => {
-              dispatch(setCurrentSongId('0'));
-              navigate('/menu');
-            }}
-          />
+          <>
+            <LyricsSharpIcon
+              className="responsive-menu-nav"
+              sx={{
+                color: theme.palette.primary.main
+              }}
+              onClick={() => {
+                dispatch(setCurrentSongId('0'));
+                navigate('/menu');
+              }}
+            />
+            <SyllableCountInput responsive={true} />
+          </>
         )}
         <Button className="save-song" variant="contained" onClick={handleSaveSong}>
           Save

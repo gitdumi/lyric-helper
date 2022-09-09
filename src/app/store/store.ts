@@ -4,11 +4,13 @@ import currentSongSlice from './currentSongSlice';
 import mainSlice from './mainSlice';
 import { loadState, saveState } from './utils/localStorage';
 import notificationSlice from './notificationSlice';
+import dbSlice from './dbSlice';
 
 const reducers = combineReducers({
   currentSong: currentSongSlice,
   main: mainSlice,
-  notifications: notificationSlice
+  notifications: notificationSlice,
+  db: dbSlice
 });
 
 // const store = configureStore({ reducer });

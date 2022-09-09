@@ -7,10 +7,9 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from './lib/Theme';
 import { Provider } from 'react-redux';
 import store from './app/store/store';
-import app from './service/firebaseConfig';
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(app);
+  console.log();
 });
 
 ReactDOM.render(

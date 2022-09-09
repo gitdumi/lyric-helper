@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { getNewSong } from './initData';
 import { MainDataState, SongState } from './utils/interfaces';
-import { COLLECTION, writeUserData } from '../../service/firebaseDb';
+import { writeUserData } from '../../service/firebaseDb';
 
 const initialState = {
   userId: 'guest',
@@ -64,7 +64,7 @@ export const mainSlice = createSlice({
         songs: updatedSongs
       };
 
-      writeUserData(COLLECTION, updatedState).then(() => {
+      writeUserData(updatedState).then(() => {
         console.log('song saved in db');
       });
 
@@ -79,7 +79,7 @@ export const mainSlice = createSlice({
         selected: songs.length > 0 ? songs[songs.length - 1].id : '0'
       };
 
-      writeUserData(COLLECTION, updatedState).then(() => {
+      writeUserData(updatedState).then(() => {
         console.log('song deleted from db');
       });
 

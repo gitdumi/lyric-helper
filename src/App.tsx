@@ -13,6 +13,7 @@ import { RESPONSIVE_WIDTH } from './utils/constants';
 import ResponsiveMenu from './app/routes/responsiveMenu';
 import LoaderOverlay from './app/components/misc/loaderOverlay';
 import PopUpMessage from './app/components/misc/popUpMessage';
+import { readLyricsDb, writeLyricsDb } from './service/firebaseDb';
 
 function App() {
   const { isLoggedIn, isGuest, isLoading } = useSelector(selectMain);
@@ -31,6 +32,9 @@ function App() {
       {notification != null && <PopUpMessage messageDetails={notification} />}
       {isLoading && <LoaderOverlay />}
       {((isLoggedIn && !isResponsive) || (isGuest && !isResponsive)) && <AppMenu />}
+
+      {/*<button onClick={writeLyricsDb}>WRITE</button>*/}
+      {/*<button onClick={async () => console.log(await readLyricsDb(8))}>READ</button>*/}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route
