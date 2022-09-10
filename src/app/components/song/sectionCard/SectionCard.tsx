@@ -1,7 +1,6 @@
 import React, { LegacyRef, useEffect, useRef, useState } from 'react';
 import SectionLyric from '../sectionLyric';
 import { Lyric } from '../../../store/utils/interfaces';
-import { getLyric } from '../../../../lib/hipster';
 import { reorder } from '../../../../utils/utils';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';

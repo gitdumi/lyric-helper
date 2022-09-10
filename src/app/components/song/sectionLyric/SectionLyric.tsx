@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { getLyric } from '../../../../lib/hipster';
 import { MAX_CHARS, RESPONSIVE_WIDTH } from '../../../../utils/constants';
 import './SectionLyric.css';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
@@ -13,6 +12,8 @@ import {
 import { Tooltip, useMediaQuery } from '@mui/material';
 import CustomInput from '../../misc/customInput';
 import { theme } from '../../../../lib/Theme';
+import convertToUiLyric from '../../../../service/lyric-db/dbLyricAdapter';
+import useLyricDb from '../../../hooks/dbHook';
 
 export default function SectionLyric(props: {
   index: number;
@@ -24,6 +25,7 @@ export default function SectionLyric(props: {
   const songData = useSelector(selectCurrentSong);
   const dispatch = useDispatch();
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
+  const { db } = useLyricDb();
   const [isHover, setIsHover] = useState(isResponsive);
   const { index, sectionIndex, provided, setIsLoading } = props;
   const { value } = songData.sections[sectionIndex].lyrics[index];
@@ -45,7 +47,7 @@ export default function SectionLyric(props: {
 
   async function handleRandom() {
     setIsLoading(true);
-    const result = await getLyric(songData.config.selectedSylCount);
+    const result = convertToUiLyric(db.lyrics[Math.floor(Math.random() * db.lyrics.length - 1)]);
     dispatch(
       updateSectionLyric({ sectionIndex: sectionIndex, lyricIndex: index, value: result.value })
     );
