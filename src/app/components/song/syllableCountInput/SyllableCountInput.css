@@ -1,0 +1,26 @@
+.syl-count-input {
+    border: 0;
+    outline: 0;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 30%;
+
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    box-shadow: 2px 2px 2px lightgray;
+    background-color: var(--accent-color);
+}
+
+.floating-input {
+    margin-top: 2rem;
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-3rem);
+    z-index: 10;
+}
+
+.syl-count-input:focus {
+    background-color: var(--accent-color-contrast);
+}

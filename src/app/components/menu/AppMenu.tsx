@@ -3,7 +3,7 @@ import { styled, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
-import MySongsList from './MySongsList';
+import MySongsList from '../mySongsList';
 import { theme } from '../../../lib/Theme';
 import { Box, ClickAwayListener, Typography } from '@mui/material';
 import guestImage from '../../../../public/assets/guest.png';
@@ -58,7 +58,7 @@ const CustomDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
   })
 );
 
-export default function AppMenu() {
+function AppMenu() {
   const [open, setOpen] = React.useState(false);
   const user = useUser();
 
@@ -73,6 +73,7 @@ export default function AppMenu() {
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <CustomDrawer
+        className="menu"
         variant="permanent"
         open={open}
         onMouseEnter={handleDrawerOpen}
@@ -99,10 +100,12 @@ export default function AppMenu() {
                 {user != null ? user?.displayName : 'Guest'}
               </Typography>
             </Box>
-            <MySongsList setOpen={setOpen} />
+            <MySongsList />
           </>
         )}
       </CustomDrawer>
     </ClickAwayListener>
   );
 }
+
+export default AppMenu;

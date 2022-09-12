@@ -1,0 +1,22 @@
+.input-view {
+  width: fit-content;
+  cursor: text;
+  font-size: 15px;
+  border-bottom: 1px solid transparent;
+  margin: 0 0.2rem;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.input-edit {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  border-bottom: 1px solid;
+  margin: 0 0.2rem;
+  padding: 0;
+  overflow-x: hidden;
+}

@@ -6,11 +6,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './lib/Theme';
 import { Provider } from 'react-redux';
-import store from './app/store';
-import app from './service/firebaseConfig';
+import store from './app/store/store';
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(app);
+  console.log();
 });
 
 ReactDOM.render(

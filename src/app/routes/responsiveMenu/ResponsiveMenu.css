@@ -1,5 +1,6 @@
-.menu {
-  height: 100vh;
+.responsive-menu {
+  margin: 4rem;
+  position: relative;
 }
 
 .menu-user {

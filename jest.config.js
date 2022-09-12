@@ -3,8 +3,6 @@
  * https://jestjs.io/docs/configuration
  */
 
-const esModules = ['react-icons'].join('|');
-
 export default {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -79,9 +77,10 @@ export default {
   // moduleFileExtensions: ['js', 'mjs', 'cjs', 'jsx', 'ts', 'tsx', 'json', 'node'],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {
+  moduleNameMapper: {
+    '\\.(css|less)$': 'identity-obj-proxy'
+  },
   //   '\\.(css|scss|less|sss|styl)$': '<rootDir>/node_modules/identity-obj-proxy'
-  // },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -108,7 +107,7 @@ export default {
   // resetModules: false,
 
   // A path to a custom resolver
-  // resolver: undefined,
+  resolver: '<rootDir>/jest.resolver.cjs',
 
   // Automatically restore mock state and implementation before every test
   // restoreMocks: false,
@@ -137,7 +136,7 @@ export default {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jsdom'
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -152,9 +151,7 @@ export default {
   // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  // testPathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  // testPathIgnorePatterns: ['/node_modules/']
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
@@ -166,10 +163,14 @@ export default {
   // testRunner: "jest-circus/runner",
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  // transform: {
+  // '^.+\\.tsx?$': 'ts-jest',
+  // '^.+\\.(js|jsx)$': 'babel-jest',
+  // 'node_modules/variables/.+\\.(j|t)sx?$': 'babel-jest'
+  // },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: [`node_modules/(?!${esModules})/*`]
+  // transformIgnorePatterns: [`node_modules/(?!${esModules})/*`, 'node_modules/?!(react-icons)']
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

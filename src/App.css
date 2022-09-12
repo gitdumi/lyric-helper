@@ -3,29 +3,37 @@
 }
 
 body {
-  /*overflow: auto;*/
-  /*height: 100%;*/
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
   outline: none;
   border: none;
+  margin: 0;
+  position: relative;
 }
 
 .App {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
 }
 
 html {
-  /*overflow: hidden;*/
-  /*height: 100%;*/
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background-color: transparent;
   padding: 0;
@@ -34,11 +42,12 @@ html {
 
 .react-button {
   display: flex;
+  align-items: center;
+  justify-content: center;
   height: 1.5rem;
   width: auto;
   padding: 0;
   margin: 0;
-  align-items: center;
   cursor: pointer;
   transition: 300ms linear all;
 }
@@ -46,6 +55,8 @@ html {
 .react-button:hover {
   transform: rotate(180deg);
   transform-origin: 50% 50%;
+}
+.react-button:hover:not(#add-section) {
   filter: grayscale(100);
 }
 

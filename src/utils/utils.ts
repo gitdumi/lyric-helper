@@ -1,4 +1,4 @@
-import { Lyric, SectionState } from '../app/interfaces';
+import { Lyric, SectionState } from '../app/store/utils/interfaces';
 
 function makeid(length: number) {
   let result = '';

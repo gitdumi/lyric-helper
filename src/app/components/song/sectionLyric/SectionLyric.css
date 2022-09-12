@@ -1,0 +1,40 @@
+/*For full lyric width*/
+.draggable-lyric,
+.droppableLyric {
+  width: 100%;
+  transition: var(--transition-speed);
+  position: relative;
+}
+
+.section-lyric {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  margin: 0;
+  padding: 0 0.2rem;
+  width: 100%;
+}
+
+.section-lyric--actions__random {
+  margin-right: 0;
+}
+
+.section-lyric--actions__delete {
+  margin-left: auto;
+}
+
+.section-lyric:hover {
+  filter: invert(1);
+}
+
+.wand {
+ font-size: small;
+}
+
+.section-lyric--actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
