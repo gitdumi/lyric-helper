@@ -16,7 +16,11 @@ function ResponsiveMenu() {
   return (
     <Box className="responsive-menu">
       <Box display="flex" className="menu-user">
-        <img className="user-image" src={`${user?.photoURL || guestImage}`} />
+        <img
+          className="user-image"
+          src={`${user?.photoURL || guestImage}`}
+          referrerPolicy="no-referrer"
+        />
         <Typography variant="body2" color={theme.palette.primary.main}>
           {user != null ? user?.displayName : 'Guest'}
         </Typography>

@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { theme } from '../../../lib/Theme';
 import './LandingPage.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,18 +30,18 @@ function LandingPage() {
     <Box
       className="landing-page"
       sx={{
-        ml: isLoggedIn || isGuest ? (!isResponsive ? '3rem' : '') : ''
+        ml: isLoggedIn || isGuest ? (!isResponsive ? '4rem' : '') : ''
       }}
     >
-      {isLoading && <Typography color="red">LOADING</Typography>}
       <Box
+        className="landing-section"
         display="inline"
         sx={{
           flexDirection: 'row'
         }}
       >
         {(isLoggedIn || isGuest) && (
-          <>
+          <div className="landing-section">
             <img
               className="user-image"
               style={{ width: '40px', borderRadius: '50%' }}
@@ -51,22 +51,17 @@ function LandingPage() {
             <Typography variant="body2" color={theme.palette.primary.main}>
               {isLoggedIn && user != null ? user?.displayName : 'Guest'}
             </Typography>
-          </>
+          </div>
         )}
       </Box>
 
-      <Typography variant="h2" color={theme.palette.primary.main} sx={{ mt: '2rem' }}>
+      <Typography className="landing-section" variant="h2" color={theme.palette.primary.main}>
         welcome to Lyric Helper!
       </Typography>
-      <Typography
-        variant="h6"
-        sx={{
-          m: '3rem 0 0 2rem'
-        }}
-      >
+      <Typography className="landing-section" variant="h6">
         {isLoggedIn || isGuest ? (
           isResponsive ? (
-            <Box className="landing-click-box">
+            <Box className="landing-click-box landing-section">
               {'click'}
               <LyricsSharpIcon
                 sx={{
@@ -76,7 +71,7 @@ function LandingPage() {
                 }}
                 onClick={() => navigate('/menu')}
               />
-              {' to get started'}
+              {'to get started'}
             </Box>
           ) : (
             'hover over the panel to get started'
@@ -94,7 +89,7 @@ function LandingPage() {
         )}
       </Typography>
       {isGuest && (
-        <Typography variant="body1" color={theme.palette.primary.main}>
+        <Typography className="landing-section" variant="body1" color={theme.palette.primary.main}>
           NOTE: as a guest you can only save songs locally. <br /> If you clear your browser data
           your songs will be lost.
         </Typography>

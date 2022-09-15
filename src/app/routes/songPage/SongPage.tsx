@@ -33,7 +33,6 @@ import CustomInput from '../../components/misc/customInput';
 import LyricsSharpIcon from '@mui/icons-material/LyricsSharp';
 import { NOTIFICATIONS } from '../../components/misc/popUpMessage';
 import useLyricDb from '../../hooks/dbHook';
-import { selectCurrentSylCount, setCurrent } from '../../store/dbSlice';
 import SyllableCountInput from '../../components/song/syllableCountInput/SyllableCountInput';
 
 function SongPage() {
@@ -45,7 +44,6 @@ function SongPage() {
   const currentSongId = useSelector(selectCurrentSongId);
   const urlId = useParams().songId;
   const songData = useSelector(selectCurrentSong);
-  const { db, setCurrentSylCount } = useLyricDb();
   const isResponsive = useMediaQuery(`(max-width: ${RESPONSIVE_WIDTH})`);
 
   useEffect(() => {

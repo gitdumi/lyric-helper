@@ -16,8 +16,6 @@ export const dbSlice = createSlice({
   initialState,
   reducers: {
     setCurrent: (state, action) => {
-      console.log('setCurrent');
-      console.log(action.payload);
       return {
         ...state,
         currentSylCount: action.payload
